@@ -1,0 +1,26 @@
+package Game;
+import javax.swing.JLabel;
+import java.util.Random;
+import java.awt.Color;
+
+public class Food extends JLabel{
+	int X;
+	int Y;
+	Field field;
+	public Food(){
+		this.setOpaque(true);
+		this.setBackground(Color.RED);
+	}
+	
+	private void poner(int x,int y){
+		this.X=x;
+		this.Y=y;
+		this.setLocation(x, y);
+	}
+	
+	private void nueva(){
+		Random x=new Random();
+		Random y=new Random();
+	}
+	
+}

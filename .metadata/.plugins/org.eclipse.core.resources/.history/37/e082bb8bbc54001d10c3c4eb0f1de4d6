@@ -1,0 +1,7 @@
+package decanato;
+import java.util.ArrayList;
+
+public class Decanato {
+	ArrayList<Alumno> ArrayList;
+	
+}

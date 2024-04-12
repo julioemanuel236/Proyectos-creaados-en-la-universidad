@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;com.nobody.adMEnestrator/images/confirm.png&apos; to &apos;confirm_0.png&apos;" description="Rename resource &apos;confirm.png&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="images/confirm.png" name="confirm_0.png" stamp="1663250098390" updateReferences="true"/>
+</session>

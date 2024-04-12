@@ -1,0 +1,28 @@
+package cadena;
+
+public class Habitacion {
+	private Piso piso;
+	private int numero;
+	private Cliente cliente;
+	private Empleado empledo;
+
+	public Habitacion(Piso piso, int numero, Cliente cliente, Empleado empledo) {
+		this.piso = piso;
+		this.numero = numero;
+		this.cliente = cliente;
+		this.empledo = empledo;
+	}
+	
+	public Piso getPiso() {
+		return piso;
+	}
+	public int getNumero() {
+		return numero;
+	}
+	public Cliente getCliente() {
+		return cliente;
+	}
+	public Empleado getEmpledo() {
+		return empledo;
+	}
+}

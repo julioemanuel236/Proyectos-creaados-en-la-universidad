@@ -1,0 +1,23 @@
+package simulacion;
+
+import elementos.Matriz;
+import elementos.serpiente.*;
+
+public class Main {
+	
+	public static void main(String[] args) {
+		int size = 5,serpientes = 1,serpientesSize = 3,pasos = 10;
+		try {
+			size = 				Integer.parseInt(args[0]);
+			serpientes = 		Integer.parseInt(args[1]);
+			serpientesSize = 	Integer.parseInt(args[2]);
+			pasos = 			Integer.parseInt(args[3]);
+		}
+		catch(Exception e) {
+			System.out.println("ERROR EN LOS DATOS DE ENTADA\n");
+		}
+		
+		Matriz tablero = new Matriz(size,size);
+	}
+	
+}

@@ -1,0 +1,195 @@
+package mainwindow;
+
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.math.BigDecimal;
+
+public class WasteArea extends Component{
+
+	private Font fontPrecio = new Font("Arciform",Font.PLAIN,12);	
+	private Font fontDolar = new Font("Arciform",Font.PLAIN,9);
+	private final String DOLAR = "$";
+	
+	private BigDecimal coste = new BigDecimal(0);
+	private BigDecimal actual = new BigDecimal(0);
+	private BigDecimal base = new BigDecimal(0);
+		
+	private long finalTime = 0;
+	private long finalTime2 = 0;
+	private long updateTime = 1000;
+	private long updateTime2 = 1000;
+	private long iniTime = 0;
+	private long iniTime2 = 0;
+	private double porcentaje1 = 0.8d;
+	private boolean updated = false;
+	
+	public WasteArea(Image img) {
+		super(img);
+	}
+			
+	public void pintarPrecio(Graphics g,BigDecimal precio) {
+		int x = getWidth();
+		int y = getHeight()/4;
+		int width = getWidth();
+		int height = getHeight()/2;
+		
+		//System.out.println(x+" "+y+" "+width+" "+height);
+		
+		g.setColor(getForeground());
+		int alto = fontPrecio.getSize();
+		String precioTexto = String.valueOf(precio.doubleValue());
+		
+		String textoPrecio = precio.intValue()+".";
+		String textoComa = precioTexto.substring(precioTexto.lastIndexOf('.')+1);
+		
+		if(textoComa.length() == 1)textoComa+='0';
+		else if(textoComa.length() >2)textoComa = textoComa.substring(0, 2);
+		int w = 0;
+		int h = 0;
+		while(w<width && h<height) {
+			w = 0;
+			h = 0;
+			alto++;
+			
+			fontPrecio = ajustarFuente(fontPrecio,alto);
+			fontDolar =	ajustarFuente(fontDolar,alto*3/5);
+						
+			w+=textWidth(fontDolar, DOLAR);
+			w+=textWidth(fontPrecio, textoPrecio);
+			w+=textWidth(fontDolar, textoComa);
+			
+			h = textHeight(fontPrecio, textoPrecio) + textHeight(fontDolar, textoComa) - (2*textHeight(fontDolar, DOLAR)/3);
+			
+		}
+		//System.out.println(w + ">=" + width);
+		while(w>=width || h>=height) {
+			w = 0;
+			alto--;
+			
+			fontPrecio = ajustarFuente(fontPrecio,alto);
+			fontDolar =	ajustarFuente(fontDolar,alto*3/5);
+						
+			w+=textWidth(fontDolar, DOLAR);
+			w+=textWidth(fontPrecio, textoPrecio);
+			w+=textWidth(fontDolar, textoComa);						
+			
+			h = textHeight(fontPrecio, textoPrecio) + textHeight(fontDolar, textoComa) - (2*textHeight(fontDolar, DOLAR)/3);
+		}	
+		
+		
+		
+		
+		
+		int toCenterY = y + (height/2)-(h/2);
+		//System.out.println(h + "--" + height);	
+		//System.out.println(toCenterY);	
+		//System.out.println(fontDolar.getSize() + " " + alto);
+		
+		int dolarY = toCenterY+textHeight(fontDolar, DOLAR) ;
+		int precioY = dolarY + textHeight(fontPrecio, textoPrecio) - (2*textHeight(fontDolar, DOLAR)/3);
+		
+		/*
+		g.setColor(Color.red);
+		g.fillRect(0, 0 , width, height);
+		*/
+		g.setFont(fontDolar);
+		g.setColor(getForeground()); 
+		
+		x = (width/2) - (w/2);
+		
+		
+		g.drawString(DOLAR, x, dolarY);		
+		x+=textWidth(fontDolar, DOLAR);
+		
+		g.setFont(fontPrecio);
+		
+		g.drawString(textoPrecio, x, precioY);
+		x+=textWidth(fontPrecio, textoPrecio);
+		
+		g.setFont(fontDolar);
+		
+		g.drawString(textoComa, x, dolarY);
+		
+		
+		 
+	}
+			
+	/*
+	@Override 
+	public void paint(Graphics g) {
+		super.paint(g);
+		pintarPrecio(g, actual);
+		System.out.println((System.currentTimeMillis()-iniTime)+"/"+updateTime);
+		if(System.currentTimeMillis()<finalTime) {
+			
+			BigDecimal perc = new BigDecimal(((double)(System.currentTimeMillis()-iniTime)/(double)updateTime) * porcentaje1);
+			this.actual = base.add(coste.subtract(base).multiply(perc));
+			System.out.println(this.actual.doubleValue());
+			try {
+				Thread.sleep(1000/144);
+			}
+			catch(Exception e) {
+				
+			}
+			repaint();
+			
+		}
+		if(System.currentTimeMillis()<finalTime2) {
+			
+			BigDecimal perc = new BigDecimal(porcentaje1 + ((double)(System.currentTimeMillis()-iniTime2)/(double)updateTime2)*(1.0d-porcentaje1));
+			this.actual = base.add(coste.subtract(base).multiply(perc));
+			System.out.println(this.actual.doubleValue());
+			try {
+				Thread.sleep(1000/144);
+			}
+			catch(Exception e) {
+				
+			}
+			repaint();
+			
+		}
+		else {
+			this.actual = this.coste;
+			if(!updated) {
+				updated = true;
+				repaint();
+				
+			}
+			
+		}
+		
+		
+	}
+*/	
+	@Override
+	public void paint(Graphics g) {
+		super.paint(g);
+		pintarPrecio(g, actual);
+		if(System.currentTimeMillis()<finalTime) {
+		
+		}
+		else {
+			this.actual = this.coste;
+			if(!updated) {
+				updated = true;
+				repaint();
+				
+			}
+		}
+	}
+
+	public void setPrecio(String coste) {
+		this.base = this.actual;
+		this.coste = new BigDecimal(coste);
+		
+		iniTime = System.currentTimeMillis(); 
+		finalTime = iniTime + updateTime;
+		iniTime2 = finalTime;
+		finalTime2 = iniTime2 + updateTime2;
+		
+		updated = false;
+		repaint();
+	}
+	
+}

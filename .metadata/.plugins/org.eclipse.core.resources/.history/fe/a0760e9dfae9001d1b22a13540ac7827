@@ -1,0 +1,14 @@
+package gui;
+import javax.swing.*;
+public class SelectTypePanel extends JPanel{
+
+	
+	public static void main(String args[]) {
+		JFrame fr = new JFrame();
+		fr.setSize(500,500);
+		fr.setDefaultCloseOperation(fr.EXIT_ON_CLOSE);
+		fr.setVisible(true);
+		fr.add(mewSeletTypePanel);
+		
+	}
+}

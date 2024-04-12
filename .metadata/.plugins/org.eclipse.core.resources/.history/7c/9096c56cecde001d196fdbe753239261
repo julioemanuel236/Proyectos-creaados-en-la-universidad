@@ -1,0 +1,27 @@
+
+package RegistroEstudiantes;
+
+import java.util.Scanner;
+
+public class App {
+    public static void main(String[] args) {
+        Scanner leer = new Scanner (System.in);
+        Metodos objeto = new Metodos ();
+        int filaEstudiantes = objeto.pedirEstudiantes();
+        String [][] estudiantes = new String [filaEstudiantes][4];
+        objeto.ingresarEstudiantes(estudiantes);
+        objeto.mostrarEstudiantes(estudiantes);
+        int filaAsignaturas = objeto.pedirAsignaturas();
+        String [][] asignatura = new String [filaAsignaturas][3];
+        objeto.ingresarAsignaturas(asignatura);
+        objeto.mostrarAsignaturas(asignatura);
+        int filaMatricula = objeto.tamañoMatricula();
+        String [][] matricula = new String [filaMatricula][5];
+        objeto.ingresarMatricula(matricula, estudiantes, asignatura);
+        objeto.mostrarMatricula(matricula);
+        int f = objeto.pedirTamañoConsulta();
+        String [][] detalleMatricula = new String [f][2];
+        objeto.detalleMatricula(estudiantes, matricula, asignatura, detalleMatricula);
+        objeto.mostrarDetalleMatricula(detalleMatricula);
+    }
+}

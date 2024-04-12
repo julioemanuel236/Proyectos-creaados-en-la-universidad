@@ -1,0 +1,45 @@
+package texteditor;
+import java.util.Scanner;
+
+public class Main {
+
+	static LineList lines;
+	static Scanner entry = new Scanner(System.in);
+	
+	public static void main(String[] args) {
+		
+		menu();
+
+	}
+	
+	public static void menu() {
+		while(true) {
+			print("Menu: m\n");
+			print("Load File: load fileName appendOption (1-append, 0-new list)\n");
+			print("Print: p\n");
+			print("Display number of lines: lines\n");
+			print("Display line: line lineNumber\n");
+			print("Count words: words\n");
+			print("Delete line: del lineNumberToDelete\n");
+			print("Append line: a\n");
+			print("Insert line: i lineNumberToInseart\n");
+			print("Clear document: cls\n");
+			print("Replace words: rep originalWord newWord\n");
+			print("Save to a file: s fileName\n");
+			print("Quiz: quit\n");  
+			
+			int op = option();
+		}
+	}
+	
+	public static int option() {
+		String ops[] = {"m","load","p","lines","line","words","del","a","i","cls","rep","s","qui"};
+		String s[] = entry.nextLine().split(' ');
+		
+	}
+	static void print(String txt) {
+		System.out.print(txt);
+	}
+	
+}
+

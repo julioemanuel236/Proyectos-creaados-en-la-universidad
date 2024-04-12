@@ -1,0 +1,201 @@
+package lietys;
+
+import javax.swing.*;
+
+import aereopuerto.Aereopuerto;
+import aereopuerto.Aereopuerto.Terminal;
+
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.Date;
+
+public class GUI extends JFrame{
+	JComboBox<String> select_tipo = new JComboBox<String>();
+	JComboBox<Avion> select_avion = new JComboBox<Avion>();
+	JComboBox<Terminal> select_terminal = new JComboBox<Terminal>();
+	JComboBox<Terminal> terminal_vuelos = new JComboBox<Terminal>();
+	JTextArea ver = new JTextArea();
+	
+
+	JPanel opciones;
+	JPanel panel_visible=null;
+	JPanel paneles[] = new JPanel[10];
+	String ops[]= new String[]{"Nueva Terminal","Nuevo Vuelo","Nuevo Avion",
+			                   "Hacer Reservacion","Ganancias por Fecha",
+			                   "Vuelos por Terminal","Ventas por Vuelo"};
+	Aereopuerto marti = new Aereopuerto();
+
+	private void limpiar_panel(JPanel panel) {
+		marti.guardar_datos_terminales();
+		marti.guardar_datos_aviones();
+		for(Component i:panel.getComponents()) {
+			if(i.getClass()==JTextField.class)
+				((JTextField)i).setText("");
+			else if(i.getClass()==JComboBox.class)
+				((JComboBox)i).setSelectedIndex(-1);
+		}
+	}
+	
+	private void ventas_entre_fechas() {
+		JPanel panel = paneles[4];
+		JTextField fecha1[]  = new JTextField[3];
+		JTextField fecha2[] = new JTextField[3];
+		JLabel results= new JLabel();
+		results.setSize(panel.getWidth(),panel.getHeight()-50);
+		results.setLocation(0,50);
+		results.setBackground(Color.gray);
+		results.setBorder(null);
+		results.setHorizontalAlignment(JLabel.CENTER);
+		
+		for(int i=0;i<3;i++) {
+			JTextField jtf = new JTextField();
+			fecha1[i]=jtf;
+			jtf.setBorder(null);
+			jtf.setSize(60,25);
+			jtf.setLocation(100+(i*60)+(i*5),5);
+			panel.add(jtf);
+		}
+		
+		for(int i=0;i<3;i++) {
+			JTextField jtf = new JTextField();
+			fecha2[i]=jtf;
+			jtf.setBorder(null);
+			jtf.setSize(60,25);
+			jtf.setLocation(panel.getWidth()-160-((i*60)+(i*5)),5);
+			panel.add(jtf);
+		}
+		
+		JButton aceptar = new JButton("Buscar");
+		aceptar.addActionListener((ActionEvent e)->{
+			
+
+			int f1d=Integer.parseInt(fecha1[0].getText());
+			int f1m=Integer.parseInt(fecha1[1].getText());
+			int f1a=Integer.parseInt(fecha1[2].getText());
+			
+			int f2a=Integer.parseInt(fecha2[0].getText());
+			int f2m=Integer.parseInt(fecha2[1].getText());
+			int f2d=Integer.parseInt(fecha2[2].getText());
+			float ganancias = marti.ventas_entre_fechas(f1d, f1m, f1a, f2a, f2m, f2d);
+			results.setText("");
+			results.setText("Se ganaron $"+ganancias);
+		});
+		
+		aceptar.setSize(175,40);
+		aceptar.setLocation((panel.getWidth()/2)-(aceptar.getWidth()/2),5);
+		panel.add(aceptar);
+		panel.add(results);
+		
+		
+	}
+	
+	private void ventas_por_vuelo() {
+		JPanel panel = paneles[6];
+		JComboBox j = new JComboBox();
+		JLabel ganancias = new JLabel();
+		j.setSize(panel.getWidth(),30);
+		ganancias.setSize(300,30);
+		ganancias.setHorizontalAlignment(JLabel.CENTER);
+		ganancias.setLocation((panel.getWidth()/2)-(ganancias.getWidth()/2),j.getY()+j.getHeight());
+		panel.add(j);
+		panel.add(ganancias);
+		
+		j.addFocusListener(new FocusListener() {
+
+			@Override
+			public void focusGained(FocusEvent e) {
+				j.removeAllItems();
+				for(Terminal t:marti.terminales) {
+					for(Vuelo v:t.vuelos) {
+						j.addItem(v);
+					}
+				}
+				
+			}
+
+			@Override
+			public void focusLost(FocusEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+		j.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ganancias.setText("El vuelo genero : 0$");
+				if(j.getSelectedItem()==null)return;
+				float c=marti.ventas_por_vuelo((Vuelo)j.getSelectedItem());
+				ganancias.setText("El vuelo genero : "+c+"$");
+			}
+		});
+		
+	}
+	
+	private void generar_nueva_terminal() {
+		JPanel panel = paneles[0];
+		String textos[] = new String[] {"Nombre","Numero"};
+		JTextField entradas[] = new JTextField[2];
+		for(int i=0;i<textos.length;i++) {
+			JLabel j = new JLabel(textos[i]);
+			j.setSize(100,30);
+			j.setLocation(5,5+(i*5)+(i*30));
+			JTextField jtf = new JTextField();
+			entradas[i]=jtf;
+			jtf.setSize(200,30);
+			jtf.setLocation(5+j.getWidth(),j.getY());
+			jtf.setBorder(null);
+			panel.add(j);
+			panel.add(jtf);
+		}
+		JButton aceptar = new JButton("Registrar Terminal");
+		aceptar.setSize(175,40);
+		aceptar.setLocation(panel.getWidth()-5-aceptar.getWidth(),panel.getHeight()-5-aceptar.getHeight());
+		aceptar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				boolean quit=false;
+				for(JTextField i:entradas) {
+					if(i.getText().equals("")) {
+						i.setText("Este campo es obligatorio");
+						quit=true;
+					}
+				}	
+				if(quit) {
+					JOptionPane.showMessageDialog(null, "Rellene todos los campos porfavor");
+					JOptionPane.showMessageDialog(null, "Hubo un error");
+					return;
+				}
+				
+				try {
+					String nombre = entradas[0].getText();
+					int    numero = Integer.parseInt(entradas[1].getText());
+					Terminal nueva = marti.generar_nueva_terminal(nombre,numero);
+					terminal_vuelos.addItem(nueva);
+					select_terminal.addItem(nueva);
+				
+					for(Component i:panel.getComponents()) {
+						if(i.getClass()==JTextField.class)
+							((JTextField)i).setText("");
+					}
+					JOptionPane.showMessageDialog(null, "Terminal Añadida con Exito");
+					limpiar_panel(panel);
+				}
+				catch(Exception ee) {
+					JOptionPane.showMessageDialog(null, "Error al registrar la terminal");
+					JOptionPane.showMessageDialog(null, "Hubo un Error");
+				}
+			}
+		});
+		panel.add(aceptar);
+	}
+	
+}

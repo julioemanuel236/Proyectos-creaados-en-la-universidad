@@ -1,0 +1,22 @@
+package mainwindow;
+
+import java.awt.Graphics;
+import java.awt.Image;
+
+import data.Usuario;
+
+public class UserNameDisplayer extends Component{
+
+	private Usuario user;
+	
+	public UserNameDisplayer(Usuario user,Image img) {
+		super(img);
+		this.user = user;
+	}
+
+	@Override
+	public void paint(Graphics g) {
+		pintarTexto(g, user.getNombre(), 0, 0, getWidth(), getHeight(), getFont());
+	}
+	
+}

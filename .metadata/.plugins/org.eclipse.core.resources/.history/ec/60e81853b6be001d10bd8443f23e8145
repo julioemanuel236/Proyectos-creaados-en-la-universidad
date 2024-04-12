@@ -1,0 +1,31 @@
+package game;
+
+public class Tablero {
+	int width;
+	int height;
+	Object map[][];
+	
+	int porPlanicie=60;
+	int porArbol=25;
+	int porAgua=10;
+	int porLava=5;
+	
+	public Tablero() {
+		map = new Object[8][8];
+	}
+
+	public Tablero(int width, int height, int porPlanicie, int porArbol, int porAgua, int porLava) {
+		super();
+		this.width = width;
+		this.height = height;
+		this.porPlanicie = porPlanicie;
+		this.porArbol = porArbol;
+		this.porAgua = porAgua;
+		this.porLava = porLava;
+	}
+	
+	
+	
+	
+
+}

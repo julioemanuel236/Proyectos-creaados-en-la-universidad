@@ -1,0 +1,15 @@
+package cadena;
+
+public class Jefe extends Empleado{
+	private int tiempoCargo;
+
+	public Jefe(String nombre, String id, String sexo, int años, int tiempoCargo) {
+		super(nombre, id, sexo, años);
+		this.tiempoCargo = tiempoCargo;
+	}
+
+	public int getTiempoCargo() {
+		return tiempoCargo;
+	}
+	
+}

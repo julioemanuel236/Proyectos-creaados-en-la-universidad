@@ -1,0 +1,30 @@
+package consumo;
+
+@SuppressWarnings("serial")
+public abstract class Bomba extends Equipo{
+	protected static String BOMBAS[]= {"CENTRIFUGAS","EMBOLOS"};
+	
+	private float presionSuccion;
+	private float presionDescarga;
+	private float flujo;
+	
+	public Bomba(String noSerie,float costo,float presionSuccion,float presionDescarga,float flujo) {
+		super(noSerie,costo);
+		this.presionSuccion=presionSuccion;
+		this.presionDescarga=presionDescarga;
+		this.flujo=flujo;
+	}
+	
+	public float getPS() {
+		return this.presionSuccion;
+	}
+	
+	public float getPD() {
+		return this.presionDescarga;
+	}
+	
+	public float getFlujo() {
+		return this.flujo;
+	}
+	 
+}

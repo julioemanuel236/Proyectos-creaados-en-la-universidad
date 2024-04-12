@@ -1,0 +1,131 @@
+package consumo;
+import javax.swing.*;
+import java.util.ArrayList;
+
+@SuppressWarnings("serial")
+public class Embolo extends Bomba{
+	protected static ArrayList<Embolo> embolos = new ArrayList<Embolo>();
+	static Embolo nuevo=null;
+	
+	private float largo;
+	private float diametro;
+	private String variedad;
+	
+	static JButton aceptar;
+	static JDialog panel;
+	static JTextField serie,coste,ps,pd,flujo,largot,diametrot;
+	
+	public Embolo(String noSerie,float costo,float presionSuccion,float presionDescarga,float flujo,float largo,float diametro) {
+		super(noSerie,costo,presionSuccion,presionDescarga,flujo);
+		setTipo("Bomba");
+		this.largo=largo;
+		this.diametro=diametro;
+		this.variedad="Embolo";
+		//Equipo.add(this);
+		embolos.add(this);
+		this.toTXT();
+	}
+
+	@Override
+	public float getConsumo() {
+		return (0.38f*(getPS()+getPD())) + (2.3f*getFlujo());
+	}
+	
+	public float getLargo() {
+		return this.largo;
+	}
+	
+	public float getDiametro() {
+		return this.diametro;
+	}
+	
+	public String getVariedad() {
+		return this.variedad;
+	}
+
+	public static void newEmbolo() {
+		if(panel!=null)panel.setVisible(false);
+		panel = new JDialog();
+		panel.setLayout(null);
+		panel.setSize(220,350);
+		panel.setTitle("Nuevo Embolo");
+		panel.setResizable(false);
+		
+		serie = new JTextField("Numero de Serie");
+		serie.setSize(200,35);
+		serie.setLocation(0,0);
+		panel.add(serie);
+		
+		coste = new JTextField("Coste del equipo");
+		coste.setSize(200,35);
+		coste.setLocation(0,35);
+		panel.add(coste);
+		
+		ps = new JTextField("Presion de succión");
+		ps.setSize(200,35);
+		ps.setLocation(0,70);
+		panel.add(ps);
+		
+		pd = new JTextField("Presion de descarga");
+		pd.setSize(200,35);
+		pd.setLocation(0,105);
+		panel.add(pd);
+		
+		flujo = new JTextField("Flujo");
+		flujo.setSize(200,35);
+		flujo.setLocation(0,140);
+		panel.add(flujo);
+		
+		largot = new JTextField("Largo");
+		largot.setSize(200,35);
+		largot.setLocation(0,175);
+		panel.add(largot);
+		
+		diametrot = new JTextField("Diametro");
+		diametrot.setSize(200,35);
+		diametrot.setLocation(0,210);
+		panel.add(diametrot);
+		
+		panel.setLocationRelativeTo(null);
+		panel.setVisible(true);
+		
+		aceptar = new JButton("Aceptar");
+		aceptar.setSize(200,35);
+		aceptar.setLocation(0,245);
+		panel.add(aceptar);
+		aceptar.addActionListener((ActionEvent)->{
+			try {
+			nuevo = new Embolo(serie.getText(),
+					 Float.parseFloat(coste.getText()),
+					 Float.parseFloat(ps.getText()),
+					 Float.parseFloat(pd.getText()),
+					 Float.parseFloat(flujo.getText()),
+					 Float.parseFloat(diametrot.getText()),
+					 Float.parseFloat(largot.getText()));
+			
+			JOptionPane.showMessageDialog(null, "Embolo Añadido con exito");
+			System.out.println(nuevo.getInfo());
+			panel.setVisible(false);
+			panel=null;
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+				JOptionPane.showMessageDialog(null, "Datos Invalidos");
+			}
+			
+			
+		});
+	}
+	
+	public String getInfo() {
+		return "No. Serie: "+getNoSerie()+"\n"+
+			   "Costo: "+getCosto()+"\n"+
+			   "Presion Succion: "+getPS()+"\n"+
+			   "Presion Descarga: "+getPD()+"\n"+
+			   "Flujo: "+getFlujo()+"\n"+
+			   "Largo: "+largo+"\n"+
+			   "Diametro: "+diametro+"\n"+
+			   "Consumo: "+getConsumo()+"\n";
+	}
+	
+}

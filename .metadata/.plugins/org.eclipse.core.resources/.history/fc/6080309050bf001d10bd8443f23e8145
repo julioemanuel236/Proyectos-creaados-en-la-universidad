@@ -1,0 +1,254 @@
+package game;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class App {
+	static Scanner cin = new Scanner(System.in);
+	static String nombre;
+	static ArrayList<Heroe> heroes = new ArrayList<>();
+	static ArrayList<Heroe> hComprar = new ArrayList<>();
+	static ArrayList<Item> items = new ArrayList<>();
+	static Tablero tablero;
+	static int oro=0;
+	static Heroe ingame[] = new Heroe[2];
+	static int mainHero=0;
+	
+	
+	public static int seleccion(int n) {
+		while(true) {
+			try {
+				int op=entero();
+				if(op<0||op>n)throw new Exception();
+				return op;
+			}
+			catch(Exception e) {
+				print("Opcion no valida\n");
+			}
+		}
+	}
+	
+	class Tienda{
+		
+		static void abrir() {
+			while(true) {
+				print("Posees "+oro+" monedas de oro\n");
+				print("1-Comprar Heroe\n");
+				print("2-Comprar Objeto\n");
+				print("0-Salir\n");
+				int op=entero();
+				switch(op) {
+					case 1:comprarHeroe();break;
+					case 2:comprarItem();break;
+					case 0:	return;
+				}
+			}
+		}
+		
+		static void comprarHeroe() {
+			if(hComprar.isEmpty()) {
+				print("Ya tienes todos los heroes\n");
+				return;
+			}
+			if(oro<200) {
+				print("No tienes suficiente oro para comprar un Heroe");
+				return;
+			}
+			mostrarhComprar();
+			print("Cada Hereo tiene un valor de 200 monedas de oro \n");
+			int op=seleccion(hComprar.size());
+			if(op==0)return;
+			else {
+				Heroe h = hComprar.get(op-1);
+				heroes.add(h);
+				hComprar.remove(h);
+				print("Se ha comprado el heroe "+h.shopping());
+				oro-=200;
+			}
+		}
+		
+		static void comprarItem() {
+			if(items.size()>10) {
+				print("No puedes llevar mas objetos");
+				return;
+			}
+			mostrarItems();
+			int op=seleccion(3);
+			if(op==0)return;
+			Item i=null;
+			switch(op) {
+				case 1:i = new SemillaVida();break;
+				case 2:i = new ElixirVerde();break;
+				case 3:i = new CapaMovilidad();break;
+			}
+			if(oro<i.precio) {
+				print("No tienes suficiente oro");
+				return;
+			}
+			items.add(i);
+			oro-=items.get(items.size()-1).precio;
+			print("Ha comprado con exito");
+		}
+		
+		public static void mostrarItems() {
+			print("1-Semilla de la vida\t50\nDescripcion: Resucita a un Heroe caido en batalla\n\n");
+			print("2-Elixir Verde\t25\nDescripcion: Restaura 50 puntos de vida sobre quien se use\n\n");
+			print("3-Capa de Movilidad\75\nDescripcion: Te permite moverte una casilla\n\n");
+			print("0-Salir");
+		}
+		
+		public static void mostrarhComprar() {
+			for(int i=0;i<hComprar.size();i++) {
+				print((i+1)+"-"+hComprar.get(i).shopping()+"\n");
+			}
+			print("0-Salir\n");
+		}
+		
+	}
+	
+	public App() {
+		init();
+		mainMenu();
+	}
+	
+	public void init() {
+		oro=500;
+		hComprar.add(new Caballero());
+		hComprar.add(new Arquero());
+		hComprar.add(new Mago());
+		hComprar.add(new Gigante());
+		hComprar.add(new Dragon());
+	}
+	
+	public void mainMenu() {
+		while(true) {
+			print("1-Jugar\n");
+			print("2-Estadisticas\n");
+			print("0-Salir\n");
+			int op=entero();
+			switch(op) {
+				case 1:iniciarPartida();break;
+				case 2: break;
+				case 0: return;
+			}
+		}
+	}
+
+	public static void showHeroes() {
+		for(Heroe i:heroes) {
+			print(i.info());
+		}
+	}
+	
+	public static void showItems() {
+		for(Item i:items) {
+			print(i.shopping());
+		}
+	}
+	
+	public void estadisticas() {
+		showHeroes();
+		showItems();
+	}
+	
+	public void iniciarPartida() {		
+		while(heroes.isEmpty()) {//primera vez que se juega
+			print("Para iniciar tu aventura obten un Heroe y algunos objetos\n");
+			Tienda.abrir();
+		}
+		print("Ahora selecciona un tipo de mapa");
+		seleccionarMapa();
+		if(tablero==null)return;
+		seleccionHeroes();
+		
+		print("Todo listo, empezamos");
+		
+		gameStart();
+	}
+	
+	public static void gameStart() {
+		while(true) {
+			Heroe hero = ingame[mainHero];
+			tablero.ver();
+			print("1-Atacar\n");
+			print("2-Moverse\n");
+			print("3-Cambiar Heroe\n");
+			print("4-Tienda\n");
+			print("4-Usar Objeto\n");
+			print("0-Terminar\n");
+			int op=seleccion(5);
+			switch(op) {
+				case 1:hero.atacar();break;
+				case 2:hero.mover();break;
+				case 3:cambiarHeroe();break;
+				case 4:Tienda.abrir();break;
+				case 0:return;
+			}
+		}
+	}
+	
+	public static void cambiarHeroe() {
+		int other = (mainHero+1)%2;
+		if()
+	}
+	
+	public static void seleccionarMapa() {
+		print("1-Normal\n");
+		print("2-Dificl\n");
+		print("3-Personalizado\n");
+		print("0-Salir");
+		int op = seleccion(3);
+		switch(op) {
+			case 1:tablero = new Tablero(1);break;
+			case 2:tablero = new Tablero(2);break;
+			case 3:tablero = new Tablero(3);break;
+			case 0:tablero=null; break;
+		}
+	}
+	
+	public static void seleccionHeroes() {
+		ingame[0]=null;
+		ingame[1]=null;
+		print("Ahora selecciona a tu heroe principal\n");
+		for(int i=0;i<heroes.size();i++) {
+			print((i+1)+"-"+heroes.get(i).shopping()+"\n");
+		}
+		print("0-Salir\n");
+		int op=seleccion(heroes.size());
+		if(op==0) return;
+		ingame[0]=heroes.get(op-1);
+		if(heroes.size()>1) {
+			ArrayList<Heroe> temp = new ArrayList<>(heroes);
+			temp.remove(ingame[0]);
+			print("Ahora selecciona a tu heroe secundario\n");
+			for(int i=0;i<heroes.size();i++) {
+				print((i+1)+"-"+heroes.get(i).shopping()+"\n");
+			}
+			print("0-Salir\n");
+			op=seleccion(temp.size());
+			if(op==0) return;
+			ingame[0]=temp.get(op-1);
+		}
+	}
+	
+	public static int entero() {
+		while(true) {
+			try {
+				int n=Integer.parseInt(cin.next());
+				return n;
+			}
+			catch(Exception e) {
+				print("Opcion no valida\n");
+			}
+		}
+	}
+	
+ 	public static void print(String txt) {
+		System.out.print(txt);
+	}
+	
+	public static void main(String args[]) {
+		new App();
+	}
+
+}

@@ -1,0 +1,35 @@
+package simulacion;
+
+import elementos.Matriz;
+import elementos.serpiente.*;
+import java.util.Random;
+public class Main {
+	
+	public static void main(String[] args) {
+		int size = 5,cantidadSerpientes = 1,serpientesSize = 3,pasos = 10;
+		try {
+			size = 				Integer.parseInt(args[0]);
+			cantidadSerpientes = 		Integer.parseInt(args[1]);
+			serpientesSize = 	Integer.parseInt(args[2]);
+			pasos = 			Integer.parseInt(args[3]);
+		}
+		catch(Exception e) {
+			System.out.println("ERROR EN LOS DATOS DE ENTADA\n");
+			System.out.println("CODIGO DE ERROR: "+e.toString());
+		}
+		
+		Matriz tablero = new Matriz(size,size);
+		Serpiente[] serpientes = new Serpiente[cantidadSerpientes];
+		Random rand = new Random();
+		int y = size-serpientesSize-1;
+		for(int i=0 ; i<cantidadSerpientes; i++) {
+			int x = rand.nextInt(size);
+			while((tablero.get(x, y) != -1)) {
+				x = rand.nextInt(size);
+			}
+			serpientes[i] = new Serpiente(x,y,i,serpienteSize,pasos,tablero);
+		}
+		
+	}
+	
+}

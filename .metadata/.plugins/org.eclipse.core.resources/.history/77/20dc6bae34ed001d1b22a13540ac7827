@@ -1,0 +1,218 @@
+/**
+ * 
+ */
+
+
+import interfacePackage.ShapesInterface;
+import objectsPackage.*;
+import java.util.Scanner;
+/**
+ * @author Larry Shannon
+ *
+ */
+public class ShapeGenerator
+{
+	private static Scanner keyboard = new Scanner(System.in);
+	public static ShapesInterface getShape()
+	{
+		int numberOfShapes = 2; //Change this value to the number of current shapes as you add new shapes.
+		int randomValue = (int)(Math.random() * numberOfShapes);
+		ShapesInterface newShape = null;
+		
+		switch(randomValue)
+		{
+		case 0:
+			newShape = new Triangle();
+			break;
+		case 1:
+			newShape = new Cone();
+			break;
+		case 2:
+			newShape = new Pyramid4();
+			break;
+		case 3:
+			newShape = new Pyramid3();
+			break;
+		case 4:
+			newShape = new Square();
+			break;
+		case 5:
+			newShape = new Cube();
+			break;
+			
+		}
+		return newShape;
+	}
+
+	public static ShapesInterface selectShape()
+	{
+		ShapesInterface newShape = null;
+		boolean shapeNotSelected = true;
+		int menuValue = 0;
+		double height = 0.0;
+		double base = 0.0;
+		double radius = 0.0;
+		double side = 0.0;
+		double side2 = 0.0;
+		double side3 = 0.0;
+		do
+		{
+			shapeNotSelected = false;
+		System.out.println("Select from the following shapes:");
+		System.out.println("1) Triangle");
+		System.out.println("2) Cone");
+		System.out.println("3) Pyramid4");
+		System.out.println("4) Pyramid3");
+		System.out.println("5) Square");
+		System.out.println("6) Cube");
+		if(!keyboard.hasNextInt())
+		{
+			keyboard.nextLine();
+			menuValue = 0;
+		}
+		else
+		{
+		menuValue = keyboard.nextInt();
+		keyboard.nextLine();
+		}
+		switch(menuValue)
+		{
+		case 1:
+			System.out.println("You selected a Triangle.");
+			System.out.println("Please enter the length of the base.");
+			while(!keyboard.hasNextDouble())
+			{
+				keyboard.nextLine();
+				System.out.println("Invalid entry.");;
+				System.out.println("Please enter the length of the base.");
+			}
+			base = keyboard.nextDouble();
+			System.out.println("Please enter the height of the triangle.");
+			while(!keyboard.hasNextDouble())
+			{
+				keyboard.nextLine();
+				System.out.println("Invalid entry.");;
+				System.out.println("Please enter the height of the triangle.");
+			}
+			height = keyboard.nextDouble();
+			keyboard.nextLine();
+		
+			newShape = new Triangle(height, base);
+			break;
+		case 2:
+			System.out.println("You selected a cone.");
+			System.out.println("Please enter the radius of the base.");
+			while(!keyboard.hasNextDouble())
+			{
+				keyboard.nextLine();
+				System.out.println("Invalid entry.");;
+				System.out.println("Please enter the radius of the base.");
+			}
+			radius = keyboard.nextDouble();
+			System.out.println("Please enter the height of the cone.");
+			while(!keyboard.hasNextDouble())
+			{
+				keyboard.nextLine();
+				System.out.println("Invalid entry.");;
+				System.out.println("Please enter the height of the cone.");
+			}
+			height = keyboard.nextDouble();
+			keyboard.nextLine();
+			newShape = new Cone(height, radius);
+			break;
+		case 3:
+			System.out.println("You selected a pyramid4.");
+			System.out.println("Please enter the side of the base.");
+			while(!keyboard.hasNextDouble())
+			{
+				keyboard.nextLine();
+				System.out.println("Invalid entry.");
+				System.out.println("Please enter the side of the base.");
+			}
+			side = keyboard.nextDouble();
+			System.out.println("Please enter the height of the pyramid4.");
+			while(!keyboard.hasNextDouble())
+			{
+				keyboard.nextLine();
+				System.out.println("Invalid entry.");
+				System.out.println("Please enter the height of the pyramid4.");
+			}
+			height = keyboard.nextDouble();
+			keyboard.nextLine();
+			newShape = new Pyramid4(side,height);
+			break;
+		case 4:
+			System.out.println("You selected a pyramid3.");
+			System.out.println("Please enter the side1 of the base.");
+			while(!keyboard.hasNextDouble())
+			{
+				keyboard.nextLine();
+				System.out.println("Invalid entry.");
+				System.out.println("Please enter the side1 of the base.");
+			}
+			side = keyboard.nextDouble();
+			
+			System.out.println("Please enter the side2 of the base.");
+			while(!keyboard.hasNextDouble())
+			{
+				keyboard.nextLine();
+				System.out.println("Invalid entry.");
+				System.out.println("Please enter the side2 of the base.");
+			}
+			side2 = keyboard.nextDouble();
+			
+			System.out.println("Please enter the side3 of the base.");
+			while(!keyboard.hasNextDouble())
+			{
+				keyboard.nextLine();
+				System.out.println("Invalid entry.");
+				System.out.println("Please enter the side3 of the base.");
+			}
+			side3 = keyboard.nextDouble();
+			
+			System.out.println("Please enter the height of the pyramid3.");
+			while(!keyboard.hasNextDouble())
+			{
+				keyboard.nextLine();
+				System.out.println("Invalid entry.");
+				System.out.println("Please enter the height of the pyramid3.");
+			}
+			height = keyboard.nextDouble();
+			keyboard.nextLine();
+			newShape = new Pyramid3(side,side2,side3,height);
+			break;
+		case 5:
+			System.out.println("You selected a square.");
+			System.out.println("Please enter the side of the square.");
+			while(!keyboard.hasNextDouble())
+			{
+				keyboard.nextLine();
+				System.out.println("Invalid entry.");;
+				System.out.println("Please enter the side of the square.");
+			}
+			side = keyboard.nextDouble();
+			keyboard.nextLine();
+			newShape = new Square(side);
+			break;
+		case 6:
+			System.out.println("You selected a cube.");
+			System.out.println("Please enter the side of the cube.");
+			while(!keyboard.hasNextDouble())
+			{
+				keyboard.nextLine();
+				System.out.println("Invalid entry.");;
+				System.out.println("Please enter the side of the cube.");
+			}
+			side = keyboard.nextDouble();
+			keyboard.nextLine();
+			newShape = new Cube(side);
+			break;
+			default:
+				shapeNotSelected = true;
+
+		}
+
+		}while(shapeNotSelected);
+		return newShape;
+	}
+}

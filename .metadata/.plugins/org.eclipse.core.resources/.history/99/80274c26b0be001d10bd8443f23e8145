@@ -1,0 +1,9 @@
+package game;
+
+public class Bruja {
+
+	public Bruja() {
+		// TODO Auto-generated constructor stub
+	}
+
+}

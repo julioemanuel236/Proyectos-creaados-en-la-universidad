@@ -1,0 +1,22 @@
+package game;
+
+public class Gigante extends Heroe {
+
+	public Gigante(Tablero t) {
+		super(350, 56, 1, false, t);
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public void atacar() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void die() {
+		// TODO Auto-generated method stub
+
+	}
+
+}

@@ -1,0 +1,9 @@
+package project;
+public class Garage {
+
+	private Car parking[];
+	
+	public Garage(int n) {
+		parking = new Car[n];
+	}
+}

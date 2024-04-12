@@ -1,0 +1,22 @@
+package mercado;
+
+public class Producto {
+	private String nombre;
+	private String codigo;
+	private float  precio;
+	private int cantidad;
+	
+	public Producto(String n,String c,float p,int ca) {
+		nombre=n;
+		codigo=c;
+		precio=p;
+		cantidad=ca;
+	}
+	
+	public String datos() {
+		return "Nombre: "+nombre+'\n'+
+			   "Codigo: "+codig+'\n'+
+			   "Precio: "+precio+'\n'+
+			   "Cantidad: "+cantidad+'\n';
+	}
+}

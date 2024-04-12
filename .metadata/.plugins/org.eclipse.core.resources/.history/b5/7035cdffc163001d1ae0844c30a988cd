@@ -1,0 +1,156 @@
+package consumo;
+
+import java.util.ArrayList;
+
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+
+@SuppressWarnings("serial")
+public class Centrifuga extends Bomba {
+	
+	public static ArrayList<Centrifuga> centrifugas = new ArrayList<Centrifuga>();
+	static Centrifuga nuevo;
+	private float der;
+	private int np;
+	private String variedad;
+	
+	static JButton aceptar;
+	static JDialog panel;
+	static JTextField serie,coste,ps,pd,flujo,dert,npt;
+	
+	public Centrifuga(String noSerie,float costo,float presionSuccion,float presionDescarga,float flujo,int der,int np) {
+		super(noSerie,costo,presionSuccion,presionDescarga,flujo);
+		setTipo("Bomba");
+		this.np=np;
+		this.der=der;
+		this.variedad="Centrifuga";
+		//Equipo.add(this);
+		Centrifuga.add(this);
+		this.toTXT();
+	}
+	
+	@Override
+	public float getConsumo() {
+		return (0.38f*(getPS()+getPD())) + (2.3f*getFlujo()) + (3.4f*(der+np));
+	}
+
+	public String getVariedad() {
+		return this.variedad;
+	}
+	
+	public int getPaletas() {
+		return this.np;
+	}
+	
+	public float getDiaEjeRotacion() {
+		return this.der;
+	}
+	
+	public static void newCentrifuga() {
+		if(panel!=null)panel.setVisible(false);
+		panel = new JDialog();
+		panel.setLayout(null);
+		panel.setSize(220,350);
+		panel.setTitle("Nueva Centrífuga");
+		panel.setResizable(false);
+		
+		serie = new JTextField("Numero de Serie");
+		serie.setSize(200,35);
+		serie.setLocation(0,0);
+		panel.add(serie);
+		
+		coste = new JTextField("Coste del equipo");
+		coste.setSize(200,35);
+		coste.setLocation(0,35);
+		panel.add(coste);
+		
+		ps = new JTextField("Presion de succión");
+		ps.setSize(200,35);
+		ps.setLocation(0,70);
+		panel.add(ps);
+		
+		pd = new JTextField("Presion de descarga");
+		pd.setSize(200,35);
+		pd.setLocation(0,105);
+		panel.add(pd);
+		
+		flujo = new JTextField("Flujo");
+		flujo.setSize(200,35);
+		flujo.setLocation(0,140);
+		panel.add(flujo);
+		
+		dert = new JTextField("Diametro Eje Rotación");
+		dert.setSize(200,35);
+		dert.setLocation(0,175);
+		panel.add(dert);
+		
+		npt = new JTextField("Numero de Paletas");
+		npt.setSize(200,35);
+		npt.setLocation(0,210);
+		panel.add(npt);
+		
+		panel.setLocationRelativeTo(null);
+		panel.setVisible(true);
+		
+		aceptar = new JButton("Aceptar");
+		aceptar.setSize(200,35);
+		aceptar.setLocation(0,245);
+		panel.add(aceptar);
+		aceptar.addActionListener((ActionEvent)->{
+			try {
+				nuevo = new Centrifuga(serie.getText(),
+					 Float.parseFloat(coste.getText()),
+					 Float.parseFloat(ps.getText()),
+					 Float.parseFloat(pd.getText()),
+					 Float.parseFloat(flujo.getText()),
+					 Integer.parseInt(dert.getText()),
+					 Integer.parseInt(npt.getText()));
+				
+				
+			JOptionPane.showMessageDialog(null, "Centrífuga Añadida con exito");
+			System.out.println(nuevo.getInfo());
+			panel.setVisible(false);
+			panel=null;
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+				JOptionPane.showMessageDialog(null, "Datos Invalidos");
+			}
+		});
+		
+	}
+	
+	public static void add(Centrifuga nuevo) {
+		for(int i=0;i<centrifugas.size();i++) {
+			Centrifuga e = centrifugas.get(i);
+			if(nuevo.getDiaEjeRotacion()>e.getDiaEjeRotacion()) {
+				centrifugas.add(i,nuevo);
+				return;
+			}
+		}
+		centrifugas.add(nuevo);
+	}
+	
+	public static void mostrarCentrifugas() {
+		if(centrifugas.isEmpty())JOptionPane.showMessageDialog(null, "No hay centrífugas");
+		String s="";
+		for(Centrifuga i:centrifugas) {
+			s+=i.getNoSerie()+" "+i.getDiaEjeRotacion()+'\n';
+		}
+		JOptionPane.showMessageDialog(null, s);
+	}
+	
+	public String getInfo() {
+		return "No. Serie: "+getNoSerie()+"\n"+
+			   "Costo: "+getCosto()+"\n"+
+			   "Presion Succion: "+getPS()+"\n"+
+			   "Presion Descarga: "+getPD()+"\n"+
+			   "Flujo: "+getFlujo()+"\n"+
+			   "Diametro Eje Rotación: "+der+"\n"+
+			   "Numero de Paletas: "+np+"\n"+
+			   "Consumo: "+getConsumo()+"\n";
+	}
+	
+}

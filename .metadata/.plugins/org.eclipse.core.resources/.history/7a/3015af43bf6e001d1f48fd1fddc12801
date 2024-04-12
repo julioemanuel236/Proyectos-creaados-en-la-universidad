@@ -1,0 +1,8 @@
+package mercado;
+
+public class Producto {
+	private String nombre;
+	private String codigo;
+	private float  precio;
+	
+}

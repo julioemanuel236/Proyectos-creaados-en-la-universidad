@@ -1,0 +1,17 @@
+package simulacion;
+import java.util.concurrent.locks.ReentrantLock;
+import elementos.serpiente.*;
+public class Simulacion extends ReentrantLock{
+
+	
+	public void actualizarSerpiente(Serpiente s) {
+		lock();
+		try {
+			s.move();
+		}
+		
+		finally {
+			unlock();
+		}
+	}
+}

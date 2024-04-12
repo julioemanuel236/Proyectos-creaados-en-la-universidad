@@ -1,0 +1,65 @@
+
+public class Arbol<T> {
+	
+	private Arbol<T> hijoIzq,hijoDer;
+	private T dato;
+
+	public Arbol() {}
+	
+	public Arbol(T dato) {
+		this.dato = dato;
+	}
+	
+	public Arbol<T> getHijoIzquierdo(){
+		return hijoIzq;
+	}
+	
+	public Arbol<T> getHijoDerecho(){
+		return hijoDer;
+	}
+	
+	public void setHijoIzquierdo(Arbol<T> hijo) {
+		this.hijoIzq = hijo;
+	}
+	
+	public void setHijoDerecho(Arbol<T> hijo) {
+		this.hijoDer = hijo;
+	}
+		
+	public static void main(String args[]) {
+		Arbol<Integer> arbol = new Arbol<>(1);
+		arbol.setHijoIzquierdo(new Arbol<Integer>(2));
+		arbol.setHijoDerecho(new Arbol<Integer>(3));
+		arbol.getHijoIzquierdo().setHijoIzquierdo(new Arbol<Integer>(4));
+		System.out.println(cantidadNodos(arbol));
+		System.out.println(altura(arbol));
+	}
+	
+	public static int cantidadNodos(Arbol arbol) {
+		int cant = 1;
+		if(arbol.getHijoIzquierdo() != null)
+			cant+= cantidadNodos(arbol.getHijoIzquierdo());
+		if(arbol.getHijoDerecho() != null)
+			cant+= cantidadNodos(arbol.getHijoDerecho());
+		System.out.println("POR DEBAJO DE MI HAY " + arbol.dato + " " + cant);
+		return cant;
+	}
+	
+	public static int altura(Arbol arbol) {		
+		int a1 = 0,a2 = 0;
+		if(arbol.getHijoIzquierdo() != null) {
+			a1 = altura(arbol.getHijoIzquierdo());
+			
+		}
+		if(arbol.getHijoDerecho()!=null) {
+			a2 = altura(arbol.getHijoIzquierdo());			
+		}
+		
+		return 1 + Math.max(a1, a2);
+		
+	}
+	
+	public static void recorridoInorden(Arbol arbol) {
+		
+	}
+}

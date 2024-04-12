@@ -1,0 +1,8 @@
+package correo;
+
+public class Correo {
+	Correspondencia correo[];
+	int cC=0;
+	
+	
+}

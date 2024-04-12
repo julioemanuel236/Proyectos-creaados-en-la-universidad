@@ -1,0 +1,16 @@
+2
+Naturaleza
+5
+Bosque
+Pez
+Universo
+Piedra
+Rio
+Programacion
+5
+Computadora
+RAM
+CPU
+Mouse
+GPU
+

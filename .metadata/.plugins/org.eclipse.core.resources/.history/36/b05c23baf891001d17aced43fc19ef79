@@ -1,0 +1,19 @@
+package competencia;
+
+public class Problema {
+	private String texto;
+	private float puntaje;
+		
+	public Problema(String texto, float puntaje) {
+		super();
+		this.texto = texto;
+		this.puntaje = puntaje;
+	}
+	public String getTexto() {
+		return texto;
+	}
+	public float getPuntaje() {
+		return puntaje;
+	}
+	
+}

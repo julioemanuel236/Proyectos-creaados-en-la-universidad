@@ -1,0 +1,17 @@
+package Algoritmos;
+
+public class ShortesJobFirst {
+
+	public ShortesJobFirst() {
+		
+	}
+	
+	public void add(Proceso pr) {
+		
+	}
+	
+	public Proceso procces() {
+		
+	}
+	
+}

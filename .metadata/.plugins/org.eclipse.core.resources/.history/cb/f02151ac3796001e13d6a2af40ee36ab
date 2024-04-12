@@ -1,0 +1,28 @@
+package app;
+import javax.swing.JFrame;
+import java.awt.Graphics;
+public class Muestra extends JFrame{
+	
+	public Muestra() {		
+		setSize(500,500);
+		setLocationRelativeTo(null);
+		setUndecorated(true);
+		setVisible(true);
+		iniciarAnimacion();
+	}
+	
+	
+	public void iniciarAnimacion() {
+		
+		while(true) {
+			mostrarExpansion();
+		}
+	}
+	public void mostrarExpansion(){
+		
+	}
+	
+	public static void main(String[] args){
+		new Muestra();
+	}
+}

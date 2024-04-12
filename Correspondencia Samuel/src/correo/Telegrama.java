@@ -1,0 +1,24 @@
+package correo;
+
+public class Telegrama extends Correspondencia{
+	private int palabras;
+	private float impuesto;
+	
+	public Telegrama(String nombre, String direccion, String remitente, int palabras, float impuesto) {
+		super(nombre, direccion, remitente);
+		this.palabras = palabras;
+		this.impuesto = impuesto;
+	}
+	public int getPalabras() {
+		return palabras;
+	}
+	public float getImpuesto() {
+		return impuesto;
+	}
+	
+	public float precio() {
+		return palabras*0.1f*impuesto;
+	}
+	
+	
+}

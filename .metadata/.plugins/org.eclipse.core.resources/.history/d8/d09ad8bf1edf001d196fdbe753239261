@@ -1,0 +1,109 @@
+PARSER_BEGIN(AjaxParser)
+    public class AjaxParser {
+        public void parse() throws ParseException {
+            // código de análisis sintáctico aquí
+        }
+    }
+PARSER_END(AjaxParser)
+
+SKIP : {
+    " "
+|   "\r"
+|   "\n"
+|   "\t"
+}
+
+TOKEN : {
+    <IDENTIFICADOR: ["a"-"z", "A"-"Z"] (["a"-"z", "A"-"Z", "0"-"9"])* >
+|   <ENTERO: (["0"-"9"])+ >
+|   <FLOAT: (["0"-"9"])+ "." (["0"-"9"])* >
+|   <OPERADOR: "+" | "-" | "*" | "/" >
+|   <PARENTESIS_ABIERTO: "(" >
+|   <PARENTESIS_CERRADO: ")" >
+|   <COMA: "," >
+|   <PUNTO_COMA: ";" >
+|   <CADENA: "\"" (~["\""])* "\"" >
+|   <IF: "if" >
+|   <ELSE: "else" >
+|   <WHILE: "while" >
+|   <FOR: "for" >
+|   <FUNCTION: "function" >
+}
+
+void instruccion() :
+{}
+{
+    (
+        asignacion()
+    |
+        condicion()
+    |
+        iteracion()
+    |
+        funcion()
+    |
+        SENTENCIA_VACIA
+    )
+}
+
+void asignacion() :
+{}
+{
+    IDENTIFICADOR "=" expresion() ";"
+}
+
+void condicion() :
+{}
+{
+    IF "(" expresion() ")" "{" instruccion() "}"
+    (
+        ELSE "{" instruccion() "}"
+    )?
+}
+
+void iteracion() :
+{}
+{
+    WHILE "(" expresion() ")" "{" instruccion() "}"
+}
+
+void funcion() :
+{}
+{
+    FUNCTION IDENTIFICADOR "(" PARAMETROS ")" "{" instruccion() "}"
+}
+
+List<String> PARAMETROS() :
+{}
+{
+    (IDENTIFICADOR ("," IDENTIFICADOR)*)?
+}
+
+double expresion() :
+{}
+{
+    termino() ( ( "+" | "-" ) termino() )*
+}
+
+double termino() :
+{}
+{
+    factor() ( ( "*" | "/" ) factor() )*
+}
+
+double factor() :
+{}
+{
+    ENTERO
+|   FLOAT
+|   "(" expresion() ")"
+|   IDENTIFICADOR
+}
+
+void start() :
+{}
+{
+    instruccion()*
+    <EOF>
+}
+

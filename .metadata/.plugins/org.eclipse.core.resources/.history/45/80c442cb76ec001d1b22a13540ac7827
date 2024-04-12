@@ -1,0 +1,6 @@
+package project;
+public class Garage {
+
+	Car parking[];
+	
+}

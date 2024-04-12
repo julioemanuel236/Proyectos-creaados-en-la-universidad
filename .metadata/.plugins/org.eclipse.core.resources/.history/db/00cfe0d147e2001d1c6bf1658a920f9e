@@ -1,0 +1,19 @@
+package Algoritmos;
+
+import java.util.LinkedList;
+public class RoundRobin {
+	LinkedList<Proceso> procesos;
+	
+	public RoundRobin() {
+		procesos = new LinkedList<Proceso>();		
+	}
+	
+	public void add(Proceso pr) {
+		procesos.add(pr);
+	}
+	
+	public void run() {
+		
+	}
+	
+}

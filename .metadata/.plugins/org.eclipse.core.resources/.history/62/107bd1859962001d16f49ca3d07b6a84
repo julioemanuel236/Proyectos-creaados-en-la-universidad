@@ -1,0 +1,78 @@
+package aplicación;
+
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+
+import javax.swing.JOptionPane;
+import javax.swing.JTextArea;
+
+public class Funciones {
+	static Trabajador[] trabajadores = new Trabajador[1000];
+	static int cTrabajadores=0;
+	
+	static Producto[] productos = new Producto[10];
+	static int cProductos=0;
+	
+	static Material[] materiales = new Material[1000];
+	static int cMateriales=0;
+	
+	public static void addTrabajador(Trabajador t){
+		trabajadores[cTrabajadores++]=t;
+		JOptionPane.showMessageDialog(null, "Trabajador añadido con exito" );
+	}
+	
+	public static void addProducto(Producto p){
+		if(cProductos==10) {
+			JOptionPane.showMessageDialog(null, "Se ha alcanzado el límite de productos" );
+			return;
+		}
+		productos[cProductos++]=p;
+		JOptionPane.showMessageDialog(null, "Producto añadido con exito" );
+	}
+	
+	public static void addMaterial(Material m){
+		materiales[cMateriales++]=m;
+		JOptionPane.showMessageDialog(null, "Material añadido con exito" );
+	}
+	
+	private static void ordenarProductos() {
+		for(int i=0;i<cProductos;i++) {
+			for(int j=1;j<cProductos;j++) {
+				if(productos[j].getProduccionAnual()*productos[j].getCosteFinal()>
+				   productos[j-1].getProduccionAnual()*productos[j-1].getCosteFinal()) {
+					System.out.println(productos[j].informacion());
+					System.out.println(productos[j-1].informacion());
+					swap(productos[j],productos[j-1]);}
+					System.out.println(productos[j].informacion());
+					System.out.println(productos[j-1].informacion());
+			}
+		}
+		
+	}
+	
+	private static void swap(Producto a,Producto b) {
+		Producto temp = new Producto(a);
+		a=new Producto(b);
+		b=temp;
+	}
+
+	public static void productosDatos(JTextArea txt) {
+		ordenarProductos();
+		for(int i=0;i<cProductos;i++) 
+			txt.setText(txt.getText()+productos[i].informacion()+'\n');
+		
+	}
+	
+	
+	public static void exportacionDatos(JTextArea txt) {
+		for(int i=0;i<cProductos;i++) 
+			if(productos[i].exportacion())txt.setText(txt.getText()+productos[i].informacion()+'\n');
+		
+	}	
+	
+	public static void trabajadoresDatos(JTextArea txt) {
+		for(int i=0;i<cTrabajadores;i++)
+			if(trabajadores[i].getTipo().equals("Científico"))txt.setText(txt.getText()+trabajadores[i].informacion()+'\n');
+	}
+}

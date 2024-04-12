@@ -1,0 +1,10 @@
+package elementos.serpiente;
+
+public class Serpiente {
+
+	private Cuerpo cabeza;
+	
+	public Serpiente() {
+		
+	}
+}

@@ -1,0 +1,42 @@
+package Game;
+import javax.swing.JLabel;
+import java.util.Random;
+import java.awt.Color;
+
+public class Food extends JLabel{
+	int X;
+	int Y;
+	Field field;
+	public Food(){
+		this.setOpaque(true);
+		this.setBackground(Color.RED);
+		this.setSize(20,20);
+	}
+	
+	private void poner(int x,int y){
+		this.X=x;
+		this.Y=y;
+		this.setLocation(x, y);
+	}
+	
+	public void nueva(Snake s){
+		Random r=new Random();
+		while(true) {
+			boolean b=true;
+			int x=r.nextInt(600/20);	
+			int y=r.nextInt(600/20);
+			for(int i=0;i<s.size;i++) {
+				if(s.Snake[i].X==x*20&&s.Snake[i].Y==y*20){
+						b=false;
+						break;
+					}
+				}
+			if(b) {
+				System.out.println(X+' '+Y);
+				poner(x,y);
+				return;
+			}
+		}
+	}
+	
+}

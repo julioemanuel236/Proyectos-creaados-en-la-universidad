@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename field &apos;state&apos; in &apos;fixer.Person&apos; to &apos;city&apos;&#x0D;&#x0A;- Original project: &apos;Fix Text&apos;&#x0D;&#x0A;- Original element: &apos;fixer.Person.state&apos;&#x0D;&#x0A;- Renamed element: &apos;fixer.Person.city&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" delegate="false" deprecate="false" description="Rename field &apos;state&apos;" flags="589826" getter="false" id="org.eclipse.jdt.ui.rename.field" input="/src&lt;fixer{Person.java[Person^state" name="city" references="true" setter="false" stamp="1683347424372" textual="false" version="1.0"/>
+</session>

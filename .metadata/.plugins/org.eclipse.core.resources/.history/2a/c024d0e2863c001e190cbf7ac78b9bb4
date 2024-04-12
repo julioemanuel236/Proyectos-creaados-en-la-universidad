@@ -1,0 +1,42 @@
+package elementos.serpiente;
+
+public class Cuerpo {
+	private int x;
+	private int y;
+	private int lastX;
+	private int lastY;
+	private int id;
+	private Cuerpo siguiente;
+	private Cuerpo anterior;
+	
+	public Cuerpo(int x,int y,int id) {
+		this.lastX = this.x = x;
+		this.lastY = this.y = y;
+		this.id = id;
+	}
+	
+	public void moveTo(int x,int y) {
+		
+	}
+
+	public int getX() {
+		return x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	public int getLastX() {
+		return lastX;
+	}
+
+	public int getLastY() {
+		return lastY;
+	}
+
+	public int getId() {
+		return id;
+	}
+		
+}

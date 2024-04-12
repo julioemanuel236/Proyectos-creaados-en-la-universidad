@@ -1,0 +1,139 @@
+package consumo;
+import java.util.ArrayList;
+
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.JComboBox;
+
+public class Plan {
+	
+	public static ArrayList<Plan> planes = new ArrayList<Plan>();
+	
+	private int year;
+	private int mes;
+	private float plan;
+	
+	private static Plan nuevo;
+	private static JDialog panel;
+	private static JComboBox<String> years,meses;
+	private static JTextField aConsumir;
+	private static JButton aceptar;
+	
+	private static String months[] = {"Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"};
+	
+	public Plan(int year,int mes,float plan) {
+		this.year=year;
+		this.mes=mes;
+		this.plan=plan;
+		Plan.add(this);
+	}
+
+	public int getYear() {
+		return this.year;
+	}
+	public int getMes() {
+		return this.mes;
+	}
+	public float getPlan() {
+		return this.plan;
+	}
+	
+	public static void newPlan() {
+		if(panel!=null)panel.setVisible(false);
+		panel = new JDialog();
+		panel.setLayout(null);
+		panel.setSize(220,200);
+		panel.setTitle("Nuevo Plan/Mes");
+		panel.setResizable(false);
+		
+		aConsumir = new JTextField("Consumo Asignado");
+		aConsumir.setSize(200,35);
+		aConsumir.setLocation(0,0);
+		panel.add(aConsumir);
+	
+		years = new JComboBox<String>();
+		for(int i = 0 ; i <=5 ; i++)
+			years.addItem(String.valueOf(2022+i));		
+		years.setSize(200,35);
+		years.setLocation(0,40);
+		panel.add(years);
+		
+		meses = new JComboBox<String>();
+		for(String i:months)
+			meses.addItem(i);
+		meses.setSize(200,35);
+		meses.setLocation(0,80);
+		panel.add(meses);
+		
+		panel.setLocationRelativeTo(null);
+		panel.setVisible(true);
+		
+		aceptar = new JButton("Aceptar");
+		aceptar.setSize(200,35);
+		aceptar.setLocation(0,120);
+		panel.add(aceptar);
+		
+		aceptar.addActionListener((ActionEvent)->{
+			try {
+				nuevo = new Plan(Integer.parseInt((String)years.getSelectedItem()),
+								 meses.getSelectedIndex(),
+								 Float.parseFloat(aConsumir.getText()));
+				
+				
+			JOptionPane.showMessageDialog(null, "Plan añadido con exito");
+			panel.setVisible(false);
+			panel=null;
+			System.out.println(nuevo.getInfo());
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+				JOptionPane.showMessageDialog(null, "Datos Invalidos");
+			}
+		});
+		
+	
+	}
+	
+	private String getInfo() {
+		return "Año: "+year+'\n'+
+			   "Mes: "+mes+'\n'+
+			   "Asignación: "+plan+'\n';
+	}
+	
+	private static void add(Plan p) {
+		for(int i=0;i<planes.size();i++) {
+			if(planes.get(i).year<p.year) {
+				planes.add(i,p);
+				return;
+			}
+			else if(planes.get(i).year==p.year&&planes.get(i).mes<p.mes) {
+				planes.add(i,p);
+				return;
+			}
+			else if(planes.get(i).year==p.year&&planes.get(i).mes==p.mes) {
+				planes.set(i, p);
+				return;
+			}
+		}
+		planes.add(p);
+	}
+
+	public static void showSobrePasados() {
+		String s="";
+		for(Plan i:planes) {
+			float consumo=Equipo.consumoGeneral();
+			
+			System.out.println(consumo+"/"+i.plan);
+			if(consumo>i.plan)s+=i.getYear()+"/"+months[i.getMes()]+" : "+consumo+"/"+i.plan+'\n';
+		}
+		
+		JOptionPane.showMessageDialog(null, s);
+	}
+	
+	public static void informe() {
+		
+	}
+	
+}

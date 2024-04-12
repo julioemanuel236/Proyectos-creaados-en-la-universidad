@@ -1,0 +1,33 @@
+package game;
+
+import java.util.Scanner;
+
+public class Game {
+
+	Player p;
+	Menu menu;
+	public void win() {
+		p.oro+=200;
+	}
+	
+	public void newGame() {
+		p.tablero=menu.selectTablero();
+	}
+	
+	public void main(String args[]) {
+		String texto="Texto para iniciar a jugar\n";
+		System.out.println(texto);
+		System.out.println("Dime tu nombre\n");
+		Scanner cin = new Scanner(System.in);
+		String nombre = cin.nextLine();
+		Player p = new Player(nombre);
+		p.oro+=500;
+		menu = new Menu();
+		
+		while(!menu.salir) {
+			switch(menu.inicio()) {
+			case 1:newGame();break;
+			}
+		}
+	}
+}

@@ -1,0 +1,17 @@
+package mercado;
+
+public class Nacional extends Producto{
+
+	private String empresa;
+	
+	public Nacional(String n,String c,float p,int ca,String empr) {
+		super(n,c,p,ca);
+		empresa=empr;
+	}
+	
+	public String datos() {
+		String s=super.datos();
+		return s+"Empresa: "+empresa+'\n';
+	}
+		
+}

@@ -1,0 +1,12 @@
+package tareas;
+
+import java.util.Scanner;
+public class Primos {
+
+	public static void main(String[] args) {
+		Scanner entry = new Scanner(System.in);
+		System.out.print("Hasta que numero desea ver lo cubos? ");
+		int numero = entry.nextInt();
+		
+	}
+}

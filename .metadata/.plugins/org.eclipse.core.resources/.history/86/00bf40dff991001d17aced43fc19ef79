@@ -1,0 +1,14 @@
+package acm;
+
+public class Junior extends Participante{
+	int problemas=0;
+
+	public Junior(String nombre, String carnet, int edad, String sexo, Pais pais) {
+		super(nombre, carnet, edad, sexo, pais);
+	}
+	
+	public int getProblemas() {
+		return problemas;
+	}
+	
+}

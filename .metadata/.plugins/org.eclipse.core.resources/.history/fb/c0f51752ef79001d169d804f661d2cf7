@@ -1,0 +1,17 @@
+package cadena;
+
+public class Reservacion extends Object{
+	Cliente cliente;
+	float precio;
+	public Reservacion(Cliente cliente, float precio) {		
+		this.cliente = cliente;
+		this.precio = precio;
+	}
+	public Cliente getCLiente() {
+		return cliente;
+	}
+	public float getPrecio() {
+		return precio;
+	}
+	
+}

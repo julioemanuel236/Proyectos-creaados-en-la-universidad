@@ -1,0 +1,21 @@
+package clases;
+import java.util.ArrayList;
+
+public class Subdireccion {
+	protected ArrayList<Medio> medios = new ArrayList<>();
+	protected ArrayList<Edificio> edificios = new ArrayList<>();
+	protected ArrayList<Becado> becados = new ArrayList<>();
+	
+	private String nombre;
+	private String ubicacion;
+	
+	public Subdireccion(String nombre,String ubicacion) {
+		this.nombre=nombre;
+		this.ubicacion=ubicacion;
+	}
+	
+	public void nuevoEdificio() {
+		
+	}
+	
+}

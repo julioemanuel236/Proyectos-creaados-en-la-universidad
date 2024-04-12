@@ -1,0 +1,23 @@
+package aplicacion;
+import java.io.*;
+public class Omnibus implements Serializable{
+	private String chapa;
+	private Persona chofer;
+	
+	public Omnibus(String chapa, Persona chofer) {
+		super();
+		this.chapa = chapa;
+		this.chofer = chofer;
+	}
+
+	public String getChapa() {
+		return chapa;
+	}
+
+	public Persona getChofer() {
+		return chofer;
+	}
+	
+	
+	
+}

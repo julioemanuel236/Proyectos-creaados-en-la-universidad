@@ -1,0 +1,11 @@
+package decanato;
+import java.util.ArrayList;
+
+public class Licencia extends Alumno{
+
+	public Licencia(String n, String a, String s, String id, String gru, int year, String p, boolean ayuda) {
+		super(n, a, s, id, gru, year, p, ayuda);
+		
+	}
+
+}

@@ -1,0 +1,18 @@
+package serpiente;
+
+public class Cuerpo {
+	private int x;
+	private int y;
+	private int lastX;
+	private int lastY;
+	
+	public Cuerpo(int x,int y) {
+		this.lastX = this.x = x;
+		this.lastY = this.y = y;
+	}
+	
+	public void moveTo(int x,int y) {
+		
+	}
+	
+}

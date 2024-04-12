@@ -1,0 +1,59 @@
+package tareas;
+import java.util.Scanner;
+
+public class Matrices {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Ingrese la frase a cifrar: ");
+        String frase = scanner.nextLine();
+        System.out.println("La frase ingresada es: " + frase);
+
+        System.out.println("Ingrese la matriz de cifrado:");
+        int[][] matrizCifrado = new int[2][2];
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < 2; j++) {
+                System.out.print("Ingrese el elemento [" + i + "][" + j + "]: ");
+                matrizCifrado[i][j] = scanner.nextInt();
+            }
+        }
+
+        // Convertir la frase a una matriz de caracteres
+        char[] caracteres = frase.toCharArray();
+        int n = caracteres.length;
+        int m = (int) Math.ceil((double) n / matrizCifrado.length);
+        char[][] fraseMatriz = new char[m][matrizCifrado.length];
+        int indice = 0;
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < matrizCifrado.length; j++) {
+                if (indice < n) {
+                    fraseMatriz[i][j] = caracteres[indice];
+                    indice++;
+                } else {
+                    fraseMatriz[i][j] = ' ';
+                }
+            }
+        }
+
+        // Multiplicar la matriz de la frase por la matriz de la clave de cifrado
+        int[][] cifradoMatriz = new int[m][matrizCifrado[0].length];
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < matrizCifrado[0].length; j++) {
+                cifradoMatriz[i][j] = 0;
+                for (int k = 0; k < matrizCifrado.length; k++) {
+                    cifradoMatriz[i][j] += fraseMatriz[i][k] * matrizCifrado[k][j];
+                }
+            }
+        }
+
+        // Convertir la matriz cifrada en texto cifrado
+        StringBuilder cifrado = new StringBuilder();
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < matrizCifrado[0].length; j++) {
+                cifrado.append((char) (cifradoMatriz[i][j] % 256));
+            }
+        }
+
+        System.out.println("La frase cifrada es: " + cifrado.toString());
+    }
+}

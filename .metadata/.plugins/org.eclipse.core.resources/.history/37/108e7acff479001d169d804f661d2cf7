@@ -1,0 +1,23 @@
+package cadena;
+import javax.swing.*;
+
+public class Interfaz extends JFrame{
+	
+	private void iniciar() {
+		JPanel panel = new JPanel();
+		add(panel);
+		
+		JButton nuevoHotel = new JButton("Nuevo Hotel");
+		panel.add(nuevoHotel);
+		
+	}
+	
+	public Interfaz(){
+		setSize(200,500);
+		setResizable(false);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		iniciar();
+		setVisible(true);
+	}
+	
+}

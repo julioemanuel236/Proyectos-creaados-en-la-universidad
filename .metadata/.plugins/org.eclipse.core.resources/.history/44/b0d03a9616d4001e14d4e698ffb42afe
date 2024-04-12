@@ -1,0 +1,213 @@
+package mainwindow;
+
+import java.awt.Container;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.event.MouseEvent;
+import java.util.LinkedList;
+
+public class Component extends java.awt.Container{
+	
+	private boolean mouseIn = false;	
+	
+	public static LinkedList<Component> COMPONENTS = new LinkedList<>();
+	
+	private Image img;
+	
+	public Component() {
+		super();
+		COMPONENTS.addLast(this);
+	}
+	
+	public Component(Image img) {
+		super();
+		COMPONENTS.addLast(this);
+		this.img = img;
+		setSize(img.getWidth(null),img.getHeight(null));		
+	}
+	
+	@Override
+	public void paint(Graphics g) {
+		Graphics2D g2 = (Graphics2D)g;
+		g2.drawImage(img, 0, 0, null);
+		super.paint(g);
+	}
+
+	public Image getImg() {
+		return img;
+	}
+	
+	public void mouseClicked(MouseEvent e) {
+		
+	}
+	
+	public void processMouseMove(int x,int y){
+		//System.out.println(x + " " + y);
+		if(mouseEntry(x,y)) {
+			//System.out.println("MOUSE ENTRY FROM "+getClass().getSimpleName());
+			mouseEnter();
+		}
+		else if(mouseLeave(x,y)) {
+			//System.out.println("MOUSE EXIT "+getClass().getSimpleName());
+			mouseExit();
+		}
+		//System.out.println("MANDANDO "+x+" "+y);
+		mouseMove(x,y);
+	}
+	
+	public boolean mouseEntry(int x,int y) {
+		x-=getAbsoluteX();
+		y-=getAbsoluteY();
+		//System.out.println(x + " " + y + " "+ getClass().getSimpleName());
+		if(x>=0 && x<=getWidth() &&
+		   y>=0 && y<=getHeight() && !mouseIn) {
+			//System.out.println("ENTRANDO A"+getClass().getSimpleName());
+			return mouseIn = true;
+		}
+		
+		return false;
+	}
+	
+	
+	
+	public boolean isMouseIn() {
+		return mouseIn;
+	}
+
+	public void setMouseIn(boolean mouseIn) {
+		this.mouseIn = mouseIn;
+	}
+
+	public boolean mouseLeave(int x,int y) {
+		x-=getAbsoluteX();
+		y-=getAbsoluteY();
+		if((x<0 || x>getWidth() ||
+		   y<0 || y>getHeight() ) && mouseIn) {
+			//System.out.println("SALIENDO DE"+getClass().getSimpleName());
+			mouseIn = false;
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public void mouseMove(int x,int y) {
+		
+	}
+	
+	public void mouseEnter() {
+		
+	}
+	
+	public void mouseExit() {
+		
+	}
+	
+	public int getAbsoluteX() {
+		int x = 0;
+		Container a = this;
+		while(a.getParent() != null) {
+			x += a.getX();
+			a = a.getParent();
+		}
+		
+		return x+a.getX();
+	}
+	
+	public int getAbsoluteY() {
+		int y = 0;
+		Container a = this;
+		while(a.getParent() != null) {
+			y += a.getY();
+			a = a.getParent();
+		}
+		
+		return y+a.getY();
+	}
+	
+	public void mouseReleased(MouseEvent e) {
+		
+	}
+	
+	public void proccesMouseEvent(MouseEvent e) {
+		if(e.getID() == MouseEvent.MOUSE_RELEASED)
+			mouseReleased(e);
+		else if(e.getID() == MouseEvent.MOUSE_PRESSED)
+			mousePressed(e);
+		else if(e.getID() == MouseEvent.MOUSE_CLICKED)
+			mouseClicked(e);
+	}
+		
+	public void mousePressed(MouseEvent e) {
+		
+	}
+	
+	public void setImg(Image img) {
+		this.img = img;
+		//setSize(img.getWidth(null),img.getHeight(null));
+	}
+
+	public boolean over(int x,int y) {
+		x-=getAbsoluteX();
+		y-=getAbsoluteY();
+		return x>=0 && x<=getWidth() && y>=0 && y<getHeight();
+	}
+	
+	public final int textHeight(Font f,String texto) {
+		return getFontMetrics(f).getAscent();
+	}
+	
+	public final int textWidth(Font f,String texto) {
+		int width = 0;
+		int[] arr = getFontMetrics(f).getWidths();
+		
+		for(int i=0;i<texto.length();i++)
+			width+=arr[texto.charAt(i)];
+		
+		return width;
+	}
+	
+	public Font ajustarFuente(Font font,int height) {
+		
+		while(getFontMetrics(font).getHeight()<height) {			
+			font = new Font(font.getFontName(),font.getStyle(),font.getSize()+1);
+		}
+		
+		while(getFontMetrics(font).getHeight()>height) {
+			font = new Font(font.getFontName(),font.getStyle(),font.getSize()-1);
+		}
+		
+		return font;
+	}
+		
+	public void pintarTexto(Graphics g,String nombre,int x,int y,int width,int height,Font font) {
+		int alto = textHeight(font, nombre);
+		int w = 0;
+		int h = 0;
+		while(w<width && h < height) {
+			w = 0;
+			h = 0;
+			alto++;
+			font= ajustarFuente(font, alto);					
+			w = textWidth(font, nombre);
+			h = textHeight(font, nombre);
+		}
+		
+		while(w>=width || h>=height) {
+			w = 0;
+			alto--;
+			font= ajustarFuente(font, alto);
+			w = textWidth(font, nombre);
+			h = textHeight(font, nombre);
+		}	
+		//System.out.println(height + " <= " + h);
+		
+		g.setColor(getForeground());
+		g.setFont(font);
+		g.drawString(nombre,x+((width-w)/2),y+height-((height-h)/2));
+	}
+	
+	
+}

@@ -1,0 +1,11 @@
+package game;
+
+public abstract class Mob {
+	int vida;
+	int movimientos;
+	int damage;
+	
+	
+	
+	public abstract void atacar();
+}

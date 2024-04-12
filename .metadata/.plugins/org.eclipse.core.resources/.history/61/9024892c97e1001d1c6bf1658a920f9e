@@ -1,0 +1,31 @@
+package App;
+
+public class Tablero {
+	final String TIPOS[] = {"Ruteo","Tablero de Prueba Electrica"};
+	private String codigo;
+	private int tipo;
+	private String location1;
+	private String location2;
+	public Tablero(String codigo,int tipo) {
+		super();
+		this.codigo = codigo;
+		this.tipo = tipo;
+	}
+
+	public String getCodigo() {
+		return codigo;
+	}
+
+	public String getTipo() {
+		return TIPOS[tipo];
+	}
+	
+	public String toString() {
+		return "Codigo: "+codigo+"\n"+"Tipo: "+getTipo();
+	}
+	
+	public void setLocation(String location) {
+		if(location1==null)this.location1=location;
+		else this.location2=location;
+	}
+}

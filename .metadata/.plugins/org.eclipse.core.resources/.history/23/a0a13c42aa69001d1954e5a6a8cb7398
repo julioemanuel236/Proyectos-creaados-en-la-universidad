@@ -1,0 +1,21 @@
+package agencia;
+import javax.swing.*;
+import java.awt.*;
+
+public class Ventana extends JFrame{
+
+	
+	
+	Ventana(){
+		setSize(800,500);
+		setResizable(false);
+		
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setVisible(true);
+	}
+	
+	public static void main(String args[]) {
+		new Ventana();
+	}
+	
+}

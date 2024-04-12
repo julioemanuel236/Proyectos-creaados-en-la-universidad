@@ -1,0 +1,79 @@
+package simulacion;
+import java.util.concurrent.CyclicBarrier;
+import java.util.concurrent.locks.ReentrantLock;
+
+import elementos.Matriz;
+import elementos.serpiente.*;
+public class Simulacion extends ReentrantLock{
+
+	public static CyclicBarrier BARRIERSNAKES;
+	public static CyclicBarrier BARRIER;
+	private int muertes = 0;
+	private int serpientes;
+	
+	public Simulacion(int hilos) {
+		this.serpientes = hilos;
+		BARRIERSNAKES = new CyclicBarrier(hilos);
+		BARRIER = new CyclicBarrier(hilos+1);
+	}
+	
+	public boolean actualizarSerpiente(Serpiente s) {
+		lock();
+		try {
+			s.move();
+			return true;
+		}		
+		catch(Exception e) {
+			return false;
+		}
+		finally {
+			unlock();
+		}
+	}
+	
+	public void iniciar(Matriz tablero,Serpiente[] serpientes) {
+
+		for(int i=0 ; i<tablero.getSize(); i++) {
+			for(int j=0 ; j<tablero.getSize(); j++) {
+				int s = tablero.get(i, j);
+				if(s == -1 )System.out.print('*');
+				else System.out.print(s);
+			}
+			System.out.println();
+		}
+		System.out.println();
+		
+		for(int i=0 ; i<serpientes.length; i++)
+			serpientes[i].start();
+		
+		while(muertes<this.serpientes) {
+
+			try {
+				System.out.println("ESPERANDO A QUE LAS SERPIENTES ACABEN");
+				BARRIER.await();
+				System.out.println("YA ACABARON");
+				Thread.sleep(300);
+				for(int i=0 ; i<tablero.getSize(); i++) {
+					for(int j=0 ; j<tablero.getSize(); j++) {
+						int s = tablero.get(j, i);
+						if(s == -1 )System.out.print('*');
+						else System.out.print(s);
+					}
+					System.out.println();
+				}
+				System.out.println();
+				
+				
+			}
+			catch(Exception e) {
+				
+			}
+											
+			
+		}
+	}
+	
+	public void nuevaBaja() {
+		muertes++;
+	}
+}

@@ -1,0 +1,15 @@
+package agencia;
+import javax.swing.*;
+import java.awt.*;
+
+public class Ventana extends JFrame{
+
+	Ventana(){
+		
+	}
+	
+	public static void main(String args[]) {
+		new Ventana();
+	}
+	
+}

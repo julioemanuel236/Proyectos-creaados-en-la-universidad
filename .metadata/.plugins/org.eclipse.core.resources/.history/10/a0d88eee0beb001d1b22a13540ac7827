@@ -1,0 +1,11 @@
+package app;
+
+public class App {
+
+	String studentsRute = "/StudentFile.txt";
+	String universitysRute = "Universities9.txt";
+	public void App() {
+		
+	}
+	
+}

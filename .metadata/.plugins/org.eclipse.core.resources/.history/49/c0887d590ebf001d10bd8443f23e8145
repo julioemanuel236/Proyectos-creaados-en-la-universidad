@@ -1,0 +1,137 @@
+package game;
+
+import java.util.Scanner;
+
+public class Partida {
+
+	Player p;
+	Tienda t;
+	Scanner cin = new Scanner(System.in);
+	boolean over=false;
+	public Partida(Player p,Tienda t) {
+		this.p=p;
+		this.t=t;
+	}
+	
+	public void mostrarHeroes() {
+		for(int i=0;i<p.heroes.size();i++)
+			System.out.println((i+1)+p.heroes.get(i).shopping());
+	}
+
+	public void mostrarItems() {
+		for(int i=0;i<p.items.size();i++)
+			System.out.println((i+1)+p.items.get(i).shopping());
+	}
+	
+	public Item seleccionarItem() {
+		Item i=null;
+		int op=-1;
+		while(op!=0) {
+			mostrarItems();
+			int n=cin.nextInt();
+			if(n==0)continue;
+			if(n>p.items.size())System.out.println("Opcion no valida");
+			return p.items.get(n-1);
+		}
+		
+		return i;
+	}
+	
+	public void usarObjeto() {
+		if(!p.items.isEmpty()) {
+			String s;
+			System.out.println("Quieres usar algun objeto");
+			s=cin.next();
+			if(s.equals("si")) {
+				System.out.println("Que objeto quieres usar?");
+				Item i = seleccionarItem();
+				if(i==null)return;
+				i.usar(p.ingame[p.mainHero]);
+			}
+		}
+	}
+	
+	public Heroe seleccionarHeroe() {
+		Heroe h=null;
+		int op=-1;
+		while(op!=0) {
+			mostrarHeroes();
+			int n=cin.nextInt();
+			if(n==0)continue;
+			if(n>p.heroes.size())System.out.println("Opcion no valida");
+			return p.heroes.get(n-1);
+		}
+		
+		return h;
+	}
+	
+	public void cambiarHeroe() {
+		int other=(p.mainHero+1)%2;
+		if(p.ingame[other]==null)return'
+		if(p.ingame[other].vida<=0) {
+			for(int i=0;i<p.items.size();i++) {
+				if(p.items.get(i) instanceof SemillaVida) {
+					System.out.println("Quieres cambiar de heroe?");
+					String s=cin.nextLine();
+					if(s.equals("si")) {
+						p.items.get(i).usar(p.ingame[other]);
+					}
+					else return;
+				}
+			}
+		}
+	}
+	
+	public void start() {
+		if(p.heroes.isEmpty()) {
+			System.out.println("No tienes ningun heroe");
+			return ;
+		}
+		String ops[]= {""};
+		System.out.println("seleccion tu heroe principal\n");
+		p.ingame[0]=seleccionarHeroe();
+		if(p.ingame[0]==null)return;
+		if(p.heroes.size()>2) {
+			System.out.println("seleccion tu heroe secundario\n");
+			Heroe h=seleccionarHeroe();
+			if(h==p.ingame[0])System.out.println("tu heroe principal y secundario son el mismo\nIras al combate con solo ese heroe");
+		}
+		if(p.ingame[1]==null)System.out.println("Seleccionaste solo un heroe");
+		String s;
+		System.out.println("Coordenadas donde ubicar al heroe");
+		System.out.println("X: ");
+		int X=cin.nextInt();
+		System.out.println("Y: ");
+		int Y=cin.nextInt();
+		p.tablero.map[Y][X]=p;
+		p.ingame[p.mainHero].x=X;
+		p.ingame[p.mainHero].y=Y;
+		while(!over) {
+			p.tablero.ver();
+			usarObjeto();
+			cambiarHeroe();
+			System.out.println("Atacar/Moverse");
+			s=cin.next();
+			if(s=="atacar") {
+				
+			}
+			else if(s=="moverse") {
+				p.ingame[p.mainHero].mover();
+			}
+			System.out.println(ops);
+			int op = cin.nextInt();
+			if(op==1) {
+				
+			}
+			else if(op==2) {
+				
+			}
+			else if(op==0)over=false;
+			
+		}
+		System.out.println("Partida Terminada");
+	}
+	
+	
+
+}

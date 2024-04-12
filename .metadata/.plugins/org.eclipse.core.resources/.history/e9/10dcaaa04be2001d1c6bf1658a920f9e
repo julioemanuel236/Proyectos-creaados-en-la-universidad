@@ -1,0 +1,23 @@
+package Algoritmos;
+
+import java.util.PriorityQueue;
+public class ShortesJobFirst {
+
+	PriorityQueue<Proceso> procesos;
+	
+	private Proceso inProcces;
+	
+	public ShortesJobFirst() {
+		procesos = new PriorityQueue<>();
+		inProcces=null;
+	}
+	
+	public void add(Proceso pr) {
+		
+	}
+	
+	public Proceso procces() {
+		
+	}
+	
+}

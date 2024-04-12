@@ -1,0 +1,36 @@
+package app;
+import javax.swing.JFrame;
+import java.awt.Graphics;
+import java.awt.Point;
+import java.util.LinkedList;
+
+public class Muestra extends JFrame{
+	
+	public Muestra() {		
+		setSize(500,500);
+		setLocationRelativeTo(null);
+		setUndecorated(true);
+		setVisible(true);
+		iniciarAnimacion();
+	}
+	
+	
+	public void iniciarAnimacion() {
+		
+		while(true) {
+			mostrarExpansion();
+		}
+	}
+	public void mostrarExpansion(){
+		Graphics g = this.getGraphics();
+		int x = getWidth()/2;
+		int y = getHeight()/2;
+		LinkedList<Point> q = new LinkedList<>();
+		
+		q.push(new Point(x,y));
+	}
+	
+	public static void main(String[] args){
+		new Muestra();
+	}
+}

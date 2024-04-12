@@ -1,0 +1,164 @@
+package gui;
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import bikes.*;
+import javax.swing.*;
+
+
+public class MainWindow extends JFrame{
+	int MAX_INVENTORY_SIZE_PER_TYPE = 100;	
+	//arrays for data
+	BasicBike[] basicBikeArray = new BasicBike[MAX_INVENTORY_SIZE_PER_TYPE]; // Creating  // Declaring the array 
+		
+	MountainBike[] mountainBikeArray = new MountainBike[MAX_INVENTORY_SIZE_PER_TYPE]; // Declare 	
+	
+	RoadBike[] roadBikeArray = new RoadBike[MAX_INVENTORY_SIZE_PER_TYPE]; // Creating // Declare 	
+	
+	EBike[] eBikeArray = new EBike[MAX_INVENTORY_SIZE_PER_TYPE]; // Declare 	
+	
+	RoadEBike[] roadEBikeArray = new RoadEBike[MAX_INVENTORY_SIZE_PER_TYPE]; // Declare 	
+	
+	JPanel table;
+	JPanel newz;
+	JPanel editz;
+	JTextArea info;
+	
+	public MainWindow(){
+		int w=600,h=700;//size of the windows
+		setResizable(false);//can not change the size
+		setSize(w,h);
+		setLayout(null);//to put things whetever u whant
+		setLocationRelativeTo(null);//put the windows at center of screen
+		setDefaultCloseOperation(EXIT_ON_CLOSE);//really close it when you press the exit X
+		setVisible(true);
+		iniButtons();//create and asign a funtion to buttons
+		iniInfoZone();//create a locate the area to write text for suer
+	}
+	
+	private void iniInfoZone() {
+		info = new JTextArea();
+		info.setSize(getWidth(),getHeight()/2);
+		info.setEditable(false);//can edit the text
+		JScrollPane jsp = new JScrollPane(info);	//this its for scroll 	
+		jsp.setSize(info.getSize());
+		jsp.setLocation(0,getHeight()/2 - 50);//set at the bottom middle
+		add(jsp);//add to the window 
+	}
+	
+	private void iniButtons() {
+		//buttons name
+		String texts[] = {"List Selected Inventary","Display All Inventory","New Bike","Remove a Bike","Edit a existence Bike"};
+		
+		JButton buttons[] = new JButton[texts.length];
+		int x=getWidth()/4,y=5;
+		for(int i=0;i<texts.length;i++) {
+			JButton jb = new JButton(texts[i]);
+			jb.setSize(getWidth()/2,40);
+			jb.setLocation(x,y);
+			y+=45;
+			add(jb);
+			buttons[i]=jb;
+		}
+		
+	buttons[0].addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			
+			String ops[] = {"Basic Bike","Mountain Bike","Road Bike","EBike","Road EBike"};
+			String op = (String)JOptionPane.showInputDialog(null, "Type of Bike","Select Type", JOptionPane.QUESTION_MESSAGE, null, ops, null);
+			System.out.println(op);
+			info.setText("");
+			BasicBike arr[];
+			if(op.equals(ops[0])) {
+				arr = basicBikeArray;
+			}
+			else if(op.equals(ops[1])) {
+				arr = mountainBikeArray;			
+			}
+			else if(op.equals(ops[2])) {
+				arr = basicBikeArray;
+			}
+			else if(op.equals(ops[3])) {
+				arr = basicBikeArray;
+			}
+			else {
+				arr = basicBikeArray;
+			}
+			
+			for(int i = 0;i<arr.length;i++) {
+				if(arr[i]!=null)info.setText(info.getText()+arr[i].getInfo()+"\n");
+			}
+
+		}
+	});
+	
+	buttons[1].addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {					
+			info.setText("");			
+			BasicBike[] arr = basicBikeArray;
+			info.setText(info.getText()+"\n-----------------------------------------------------------------------\n"
+					+ 					  "|                                  BASIC BIKES                              \n"
+					+ 					  "-----------------------------------------------------------------------\n");
+			for(int i = 0;i<arr.length;i++) {
+				
+				if(arr[i]!=null)info.setText(info.getText()+arr[i].getInfo()+"\n");
+			}
+			info.setText(info.getText()+"\n-----------------------------------------------------------------------\n"
+					+ 					  "|                                  MOUNTAIN BIKE                       \n"
+					+ 					  "-----------------------------------------------------------------------\n");
+			arr = mountainBikeArray;
+			for(int i = 0;i<arr.length;i++) {
+				if(arr[i]!=null)info.setText(info.getText()+arr[i].getInfo()+"\n");
+			}
+			
+			info.setText(info.getText()+"\n-----------------------------------------------------------------------\n"
+					+ 					  "|                                      ROAD BIKE                       \n"
+					+ 					  "-----------------------------------------------------------------------\n");
+			arr = roadBikeArray;
+			for(int i = 0;i<arr.length;i++) {
+				if(arr[i]!=null)info.setText(info.getText()+arr[i].getInfo()+"\n");
+			}
+			
+			info.setText(info.getText()+"\n-----------------------------------------------------------------------\n"
+					+ 					  "|                                  ELECTRIC BIKE                    \n"
+					+ 					  "-----------------------------------------------------------------------\n");
+			arr = eBikeArray;
+			for(int i = 0;i<arr.length;i++) {
+				if(arr[i]!=null)info.setText(info.getText()+arr[i].getInfo()+"\n");
+			}
+			
+			info.setText(info.getText()+"\n-----------------------------------------------------------------------\n"
+					+ 					  "|                                ROAD ELECTRIC BIKE                \n"
+					+ 					  "-----------------------------------------------------------------------\n");
+			arr = roadEBikeArray;
+			for(int i = 0;i<arr.length;i++) {
+				if(arr[i]!=null)info.setText(info.getText()+arr[i].getInfo()+"\n");
+			}
+		}
+	});	
+	
+	buttons[2].addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {					
+			Control.addToInventory(MAX_INVENTORY_SIZE_PER_TYPE, false , basicBikeArray, mountainBikeArray, roadBikeArray, eBikeArray, roadEBikeArray);
+		}
+	});	
+	
+	buttons[3].addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {					
+			Control.removeFromInventory(MAX_INVENTORY_SIZE_PER_TYPE, false, basicBikeArray, mountainBikeArray, roadBikeArray, eBikeArray, roadEBikeArray);
+		}
+	});
+	
+	buttons[4].addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {					
+			Control.modifyCurrentInventory(MAX_INVENTORY_SIZE_PER_TYPE, false, basicBikeArray, mountainBikeArray, roadBikeArray, eBikeArray, roadEBikeArray);
+		}
+	});
+	
+	}
+				
+	public static void main(String args[]) {
+		new MainWindow();
+	}
+	
+}

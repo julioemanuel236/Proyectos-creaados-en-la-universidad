@@ -1,0 +1,7 @@
+package correo;
+import java.io.Serializable;
+public class Correspondencia implements Serializable {
+	private String nombre;
+	private String direccion;
+	private String remitente;
+}

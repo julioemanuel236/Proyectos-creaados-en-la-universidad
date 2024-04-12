@@ -1,0 +1,34 @@
+package game;
+
+import java.util.Scanner;
+
+public class Caballero extends Heroe {
+
+	public Caballero(Tablero t) {
+		super(300,45,1,false,t,'c');
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public void atacar() {		
+
+		for(int i=0;i<8;i++) {
+			int x=getX()+dx[i];
+			int y=getY()+dy[i];
+			if(x<1||x>tablero.width||y<1||y>tablero.height)continue;
+			if(tablero.map[y][x] instanceof Entity) {
+				this.hit((Entity)tablero.map[x][y]);
+			}
+		}
+	}
+	
+	@Override
+	public void die() {
+		
+	}
+
+	
+	public String inf() {
+		return "Caballero "+super.info();
+	}
+}

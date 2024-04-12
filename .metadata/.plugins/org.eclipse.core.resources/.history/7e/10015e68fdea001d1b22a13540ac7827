@@ -1,0 +1,22 @@
+package app;
+
+public class University {
+
+	private String universityName;
+	private String streetAddress;
+	private String city;
+	private String state;
+	private String zip;
+	private String phoneNumber;
+	private int inStateTuitionpercredit[];		
+	private int outofStateTuitionpercredit[];		
+	private float lateFees;
+	private float incidentalFees;
+	private float optionalHealthCare[];		
+	private float onCampusMealPlan[];
+		
+	
+	
+
+	
+}

@@ -1,0 +1,23 @@
+package App;
+
+public class Almacen {
+	
+	Tablero tableros[] = new Tablero[50];
+	int nuevo=0;
+	
+	public Almacen() {
+		
+	}
+	
+	public void add(Tablero t) {
+		tableros[nuevo]=t;
+		t.setLocation(getLocation(nuevo));
+		nuevo++;
+	}
+	
+	public void getLocation(int n) {
+		int p = (n%50)+1;
+		String r = (p<10?"0"+p:"10");
+		return "A0"+((50/n)+1)+r;
+	}
+}

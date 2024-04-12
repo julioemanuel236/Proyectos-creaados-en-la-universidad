@@ -1,0 +1,5 @@
+package correo;
+
+public class BultoPostal extends Correspondencia{
+
+}

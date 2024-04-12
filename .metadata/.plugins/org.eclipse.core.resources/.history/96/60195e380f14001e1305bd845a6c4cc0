@@ -1,0 +1,26 @@
+package todolist;
+
+public class Task implements Comparable<Task>{
+
+	private int id;
+	
+	public Task(int id) {
+		this.id = id;
+	}
+	
+	public int getId() {
+		return id;
+	}
+	
+	public String toString() {
+		return "TASK ID: "+id;
+	}
+	
+	@Override
+	public int compareTo(Task o) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	
+}

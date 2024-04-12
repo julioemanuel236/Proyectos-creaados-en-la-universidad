@@ -1,0 +1,14 @@
+package gui;
+import javax.swing.*;
+
+public class MainWindow extends JFrame{
+
+	public MainWindow(){
+		setResizable(false);
+		setSize(700,500);
+		setLocationRelativeTo(null);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setVisible(true);
+	}
+	
+}

@@ -1,0 +1,13 @@
+package todolist;
+
+public class Main {
+
+	public static void main(String[] args) {
+		HeapPriQueue<Task> pq = new HeapPriQueue<>(10);
+		for(int i=0 ; i < 10 ;i++)
+			pq.enqueue(new Task());
+		
+		pq.printList();
+	}
+		
+}

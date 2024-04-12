@@ -1,0 +1,103 @@
+package elementos.serpiente;
+
+import elementos.Matriz;
+import simulacion.Simulacion;
+
+public class Serpiente extends Thread{
+
+	private Cuerpo cabeza;
+	private Cuerpo cola;
+	private Matriz tablero;
+	private int dir;
+	private int pasos;
+	private Simulacion simulacion;
+	private final int ARRIBA = 8;
+	private final int ABAJO = 2;
+	private final int IZQUIERDA = 4;
+	private final int DERECHA = 6;
+		
+	
+	private final int[][] dondeIr = {{ABAJO,IZQUIERDA,DERECHA},
+									 {ARRIBA,IZQUIERDA,DERECHA},
+									 {ARRIBA,ABAJO,DERECHA},
+									 {ARRIBA,ABAJO,IZQUIERDA}};
+	
+	public Serpiente(int x,int y,int id,int size,int pasos,Matriz tablero,Simulacion simulacion) {
+		this.tablero = tablero;
+		this.cabeza = new Cuerpo(x,y,id,tablero);
+		this.cola = this.cabeza;
+		this.dir = this.ARRIBA;
+		this.pasos = pasos;
+		this.simulacion = simulacion;
+		for(int i = 1 ; i < size ; i++)
+			agregarCuerpo();
+	}
+	
+	public int getX() {
+		return cabeza.getX();
+	}
+	
+	public int getY() {
+		return cabeza.getY();
+	}
+	
+	public int getSerpienteId() {
+		return cabeza.getId();
+	}
+	
+	public void move() {		
+		seleccionarNuevaDireccion();
+		int x = cabeza.getX();
+		int y = cabeza.getY();
+		
+		switch(dir) {
+			case ARRIBA:y--;break;
+			case ABAJO:y++;break;
+			case IZQUIERDA:x--;break;
+			case DERECHA:x++;break;
+		}
+		cabeza.moveTo(x, y);
+	}
+	
+	private void seleccionarNuevaDireccion() {
+		int pos = 0;
+		switch(dir) {
+			case ARRIBA:pos = 0;break;
+			case ABAJO:pos = 1;break;
+			case IZQUIERDA:pos = 2;break;
+			case DERECHA:pos = 3;break;
+		}
+		
+		dir = dondeIr[pos][(int)System.currentTimeMillis()%3];
+	}
+	
+	private void agregarCuerpo() {
+		
+		int x = cola.getX();
+		int y = cola.getY();
+		int id = cola.getId();
+		
+		Cuerpo nuevo = new Cuerpo(x,y+1,id,tablero,cola);
+		cola.setSiguiente(nuevo);
+		cola = nuevo;
+		
+	}
+
+	public void run() {		
+		while(!cabeza.isMuerta()) {
+			try {
+				simulacion.actualizarSerpiente(this);
+					
+				System.out.println(getSerpienteId());
+				Simulacion.BARRIER.await();
+				pasos--;
+				if(pasos == 0)cabeza.morir();
+			}
+			catch(Exception e) {
+				
+			}				
+		}
+		simulacion.nuevaBaja();
+	}
+	
+}

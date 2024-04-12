@@ -1,0 +1,49 @@
+package tareas;
+
+import java.util.Scanner;
+public class Primos {
+
+	public static void main(String[] args) {
+		int cantidad=0;// para saber cuantos numeros primos llevamos
+		int numeroDelImpar=1;//el numero del impar, por ejemplo el impar 2 es 3
+		int impar=1;//el ultimo numero impar que llevamos hasta ese momento
+		for(int i=2;cantidad<5;i++) {//mientras que no llevemos 5 numeros primos
+			boolean primo=true;//para saber si es primo o no
+			for(int j=2;j<=i/2;j++) {//miramos todos los numeros desde 2 hasta la mitad de i
+				if(i%j==0)primo=false;//si alguno lo divide no es primo
+			}
+			if(primo) {//en caso de ser primo				
+				int cubo = 0;
+				int cantidadDeNumeros=i+numeroDelImpar;				
+				int numero=impar+1;
+				do {
+					if(numero%2==1) {
+						impar=numero;
+						int sumar = impar;
+						while(sumar>0) {
+							cubo++;
+							sumar--;
+						}
+						
+						numeroDelImpar++;
+					}
+					numero++;
+				}while(numeroDelImpar<cantidadDeNumeros);
+				cantidad++;
+			}
+			else {
+				int cantidadDeNumeros=i+numeroDelImpar;				
+				int numero=impar+1;
+				do {
+					if(numero%2==1) {
+						
+						impar=numero;						
+						numeroDelImpar++;
+					}
+					numero++;
+				}while(numeroDelImpar<cantidadDeNumeros);
+			}
+			}
+		}		
+	
+}

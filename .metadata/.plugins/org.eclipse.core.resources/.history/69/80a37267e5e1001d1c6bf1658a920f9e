@@ -1,0 +1,34 @@
+package App;
+
+import javax.swing.*;
+
+public class Reporte extends JDialog{
+
+	private String texts[][]= {{"Board","Board Type","Part 1","Part 2",""},
+			                   {"","","Location","Warehouse","Conv","","","Location","Warehouse","Conv","Date"}};
+	
+	private JLabel labels[][];
+	
+	public Reporte() {
+		setSize(900,700);
+		iniTable();
+		setVisible(true);
+	}
+	
+	private void iniTable() {
+		labels = new JLabel[texts.length][0];
+		for(int i=0;i<texts.length;i++) {
+			labels[i] = new JLabel[texts[i].length];
+			
+			for(int j=0;j<texts[i].length;j++) {
+								
+			}
+			
+		}
+		
+	}
+	
+	public static void main(String[] args) {
+		new Reporte();
+	}
+}

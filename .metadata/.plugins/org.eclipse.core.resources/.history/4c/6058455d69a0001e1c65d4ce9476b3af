@@ -1,0 +1,15 @@
+package pieza;
+import java.awt.Point;
+
+
+public abstract class Pieza{
+	
+	//atributos
+	private int i;
+	private int j;
+	
+	private boolean color;
+	
+	public abstract Point[] getPosicionesValidas();
+	
+}

@@ -1,0 +1,50 @@
+package game;
+import java.util.ArrayList;
+public class Player {
+	
+	
+	String nombre;
+	ArrayList<Heroe> heroes = new ArrayList<>();
+	ArrayList<Heroe> hComprar = new ArrayList<>();
+	ArrayList<Item> items = new ArrayList<>();
+	Tablero tablero;
+	Tienda tienda;
+	int oro;
+	Heroe ingame[] = new Hereo[2];
+	
+	public Player(String nombre,Tienda t) {
+		this.tienda=t;
+		this.nombre=nombre;
+		this.oro=500;
+		hComprar.add(new Caballero(null));
+		hComprar.add(new Arquero(null));
+		hComprar.add(new Mago(null));
+		hComprar.add(new Gigante(null));
+		hComprar.add(new Dragon(null));
+	}
+	
+	public void usarItem() {
+		
+	}
+	
+	public void moverHeroe() {
+		
+	}
+	
+	public void atacar() {
+		
+	}
+	
+	public void abrirTienda() {
+		tienda.open();
+	}
+	
+	public void comprarHeroe() {
+		
+	}
+	
+	public void comprarItem() {
+		
+	}
+
+}

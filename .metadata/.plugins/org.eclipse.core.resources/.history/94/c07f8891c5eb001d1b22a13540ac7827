@@ -1,0 +1,6 @@
+package fixer;
+
+public class Fixer {
+
+	String fileRute = "50Names.txt";
+}

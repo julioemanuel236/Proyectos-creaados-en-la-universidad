@@ -1,0 +1,10 @@
+package project;
+import java.util.Scanner;
+public class InputRead {
+	private static Scanner entry = new Scanner(System.in);
+
+	static public int nextInt() {
+		
+	}
+	
+}

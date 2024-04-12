@@ -1,0 +1,22 @@
+package Game;
+import javax.swing.JLabel;
+import java.util.Random;
+
+public class Food extends JLabel{
+	int X;
+	int Y;
+	public Food(){
+		
+	}
+	
+	private void poner(int x,int y){
+		this.X=x;
+		this.Y=y;
+		this.setLocation(x, y);
+	}
+	
+	private void nueva(){
+		
+	}
+	
+}

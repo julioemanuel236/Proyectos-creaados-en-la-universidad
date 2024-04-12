@@ -1,0 +1,41 @@
+package app;
+
+import java.io.FileReader;
+import java.util.Scanner;
+
+public class App {
+
+	String studentsRute = "/StudentFile.txt";
+	String universitysRute = "Universities9.txt";
+	University universities[];
+	Student students[];
+	
+	public void App() {
+		try {
+			loadStudents();
+		}
+		catch(Exception e) {
+			
+		}
+	}
+	
+	private boolean YN(String s) {
+		return s.equalsIgnoreCase("Y");
+	}
+	
+	private void loadStudents() throws Exception{	
+		FileReader fr = new FileReader(studentsRute);
+		Scanner entry = new Scanner(fr);
+		int count = entry.nextInt();
+		students = new Student[count];
+		for(int i=0;i<count;i++) {
+			String[] dataLine = entry.nextLine().split(",");
+			students[i] = new Student(dataLine[0],dataLine[1],dataLine[2],
+					Integer.parseInt(dataLine[3]),dataLine[4],dataLine[5],
+					dataLine[6],dataLine[7],dataLine[8],dataLine[9],dataLine[10],
+					dataLine[11],Integer.parseInt(dataLine[12]),
+					YN(dataLine[13]),YN(dataLine[14]),Integer.parseInt(dataLine[15]),YN(dataLine[16]));
+		}
+	}
+	
+}

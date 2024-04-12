@@ -1,0 +1,10 @@
+package decanato;
+import java.util.ArrayList;
+
+public class Decanato {
+	ArrayList<Alumno> alumnos = new ArrayList<Alumno>();
+	ArrayList<Ayudante> ayudantes = new ArrayList<Ayudante>();
+	ArrayList<Licencia> licencias = new ArrayList<Licencia>();
+	
+	
+}

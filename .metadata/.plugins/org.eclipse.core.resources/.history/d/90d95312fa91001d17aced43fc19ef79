@@ -1,0 +1,16 @@
+package acm;
+import java.util.ArrayList;
+public class Junior extends Participante{
+	ArrayList<Problema> problemas = new ArrayList<>();
+
+	public Junior(String nombre, String carnet, int edad, String sexo, Pais pais) {
+		super(nombre, carnet, edad, sexo, pais);
+	}
+	
+	public 
+	
+	public int getProblemas() {
+		return problemas;
+	}
+	
+}

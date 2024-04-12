@@ -1,0 +1,14 @@
+package app;
+
+public class Person {
+	final private Name name;
+	
+	private int Age			// 19
+	private String Gender			// M (This field will be immutable)
+	private Street Address		// 1934 Same Street
+	City			// Annandale
+	State			// State
+	ZIP			// 02497
+	Phone number		// 7033345343
+
+}

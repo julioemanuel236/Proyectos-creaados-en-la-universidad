@@ -1,0 +1,12 @@
+package cadena;
+import javax.swing.*;
+
+public class Interfaz extends JFrame{
+	
+	public Interfaz(){
+		setSize(200,500);
+		setResizable(false);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+	}
+	
+}

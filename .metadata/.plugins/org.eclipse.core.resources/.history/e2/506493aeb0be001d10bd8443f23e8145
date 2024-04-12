@@ -1,0 +1,16 @@
+package game;
+
+public class Arbol extends Entity {
+
+	public Arbol(int vida) {
+		super(vida);
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public void die() {
+		// TODO Auto-generated method stub
+
+	}
+
+}

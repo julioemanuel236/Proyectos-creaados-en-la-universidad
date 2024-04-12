@@ -1,0 +1,42 @@
+package game;
+
+public abstract class Mob extends Entity{
+	int vida;
+	int movimientos;
+	int damage;
+	int x;
+	int y;
+	Tablero tablero;
+	public Mob(int vida, int movimientos, int damage,Tablero t) {
+		super();
+		this.vida = vida;
+		this.movimientos = movimientos;
+		this.damage = damage;
+		this.tablero=t;
+	}
+
+	public int getVida() {
+		return vida;
+	}
+
+	public int getMovimientos() {
+		return movimientos;
+	}
+
+	public int getDamage() {
+		return damage;
+	}
+
+	public int getX() {
+		return x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	public abstract void atacar();
+	
+	public abstract void hit(Mob m);
+	
+}

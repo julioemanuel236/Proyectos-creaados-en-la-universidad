@@ -1,0 +1,18 @@
+1690948925064	Delete element
+1690948976973	Rename package 'modelo.mobs'
+1690948986524	Rename type 'mob'
+1690985087715	Rename resource 'left_1.png'
+1690987425621	Delete element
+1690987430274	Delete element
+1690992636015	Delete element
+1691006467490	Rename field 'A'
+1691006476480	Rename field 'D'
+1691006489816	Rename field 'SPACE'
+1691006501524	Rename field 'S'
+1691007365204	Rename field 'stand_by_shot_left'
+1691007376553	Rename field 'stand_by_shot_right'
+1691083678530	Rename field 'right'
+1691187228889	Rename local variable 'piso2'
+1691190047400	Rename type 'Piso'
+1691215159775	Rename compilation unit 'EnemyControler.java'
+1691217090336	Rename field 'looking'

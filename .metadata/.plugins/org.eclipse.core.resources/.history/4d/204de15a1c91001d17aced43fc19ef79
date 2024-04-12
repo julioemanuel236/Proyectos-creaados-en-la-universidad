@@ -1,0 +1,23 @@
+package empresa_turistica;
+
+public class ExcursionDirigida extends Excursion {
+	String nombreGuia;
+	
+	public ExcursionDirigida(String nombre,int numero,float preciop,Carro carro,String guia) {
+		this.nombreGuia=guia;
+	}
+	
+	@Override
+	public String Reporte() {
+		return "EXCURSION: \n\t"+"Nombre: "+getNombre()+"\n\t"+"Numero: "+numero+"\n\t"+"Guia: "+nombreGuia+"\n\t"+"Precio por Persona: "+precioPersona+"\n\t"+"Capacidad: "+carro.cantidadAsientos+"\n\tReservas: "+carro.ocupados+"\n\tGanancias: "+carro.ocupados*precioPersona
+				+"\n"+carro.Reporte()+"\n\n";
+	}
+
+	public String getGuia() {
+		return nombreGuia;
+	}
+
+	public String toString() {
+		return nombre + " " +nombreGuia;
+	}
+}

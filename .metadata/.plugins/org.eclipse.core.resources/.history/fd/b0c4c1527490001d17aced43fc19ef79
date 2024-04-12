@@ -1,0 +1,6 @@
+package empresa_turistica;
+
+public class Guia extends Persona{
+	
+
+}

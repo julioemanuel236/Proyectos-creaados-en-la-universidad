@@ -1,0 +1,254 @@
+package consumo;
+import java.awt.Color;
+
+import javax.swing.*;
+
+public class Aplicacion {
+	JFrame ventana;
+	JPanel panel;
+	JDialog visible;
+	
+	private void seleccionNuevoEquipo() {
+		JDialog panel = new JDialog();
+		if(visible!=null)visible.setVisible(false);
+		visible=panel;
+		panel.setLocation(ventana.getX()+200,ventana.getHeight());
+		panel.setSize(200,145);
+		panel.setLayout(null);
+		panel.setUndecorated(true);
+		
+		JButton centrifuga = new JButton("Centrifuga");
+		centrifuga.setSize(190,40);
+		centrifuga.setLocation(5,5);
+		centrifuga.addActionListener((ActionEvent)->{
+			panel.setVisible(false);
+			Centrifuga.newCentrifuga();
+		});
+		
+		JButton embolo = new JButton("Embolo");
+		embolo.setSize(190,40);
+		embolo.setLocation(5,50);
+		embolo.addActionListener((ActionEvent)->{
+			panel.setVisible(false);
+			Embolo.newEmbolo();
+		});
+		
+		JButton intercambiador = new JButton("Intercambiador");
+		intercambiador.setSize(190,40);
+		intercambiador.setLocation(5,95);
+		intercambiador.addActionListener((ActionEvent)->{
+			panel.setVisible(false);
+			Intercambiador.newIntercambiador();
+		});
+		
+		panel.add(centrifuga);
+		panel.add(embolo);
+		panel.add(intercambiador);
+		
+		panel.setVisible(true);
+	}
+
+	private void seleccionNuevoTrabajador() {
+		JDialog panel = new JDialog();
+		if(visible!=null)visible.setVisible(false);
+		visible=panel;
+		panel.setLocation(ventana.getX(),ventana.getHeight());
+		panel.setSize(200,100);
+		panel.setLayout(null);
+		panel.setUndecorated(true);
+		
+		JButton trabajador = new JButton("Trabajador");
+		trabajador.setSize(190,40);
+		trabajador.setLocation(5,5);
+		trabajador.addActionListener((ActionEvent)->{
+			panel.setVisible(false);
+			Trabajador.newTrabajador();
+		});
+		
+		JButton director = new JButton("Director");
+		director.setSize(190,40);
+		director.setLocation(5,50);
+		director.addActionListener((ActionEvent)->{
+			panel.setVisible(false);
+			Director.newDirector();
+		});
+		
+		
+		panel.add(trabajador);
+		panel.add(director);
+		
+		panel.setVisible(true);
+	}
+	
+	private void seleccionVerInfo() {
+		JDialog panel = new JDialog();
+		if(visible!=null)visible.setVisible(false);
+		visible=panel;
+		panel.setLocation(ventana.getX()+400,ventana.getHeight());
+		panel.setSize(200,230);
+		panel.setLayout(null);
+		panel.setUndecorated(true);
+		
+		JButton masConsumo = new JButton("Equipo Más Consumo");
+		masConsumo.setSize(190,40);
+		masConsumo.setLocation(5,5);
+		masConsumo.addActionListener((ActionEvent)->{
+			panel.setVisible(false);
+			Equipo.showMasConsumidor();
+		});
+		
+		JButton centrifugas = new JButton("Ver Centrifugas");
+		centrifugas.setSize(190,40);
+		centrifugas.setLocation(5,50);
+		centrifugas.addActionListener((ActionEvent)->{
+			panel.setVisible(false);
+			Centrifuga.mostrarCentrifugas();
+		});
+		
+		JButton tipos = new JButton("Cantidad de Equipos");
+		tipos.setSize(190,40);
+		tipos.setLocation(5,95);
+		tipos.addActionListener((ActionEvent)->{
+			panel.setVisible(false);
+			Equipo.showEquiposTipo();
+		});
+		
+		JButton trabajadores = new JButton("Ver Trabajadores");
+		trabajadores.setSize(190,40);
+		trabajadores.setLocation(5,140);
+		trabajadores.addActionListener((ActionEvent)->{
+			panel.setVisible(false);
+			Trabajador.showTrabajadores();
+		});
+
+		JButton tiempo = new JButton("Trabajador Experiencia");
+		tiempo.setSize(190,40);
+		tiempo.setLocation(5,185);
+		tiempo.addActionListener((ActionEvent)->{
+			panel.setVisible(false);
+			Trabajador.masTiempo();
+		});
+		
+		panel.add(masConsumo);
+		panel.add(centrifugas);
+		panel.add(tipos);
+		panel.add(trabajadores);
+		panel.add(tiempo);
+		
+		panel.setVisible(true);
+		
+	}
+
+	private void seleccionPlan() {
+		JDialog panel = new JDialog();
+		if(visible!=null)visible.setVisible(false);
+		visible=panel;
+		panel.setLocation(ventana.getX()+600,ventana.getHeight());
+		panel.setSize(200,100);
+		panel.setLayout(null);
+		panel.setUndecorated(true);
+		
+		JButton planMes = new JButton("Añadir Plan Mes");
+		planMes.setSize(190,40);
+		planMes.setLocation(5,5);
+		planMes.addActionListener((ActionEvent)->{
+			panel.setVisible(false);
+			Plan.newPlan();
+		});
+		
+		JButton pasados = new JButton("Meses Sobrepasados");
+		pasados.setSize(190,40);
+		pasados.setLocation(5,50);
+		pasados.addActionListener((ActionEvent)->{
+			panel.setVisible(false);
+			Plan.showSobrePasados();
+		});
+		
+		JButton informe = new JButton("Informe");
+		informe.setSize(190,40);
+		informe.setLocation(5,50);
+		informe.addActionListener((ActionEvent)->{
+			panel.setVisible(false);
+			Plan.informe();
+		});
+		
+		panel.add(planMes);
+		panel.add(pasados);
+		
+		panel.setVisible(true);
+		
+	}
+	
+	private void init() {
+		ventana.add(panel);
+		JButton nuevoEquipo;
+		JButton verInfo;
+		JButton salir;
+		JButton nuevoTrabajador;
+		JButton plan;
+		
+		panel.setBackground(Color.LIGHT_GRAY);
+		panel.setOpaque(true);
+		panel.setLayout(null);
+		
+		nuevoTrabajador = new JButton("Nuevo Trabajador");
+		nuevoTrabajador.setSize(200,25);
+		nuevoTrabajador.setLocation(0,0);
+		
+		nuevoEquipo = new JButton("Nuevo Equipo");
+		nuevoEquipo.setSize(200,25);
+		nuevoEquipo.setLocation(200,0);
+				
+		verInfo = new JButton("Ver Información");
+		verInfo.setSize(200,25);
+		verInfo.setLocation(400,0);
+		
+		plan = new JButton("Plan Consumo");
+		plan.setSize(200,25);
+		plan.setLocation(600,0);
+		
+		salir = new JButton("Salir");
+		salir.setSize(75,25);
+		salir.setLocation(800,0);
+		
+		salir.addActionListener((ActionEvent)->{
+			System.exit(0);
+		});
+		plan.addActionListener((ActionEvent)->{
+			seleccionPlan();
+		});
+		nuevoEquipo.addActionListener((ActionEvent)->{
+			seleccionNuevoEquipo();
+		});
+		nuevoTrabajador.addActionListener((ActionEvent)->{
+			seleccionNuevoTrabajador();
+		});
+		verInfo.addActionListener((ActionEvent)->{
+			seleccionVerInfo();
+		});
+		
+		panel.add(nuevoTrabajador);
+		panel.add(nuevoEquipo);
+		panel.add(verInfo);
+		panel.add(plan);
+		panel.add(salir);
+		panel.repaint();
+	}
+	
+	public Aplicacion() {
+		ventana = new JFrame();
+		ventana.setBounds(0,0,875,25);
+		panel = new JPanel();
+		panel.setSize(875,25);
+		ventana.setUndecorated(true);
+		ventana.setLocationRelativeTo(null);
+		ventana.setLocation(ventana.getX(),0);
+		ventana.setVisible(true);
+		ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		init();
+	}
+	
+	public static void main(String args[]) {
+		new Aplicacion();
+	}
+}

@@ -1,0 +1,6 @@
+package competencia;
+
+public class Problema {
+	String texto;
+	float puntaje;
+}

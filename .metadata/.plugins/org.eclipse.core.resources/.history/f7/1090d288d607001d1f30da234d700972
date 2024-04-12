@@ -1,0 +1,81 @@
+package Game;
+
+import javax.swing.JLabel;
+import javax.swing.SwingUtilities;
+import java.awt.Color;
+import java.util.Scanner;
+import java.lang.System;
+import java.awt.Point;
+
+public class Snake{
+
+	public class Body extends JLabel{
+		int X;
+		int Y;
+		int Dir;
+		
+		public Body(int x,int y,int dir,Field f) {	
+			this.X=x;
+			this.Y=y;
+			this.Dir=dir;
+			this.ini(f);
+		}
+		
+		public Body(Field f) {
+			this.ini(f);
+		}
+		
+		private void ini(Field f) {
+			this.setSize(20,20);
+			this.setLayout(null);
+			this.setOpaque(true);
+			this.setBackground(Color.white);
+			f.add(this);
+		}
+		
+		public void poner(int x,int y,int dir) {
+			this.X=x;
+			this.Y=y;
+			this.Dir=dir;
+			this.setLocation(X, Y);
+		}
+		
+	}
+
+	Body[] Snake = new Body[1000];
+	int new_body=1;
+	int cabeza=0;
+	int cola=0;
+	int size=1;
+	int dx;
+	int dy;
+	int nextDir;
+	public Snake(Field f) {
+		Snake[0]=new Body(100,100,3,f);
+		Snake[0].poner(100, 0,3);
+	}
+	
+	public void crecer(Field f){
+		int x=Snake[size-1].X;
+		int y=Snake[size-1].Y;
+		int dir=Snake[size-1].Dir;
+		if(dir==1)y+=20;
+		else if(dir==2)x-=20;
+		else if(dir==3)y-=20;
+		else if(dir==4)x+=20;
+		Snake[new_body] = new Body(x,y,dir,f);
+		Snake[size-1].updateUI();
+		new_body++;
+		size++;
+	}
+	
+	public void comer(Food food) {
+		Point sa=new Point(),sb=new Point();
+		sa.x=Snake[0].X;sa.y=Snake[0].Y;
+		sb.x=Snake[0].X+20;sb.y=Snake[0].Y;		
+		if(food.X>=sa.x&&food.X<=sb.x) {
+			
+		}
+	}
+		
+} 

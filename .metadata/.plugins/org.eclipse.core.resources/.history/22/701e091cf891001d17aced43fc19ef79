@@ -1,0 +1,120 @@
+package consumo;
+
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+
+@SuppressWarnings("serial")
+public class Director extends Trabajador {
+	
+	private String beeper;
+	private String inicio;
+	private static Director director;
+	
+	static JTextField beepert,iniciot;
+	
+	public Director(String nombre,String carnet,int trabajado,String beeper,String inicio) {
+		super(nombre,carnet,trabajado);
+		this.beeper=beeper;
+		this.inicio=inicio;
+		director=this;
+		//Trabajador.add(this);
+	}
+	
+	public String getBeeper() {
+		return this.beeper;
+	}
+	
+	public String getInicio() {
+		return this.inicio;
+	}
+	
+	public static void newDirector() {
+		if(panel!=null)panel.setVisible(false);
+		panel = new JDialog();
+		panel.setLayout(null);
+		panel.setSize(220,245);
+		panel.setTitle("Nuevo Director");
+		panel.setResizable(false);
+		
+		nombret = new JTextField("Nombre");
+		nombret.setSize(200,35);
+		nombret.setLocation(0,0);
+		panel.add(nombret);
+		
+		carnett = new JTextField("Carnet");
+		carnett.setSize(200,35);
+		carnett.setLocation(0,35);
+		panel.add(carnett);
+		
+		trabajadot = new JTextField("Años trabajados");
+		trabajadot.setSize(200,35);
+		trabajadot.setLocation(0,70);
+		panel.add(trabajadot);	
+		
+		beepert = new JTextField("Numero Beeper");
+		beepert.setSize(200,35);
+		beepert.setLocation(0,105);
+		panel.add(beepert);
+
+		iniciot = new JTextField("Comienzo de Director");
+		iniciot.setSize(200,35);
+		iniciot.setLocation(0,140);
+		panel.add(iniciot);
+		
+		panel.setLocationRelativeTo(null);
+		panel.setVisible(true);
+		
+		aceptar = new JButton("Aceptar");
+		aceptar.setSize(200,35);
+		aceptar.setLocation(0,175);
+		panel.add(aceptar);
+		aceptar.addActionListener((ActionEvent)->{
+			try {
+				String s = iniciot.getText();
+				int p0=s.indexOf('/');
+				int p1=s.lastIndexOf('/');
+				int dia = Integer.parseInt(s.substring(0, p0));
+				int mes = Integer.parseInt(s.substring(p0+1,p1));
+				int year = Integer.parseInt(s.substring(p1+1));
+				if(dia<0||dia>31||
+				   mes<1||mes>12||
+				   year<2000) {
+					Integer.parseInt(null);
+				}
+				
+			nuevo = new Director(nombret.getText(),
+					 carnett.getText(),
+					 Integer.parseInt(trabajadot.getText()),
+					 beepert.getText(),
+					 iniciot.getText());
+			
+			
+			JOptionPane.showMessageDialog(null, "Director Añadido con exito");
+			System.out.println(nuevo.getInfo());
+			panel.setVisible(false);
+			panel=null;
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+				JOptionPane.showMessageDialog(null, "Datos Invalidos");
+			}
+		});
+
+	}
+	
+	public String getInfo() {
+		return "Nombre: "+getNombre()+'\n'+
+			   "Carnet: "+getCarnet()+'\n'+
+			   "Años Trabajados: "+getAnios()+'\n'+
+			   "Numero Beeper: "+beeper+'\n'+
+			   "Inicio Director: "+inicio+'\n';
+		
+	}
+	
+	public static Director getDirector() {
+		return director;
+	}
+	
+}

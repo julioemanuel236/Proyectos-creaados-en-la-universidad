@@ -1,0 +1,22 @@
+package game;
+
+public class FlorCarnivora extends Enemigo {
+
+	public FlorCarnivora(int vida, int damage, int mM, boolean volar, Tablero t) {
+		super(vida, damage, mM, volar, t);
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public void atacar() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void die() {
+		// TODO Auto-generated method stub
+
+	}
+
+}

@@ -1,0 +1,30 @@
+package project;
+
+public class Main {
+
+	
+	public static void main(String[] args) {
+		System.out.println("Welcome to the Car and Garage program");
+		System.out.println("Enter the number of parking space you would like to have in the garage");		
+		Garage garage = new Garage(InputRead.parkingSize());
+	
+		while(true) {
+			if(garage.isEmpty())System.out.println("There are no cars currently in the garage.");
+			System.out.println("A) Refuel a car");
+			System.out.println("B) Get a Car to drive");
+			System.out.println("C) Add a Car");
+			System.out.println("Q) Quit");
+			System.out.println("\nPlease select one of the above choices.");
+			char op = InputRead.option();
+			switch(op) {
+				case 'a':	break;
+				case 'b':	break;
+				case 'c':	break;
+				case 'd':	break;
+				default:System.out.println("Not valid");break;
+			}
+			
+
+		}
+	}
+}

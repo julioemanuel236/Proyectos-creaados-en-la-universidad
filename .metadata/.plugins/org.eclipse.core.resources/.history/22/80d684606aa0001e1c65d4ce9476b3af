@@ -1,0 +1,20 @@
+package pieza;
+
+import java.awt.Point;
+
+public class Peon extends Pieza{
+
+	public Peon(int i, int j, boolean color,char[][] matrix) {
+		super(i, j, color,matrix); 
+	}
+
+	@Override
+	public Point[] getMovimientosValidas() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	
+
+	
+}

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Extract local variable &apos;readObject&apos; from expression &apos;(Map&lt;Integer,Entry&gt;)oos.readObject()&apos;&#x0D;&#x0A;- Original project: &apos;com.nobody.adMEnestrator&apos;&#x0D;&#x0A;- Variable name: &apos;readObject&apos;&#x0D;&#x0A;- Destination method: &apos;com.nobody.adMEnestrator.App.Data.Cargar_Datos()&apos;&#x0D;&#x0A;- Variable expression: &apos;(Map&lt;Integer,Entry&gt;)oos.readObject()&apos;" description="Extract local variable &apos;readObject&apos;" final="false" id="org.eclipse.jdt.ui.extract.temp" input="/src&lt;com.nobody.adMEnestrator{App.java" name="readObject" replace="false" selection="8061 36" stamp="1661813670237" varType="false" version="1.0"/>
+</session>

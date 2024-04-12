@@ -1,0 +1,10 @@
+package game;
+
+public class Lava extends Terreno {
+
+	public Lava(int x, int y, char c) {
+		super(x, y, c);
+		// TODO Auto-generated constructor stub
+	}
+
+}

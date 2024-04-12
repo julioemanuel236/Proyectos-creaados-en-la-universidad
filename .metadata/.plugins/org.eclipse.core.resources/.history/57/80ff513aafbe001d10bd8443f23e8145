@@ -1,0 +1,22 @@
+package game;
+
+public class Ogro extends Enemigo {
+
+	public Ogro(Tablero t) {
+		super(300, 50, 1, volar, t);
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public void atacar() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void die() {
+		// TODO Auto-generated method stub
+
+	}
+
+}

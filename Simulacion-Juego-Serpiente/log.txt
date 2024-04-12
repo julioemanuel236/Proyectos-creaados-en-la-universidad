@@ -1,0 +1,33 @@
+Snake 0 moved from: (10,6) to (10,5) at 1692274070822
+Snake 1 moved from: (3,6) to (2,6) at 1692274070822
+Snake 1 died at: (2,6) at 1692274070822
+Snake 2 moved from: (4,6) to (4,5) at 1692274070824
+Snake 3 moved from: (1,6) to (1,5) at 1692274070824
+Snake 4 moved from: (5,6) to (5,5) at 1692274070825
+Snake 5 moved from: (7,6) to (6,6) at 1692274070825
+Snake 5 died at: (6,6) at 1692274070825
+Snake 6 moved from: (2,6) to (1,6) at 1692274070825
+Snake 6 died at: (1,6) at 1692274070825
+Snake 7 moved from: (9,6) to (10,6) at 1692274070826
+Snake 7 died at: (10,6) at 1692274070826
+Snake 8 moved from: (6,6) to (7,6) at 1692274070826
+Snake 8 died at: (7,6) at 1692274070826
+Snake 9 moved from: (8,6) to (9,6) at 1692274070826
+Snake 9 died at: (9,6) at 1692274070826
+Snake 0 moved from: (10,5) to (11,5) at 1692274071138
+Snake 0 died at: (11,5) at 1692274071138
+Snake 2 moved from: (4,5) to (5,5) at 1692274071138
+Snake 2 died at: (5,5) at 1692274071138
+Snake 3 moved from: (1,5) to (2,5) at 1692274071138
+Snake 4 moved from: (5,5) to (6,5) at 1692274071138
+Snake 3 moved from: (2,5) to (3,5) at 1692274071456
+Snake 4 moved from: (6,5) to (7,5) at 1692274071456
+Snake 3 moved from: (3,5) to (3,6) at 1692274071770
+Snake 3 died at: (3,6) at 1692274071770
+Snake 4 moved from: (7,5) to (8,5) at 1692274071771
+Snake 4 moved from: (8,5) to (8,4) at 1692274072075
+Snake 4 moved from: (8,4) to (7,4) at 1692274072391
+Snake 4 moved from: (7,4) to (7,5) at 1692274072721
+Snake 4 moved from: (7,5) to (8,5) at 1692274073025
+Snake 4 moved from: (8,5) to (8,6) at 1692274073342
+Snake 4 died at: (8,6) at 1692274073342

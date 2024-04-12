@@ -1,0 +1,19 @@
+package game;
+
+public class Tablero {
+	int width;
+	int height;
+	Object map[][];
+	
+	int porPlanicie=60;
+	int porArbol=25;
+	int porAgua=10;
+	int porLava=5;
+	
+	public Tablero() {
+		
+	}
+	
+	
+
+}

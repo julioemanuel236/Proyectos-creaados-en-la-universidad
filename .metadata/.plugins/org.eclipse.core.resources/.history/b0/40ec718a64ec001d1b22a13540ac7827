@@ -1,0 +1,14 @@
+package project;
+
+public class Car {
+
+	final String make;
+	final String model;
+	final int year;
+	final float fuelTankSize;
+	final float fuelEconomy;// fuel economy at best speed
+	final float  optimalSpeed; // speed at which the car has the most efficient fuel economy
+
+	
+	
+}

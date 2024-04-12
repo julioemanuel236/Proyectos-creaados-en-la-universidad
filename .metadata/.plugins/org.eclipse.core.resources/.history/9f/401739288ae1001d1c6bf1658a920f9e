@@ -1,0 +1,10 @@
+package App;
+
+public class Almacen {
+	
+	Tablero tableros[] = new Tablero[50];
+	
+	public Almacen() {
+		
+	}
+}

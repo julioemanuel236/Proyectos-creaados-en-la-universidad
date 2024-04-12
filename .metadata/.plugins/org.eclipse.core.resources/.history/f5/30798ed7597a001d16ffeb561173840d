@@ -1,0 +1,70 @@
+package clases;
+
+import java.util.ArrayList;
+
+public class Apartamento {
+	protected ArrayList<Becado> becados = new ArrayList<>();
+	protected ArrayList<Medio> medios = new ArrayList<>();
+	
+	private String   tipo;
+	private String numero;
+	private String telefono;
+	private int    capacidad;
+	private int    ocupado;
+	private String    razon;
+	
+	public Apartamento(ArrayList<Becado> becados, ArrayList<Medio> medios, String tipo, String numero, String telefono,
+			int capacidad, int ocupado, String razon) {
+		super();
+		this.becados = becados;
+		this.medios = medios;
+		this.tipo = tipo;
+		this.numero = numero;
+		this.telefono = telefono;
+		this.capacidad = capacidad;
+		this.ocupado = ocupado;
+		this.razon = razon;
+	}
+
+	public void addMedio(Medio m) {
+		medios.add(m);
+	}
+	
+	public void addBecado(Becado b) {
+		becados.add(b);
+	}
+
+	public ArrayList<Becado> getBecados() {
+		return becados;
+	}
+
+	public ArrayList<Medio> getMedios() {
+		return medios;
+	}
+
+	public String getTipo() {
+		return tipo;
+	}
+
+	public String getNumero() {
+		return numero;
+	}
+
+	public String getTelefono() {
+		return telefono;
+	}
+
+	public int getCapacidad() {
+		return capacidad;
+	}
+
+	public int getOcupado() {
+		return ocupado;
+	}
+
+	public String getRazon() {
+		return razon;
+	}
+	
+	
+}

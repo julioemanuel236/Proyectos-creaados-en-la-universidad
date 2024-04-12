@@ -1,0 +1,26 @@
+package game;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class Tienda {
+	Scanner cin = new Scanner(System.in);
+	
+	Item items[] = new Item[3];
+	Player player;
+	
+	public Tienda() {
+	
+	}
+	
+	public void open() {
+		String ops="1-Comprar Heroes\n2-Comprar Objetos\n0-Salir";
+		int n;
+		while(true) {
+			System.out.println(ops);
+			n=cin.nextInt();
+		}
+		
+	}
+
+}

@@ -1,0 +1,20 @@
+package lietys;
+
+import java.io.Serializable;
+
+public class Asiento implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	int numero;
+	Persona persona=null;
+	int categoria;
+	float precio;
+	
+	public String toString() {
+		return ""+categoria;
+		
+	}
+}	
+

@@ -1,0 +1,66 @@
+package agencia;
+import javax.swing.*;
+import java.awt.*;
+
+public class Ventana extends JFrame{
+
+	JPanel menu;
+	
+	public void menu() {
+		menu = new JPanel();
+		menu.setSize(200,500);
+		menu.setLocation(getWidth()-menu.getWidth(),0);
+		botones();
+		
+		add(menu);
+	}
+	
+	public void botones() {
+		JButton nuevo Elementos,cargasemana,distanciapromediocamion,viajeschapa,mayortransportador,
+		modernospordistancia,masprovincias,generarnomina,guardarviajes,cargarviajes;
+		
+		nuevo = new JButton("Nuevo");
+		menu.add(nuevo);
+				
+		cargasemana = new JButton("Carga Semanal");
+		menu.add(cargasemana);			
+		
+		distanciapromediocamion = new JButton("Distancia Promedio");
+		menu.add(distanciapromediocamion);
+						
+		viajeschapa = new JButton("Viajes por Chapa");
+		menu.add(viajeschapa);
+		
+		mayortransportador = new JButton("Mayor Transportador");
+		menu.add(mayortransportador);
+				
+		modernospordistancia= new JButton("Lista Modernos");
+		menu.add(modernospordistancia);
+				
+		masprovincias = new JButton("Mas Provincias");
+		menu.add(masprovincias);
+		
+		generarnomina = new JButton("Generar Nómina");
+		menu.add(generarnomina);
+		
+		guardarviajes = new JButton("Guardar Viajes");
+		menu.add(guardarviajes);
+		
+		cargarviajes= new JButton("CargarViajes");
+		menu.add(cargarviajes);
+	}
+	
+	Ventana(){
+		setSize(800,500);
+		setResizable(false);
+		setLayout(null);
+		menu();
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setVisible(true);
+	}
+	
+	public static void main(String args[]) {
+		new Ventana();
+	}
+	
+}

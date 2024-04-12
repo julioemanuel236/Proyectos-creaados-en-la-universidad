@@ -1,0 +1,14 @@
+package game;
+
+public abstract class Heroe extends Mob {
+
+	public Heroe(int vida, int damage,int mM,Tablero t) {
+		super(vida, damage,mM,t);
+		// TODO Auto-generated constructor stub
+	}	
+	
+	public String info() {
+		return "Heroe "+super.info();
+	}
+
+}

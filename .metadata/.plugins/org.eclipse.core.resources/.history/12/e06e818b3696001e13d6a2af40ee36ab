@@ -1,0 +1,14 @@
+package app;
+import javax.swing.JFrame;
+public class Muestra extends JFrame{
+	
+	public Muestra() {		
+		setSize(500,500);
+		setUndecorated(true);
+		setVisible(true);
+	}
+	
+	public void main(String[] args){
+		new Muestra();
+	}
+}

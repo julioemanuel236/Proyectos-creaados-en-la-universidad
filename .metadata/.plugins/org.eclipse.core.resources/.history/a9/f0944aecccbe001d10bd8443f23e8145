@@ -1,0 +1,16 @@
+package game;
+
+public class SemillaVida extends Item {
+
+	public SemillaVida() {
+		super("Semilla de la Vida",50);
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public void usar(Heroe e) {
+		if(e.vida<=0)e.vida=e.vidaMaxima;
+		
+	}
+
+}

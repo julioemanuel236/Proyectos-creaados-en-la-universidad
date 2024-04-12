@@ -1,0 +1,44 @@
+package gui;
+import java.awt.Color;
+
+import javax.swing.*;
+
+public class MainWindow extends JFrame{
+
+	SelectTypePanel stp;
+	Reporte reporte;
+	JPanel table;
+	public MainWindow(){
+		int w=1120,h=720;
+		setResizable(false);
+		setSize(w,h);
+		setLayout(null);
+		setLocationRelativeTo(null);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		stp = new SelectTypePanel(w,h);
+		setVisible(true);
+		iniNewZone();
+		iniTableZone();
+	}
+	
+	private void iniNewZone() {
+		
+	}
+	
+	private void iniTableZone() {
+		table = new JPanel();
+		table.setLayout(null);
+		table.setBackground(Color.red);
+		table.setSize(getWidth(),360);
+		table.setLocation(0,getHeight()-table.getHeight());
+		add(table);
+		reporte = new Reporte(table.getWidth(),table.getHeight());
+		table.add(reporte);
+	}
+	
+	
+	public static void main(String args[]) {
+		new MainWindow();
+	}
+	
+}

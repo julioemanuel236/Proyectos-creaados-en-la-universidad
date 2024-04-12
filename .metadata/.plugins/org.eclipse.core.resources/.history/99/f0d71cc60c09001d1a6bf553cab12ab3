@@ -1,0 +1,39 @@
+package vector;
+
+public class Vector {
+	nodo first=null;
+	nodo last=null;
+	
+	public class nodo{
+		int valor;
+		nodo next;
+		int index;
+		public nodo(int x) {
+			this.valor=x;
+		}
+	}
+	
+	public void add(int x){
+		nodo n=new nodo(x);
+		if(first==null) {
+			first=n;
+			last=n;
+		}
+		else {
+			last.next=n;
+			last=n;
+		}
+	}
+	
+	public void get_list() {
+		nodo n=first;
+		while(first.next!=null) {
+			System.out.println(n.valor);
+			n=n.next;
+		}
+	}
+	
+	public static void main(String[] args) {
+		Vector v= new Vector();
+	}
+}

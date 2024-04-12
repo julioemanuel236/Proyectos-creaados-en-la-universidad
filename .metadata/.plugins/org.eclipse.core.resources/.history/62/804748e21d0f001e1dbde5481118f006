@@ -1,0 +1,194 @@
+package texteditor;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.util.Scanner;
+
+public class Main {
+
+	static LineList lines = new LineList();
+	static Scanner entry = new Scanner(System.in);
+	
+	public static void main(String[] args) {
+		if(args.length>0) {
+			withArgs(args);
+		}
+		menu();
+		selectOption();
+		while(true) {
+			selectOption();
+		}
+
+	}
+	
+	public static void withArgs(String[] args) {
+		String ops[] = {"m","load","p","lines","line","words","del","a","i","cls","rep","s","qui"};
+		loadFile({"",args[0]});
+		for(int j = 3;j<args.length;j++) {
+			
+			String[] s = {args[j],args[j-1],args[j-2]};
+			int i = 0;			
+			for(;i<ops.length;i++) 
+				if(s[0].equals(ops[i]))
+					break;
+			
+			switch(i) {
+				case 0:menu(); break;
+				case 1:loadFile(s); break;
+				case 2:printLines(); break;
+				case 3:numberLines(); break;
+				case 4:displayLine(s); break;
+				case 5:countWords(); break;
+				case 6:deleteLine(s); break;
+				case 7:appendLine(); break;
+				case 8:insertLine(s); break;
+				case 9:clearDocument(); break;
+				case 10:replaceWord(s); break;
+				case 11:saveFile(s); break;
+				case 12:return;							
+			}
+		}
+		saveFile(args);
+	}
+	
+	public static void menu() {		
+			print("Menu: m\n");
+			print("Load File: load fileName appendOption (1-append, 0-new list)\n");
+			print("Print: p\n");
+			print("Display number of lines: lines\n");
+			print("Display line: line lineNumber\n");
+			print("Count words: words\n");
+			print("Delete line: del lineNumberToDelete\n");
+			print("Append line: a\n");
+			print("Insert line: i lineNumberToInseart\n");
+			print("Clear document: cls\n");
+			print("Replace words: rep originalWord newWord\n");
+			print("Save to a file: s fileName\n");
+			print("Quiz: quit\n");  							
+	}
+	
+	public static void selectOption() {
+		String ops[] = {"m","load","p","lines","line","words","del","a","i","cls","rep","s","qui"};
+		String[] s = entry.nextLine().split(" ");
+		if(s.length == 0)return;
+		int i = 0;
+		for(;i<ops.length;i++) 
+			if(s[0].equals(ops[i]))
+				break;
+		
+		switch(i) {
+			case 0:menu(); break;
+			case 1:loadFile(s); break;
+			case 2:printLines(); break;
+			case 3:numberLines(); break;
+			case 4:displayLine(s); break;
+			case 5:countWords(); break;
+			case 6:deleteLine(s); break;
+			case 7:appendLine(); break;
+			case 8:insertLine(s); break;
+			case 9:clearDocument(); break;
+			case 10:replaceWord(s); break;
+			case 11:saveFile(s); break;
+			case 12:return;			
+			
+		}
+	}
+	
+	public static void saveFile(String[] s) {
+		if(s.length < 2)return;
+		try {
+			FileWriter fw = new FileWriter(s[1]);
+			fw.write(lines.toString());
+			fw.close();
+		}
+		catch(Exception e){e.printStackTrace();
+			
+		}
+	}
+	
+	public static void replaceWord(String[] s) {
+		if(s.length < 3)return;
+		lines.replace(s[1], s[2]);
+	}
+	
+	public static void clearDocument() {
+		lines.empty();
+	}
+	
+	public static void insertLine(String[] s) {
+		if(s.length<2)return;
+		try {
+			int n = Integer.parseInt(s[1]);
+			print("Type a line: ");
+			String line = entry.nextLine();
+			lines.addLine(line, n);
+		}
+		catch(Exception e){e.printStackTrace();
+			
+		}
+	}
+	
+	public static void appendLine() {
+		print("Type a line: ");
+		String line = entry.nextLine();
+		lines.addLine(line);
+	}
+	
+	public static void deleteLine(String[] s) {
+		if(s.length<2) return;
+		try {
+			int line = Integer.parseInt(s[1]);
+			lines.delete(line);
+		}
+		catch(Exception e){e.printStackTrace();
+			
+		}
+		
+	}
+	
+	public static void countWords() {
+		print("There are "+lines.words()+" words.\n");
+	}
+	
+	public static void displayLine(String[] s) {
+		if(s.length < 2)return;
+		try {
+			int n = Integer.parseInt(s[1]);
+			lines.line(n);
+		}
+		catch(Exception e){e.printStackTrace();
+			
+		}
+	}
+	
+	public static void numberLines() {
+		print("There are "+lines.lines()+" lines.\n");
+	}
+	
+	public static void printLines() {
+		lines.print();
+	}
+	
+	public static void loadFile(String[] s) {
+		try {
+			if(s.length<3)return;
+			String fileName = s[1];
+			boolean append = (Integer.parseInt(s[2])==1?true:false);			
+			if(!append)lines.empty();
+			FileReader fr = new FileReader(fileName);
+			Scanner read = new Scanner(fr);
+			while(read.hasNext()) {
+				lines.addLine(read.nextLine());
+			}
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			
+		}
+	}
+	
+	static void print(String txt) {
+		System.out.print(txt);
+	}
+	
+}
+

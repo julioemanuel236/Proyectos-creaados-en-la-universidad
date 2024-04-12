@@ -1,0 +1,79 @@
+package clases;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class Ventana extends JFrame{
+	Subdireccion estudiantil = new Subdireccion("Estudiante","Havana");
+
+	private JPanel opciones;
+	Dimension tamannoPanel = new Dimension(600,500);
+	JPanel  interaccion;
+	
+	Subdireccion sb = new Subdireccion("Subdireccion","Algun lugar");
+
+	public void iniciar() {
+		JPanel panel = new JPanel();
+		add(panel);
+		
+		JButton nuevoEdificio = new JButton("Nuevo Edificio");
+		panel.add(nuevoEdificio);
+		nuevoEdificio.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				sb.nuevoEdificio();				
+			}
+			
+		});
+		
+		JButton nuevoBecado = new JButton("Nuevo Becado");
+		panel.add(nuevoBecado);
+		nuevoBecado.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				sb.nuevoBecado();				
+			}
+			
+		});
+		
+		JButton datosEdificio = new JButton("Datos de un Edificio");
+		panel.add(datosEdificio);
+		datosEdificio.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				sb.datosEdificio();				
+			}
+			
+		});
+		
+		JButton datosBecadoCi = new JButton("Datos de un Becado por su carnet");
+		panel.add(datosBecadoCi);
+		datosEdificio.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				sb.datosBecadoCi();				
+			}
+			
+		});
+	}
+	
+	public Ventana(){
+		setResizable(false);
+		setSize(200,300);
+		setTitle("Residencia");
+		iniciar();
+		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		this.setVisible(true);
+	}
+
+	
+	public static void main(String args[]) {
+		new Ventana();
+	}
+}

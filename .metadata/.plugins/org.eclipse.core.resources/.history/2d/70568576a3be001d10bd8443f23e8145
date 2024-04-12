@@ -1,0 +1,63 @@
+package game;
+
+public abstract class Mob extends Entity{
+	final int dx[]= {1,1,0,-1,-1,-1,0,1};
+	final int dy[]= {0,1,1,1,0,-1,-1,-1};
+	
+	int vida;
+	int vidaMaxima;
+	int movimientos;
+	int maxMov;
+	int damage;
+	int x;
+	int y;
+	Tablero tablero;
+	public Mob(int vida, int movimientos, int damage,int mM,Tablero t) {
+		super();
+		this.vida = vidaMaxima = vida;
+		this.movimientos = movimientos;
+		this.damage = damage;
+		this.tablero=t;
+		this.maxMov = movimientos = mM;
+	}
+
+	public int getVida() {
+		return vida;
+	}
+
+	public int getMovimientos() {
+		return movimientos;
+	}
+
+	public int getDamage() {
+		return damage;
+	}
+
+	public int getX() {
+		return x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	public void restarMove() {
+		this.movimientos=maxMov;
+	}
+	
+	public abstract void atacar();
+	
+	public abstract void hit(Mob m);
+	
+	public abstract void die();
+	
+	public abstract boolean mover(int dir);
+	
+	public void moveTo(int x,int y) {
+		tablero.map[x][y]=this;
+		tablero.map[this.x][this.y]=null;
+		this.x=x;
+		this.y=y;
+		this.movimientos--;
+	}
+}

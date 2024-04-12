@@ -1,0 +1,152 @@
+package game;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class App {
+	static Scanner cin = new Scanner(System.in);
+	static String nombre;
+	static ArrayList<Heroe> heroes = new ArrayList<>();
+	static ArrayList<Heroe> hComprar = new ArrayList<>();
+	static ArrayList<Item> items = new ArrayList<>();
+	static Tablero tablero;
+	static int oro=0;
+	static Heroe ingame[] = new Heroe[2];
+	static int mainHero=0;
+	
+	
+	public static int seleccion(int n) {
+		while(true) {
+			try {
+				int op=entero();
+				if(op<0||op>n)throw new Exception();
+			}
+			catch(Exception e) {
+				print("Opcion no valida\n");
+			}
+		}
+	}
+	class Tienda{
+		
+		static void abrir() {
+			print("Posees "+oro+" monedas de oro");
+			print("1-Comprar Heroe\n");
+			print("2-Comprar Objeto\n");
+			print("0-Salir\n");
+			int op=entero();
+			switch(op) {
+				case 1:comprarHeroe();break;
+				case 2:comprarItem();break;
+				case 0:	return;
+			}
+		}
+		
+		static void comprarHeroe() {
+			mostrarhComprar();
+			print("Cada Hereo tiene un valor de 200 monedas de oro");
+			int op=seleccion(hComprar.size());
+			if(op==0)return;
+			else {
+				Heroe h = hComprar.get(op-1);
+				heroes.add(h);
+				hComprar.remove(h);
+				print("Se ha comprado el heroe "+h.info());
+				oro-=200;
+			}
+		}
+		
+		static void comprarItem() {
+			if(items.size()>10) {
+				print("No puedes llevar mas objetos");
+				return;
+			}
+			mostrarItems();
+			int op=seleccion(3);
+			if(op==0)return;
+			Item i=null;
+			switch(op) {
+				case 1:i = new SemillaVida();break;
+				case 2:i = new ElixirVerde();break;
+				case 3:i = new CapaMovilidad();break;
+			}
+			if(oro<i.precio) {
+				print("No tienes suficiente oro");
+				return;
+			}
+			items.add(i);
+			oro-=items.get(items.size()-1).precio;
+			print("Ha comprado con exito");
+		}
+		
+		public static void mostrarItems() {
+			print("1-Semilla de la vida\t50\nDescripcion: Resucita a un Heroe caido en batalla");
+			print("2-Elixir Verde\t25\nDescripcion: Restaura 50 puntos de vida sobre quien se use");
+			print("3-Capa de Movilidad\75\nDescripcion: Te permite moverte una casilla");
+			print("0-Salir");
+		}
+		
+		public static void mostrarhComprar() {
+			for(int i=0;i<hComprar.size();i++) {
+				print(i+hComprar.get(i).shopping()+"\n");
+			}
+			print("0-Salir\n");
+		}
+		
+	}
+	
+	public App() {
+		mainMenu();
+	}
+	
+	public void mainMenu() {
+		print("1-Jugar\n");
+		print("2-Estadisticas\n");
+		print("0-Salir\n");
+		int op=entero();
+		switch(op) {
+			case 1:iniciarPartida();break;
+			case 2: break;
+			case 0: return;
+		}
+	}
+	
+	public void estadisticas() {
+		for(Heroe i:heroes) {
+			print(i.info());
+		}
+		for(Item i:items) {
+			print(i.shopping());
+		}
+	}
+	
+	public void iniciarPartida() {
+		if(heroes.isEmpty()) {
+			//primera vez que se juega
+			while(heroes.isEmpty()) {
+				print("Para iniciar tu aventura obten un Heroe y algunos objetos\n");
+				Tienda.abrir();
+			}
+		}
+	}
+	
+	public static int entero() {
+		while(true) {
+			try {
+				int n=Integer.parseInt(cin.next());
+				return n;
+			}
+			catch(Exception e) {
+				print("Opcion no valida\n");
+			}
+		}
+	}
+	
+ 	public static void print(String txt) {
+		System.out.print(txt);
+	}
+	
+	public static void main(String args[]) {
+		new App();
+	}
+
+}

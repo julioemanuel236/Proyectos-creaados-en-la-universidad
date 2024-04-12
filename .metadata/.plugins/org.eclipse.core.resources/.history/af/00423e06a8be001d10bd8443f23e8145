@@ -1,0 +1,28 @@
+package game;
+
+public class Mago extends Heroe {
+
+	public Mago(Tablero t) {
+		super(100, 60, 2, t);
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public void atacar() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void die() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public boolean mover() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+}

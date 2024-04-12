@@ -1,0 +1,164 @@
+/**
+ * 
+ */
+
+/**
+ * CSC 223 001N Introduction to Data Structures
+ * FillGrid
+ * version 1.2 changed 2d array as a passed reference instead of class variable.
+ * 10 Jan 2021
+ * @author Larry Shannon
+ * @copyright Larry Shannon This code may be freely used with attribution
+ * 
+ */
+public class FillGrid
+{
+
+	/**
+	 * @description This is the entry point for the program. It calls other methods to run the program
+	 * @param args
+	 * precondition NA
+	 * postcondition NA
+	 * algorithm
+	 * This module uses a simple sequence of method calls
+	 */
+	public static void main(String[] args)
+	{
+		String[][] myGrid = new String[5][5];
+		fillGrid(myGrid);
+		displayGrid(myGrid);
+		recursiveFill(myGrid, 2, 2);
+		displayGrid(myGrid);
+	}
+
+	/**
+	 * description This method displays the contents of a 2 dimensional grid in a box pattern. 
+	 * Rows run horizontally and columns run vertically
+	 * @param myGrid
+	 * precondition parameter may not be null
+	 * postcondition no change to class variables and the 2D grid is displayed to the terminal
+	 * algorithm
+	 * BEGIN METHOD displayGrid() ACCEPTS a reference to 2D STRING array parameter named myGrid and RETURNS NOTHING
+	 *   DECLARE VARIABLES
+	 *   INTEGER rowSize 
+	 *   INTEGER columnSize 
+	 *   INITIALIZE rowSize to the row size of the parameter array
+	 *   INITIALIZE columnSize to the column size of the parameter array
+	 *   FOR each row in the parameter array
+	 *     FOR each column in the row
+	 *       DISPLAY the current row/column cell
+	 *     END FOR
+	 *     DISPLAY a new line
+	 *   END FOR
+	 * END METHOD
+	 */
+	private static void displayGrid(String[][] myGrid)
+	{
+		int rowSize = myGrid.length;
+		int colSize = myGrid[0].length;
+		for (int row = 0; row < rowSize; row++)
+		{
+			for (int col = 0; col < colSize; col++)
+			{
+				System.out.printf(" %s ", myGrid[row][col]);// myGrid[row][col] = "";
+			}
+			System.out.println();
+		}
+		System.out.println();
+	}
+
+	/**
+	 * description This method fills the contents of a 2 dimensional array with '-'s. 
+	 * Rows run horizontally and columns run vertically
+	 * @param myGrid
+	 * precondition parameter may not be null
+	 * postcondition referenced array is filled with '-'s
+	 * algorithm
+	 * BEGIN METHOD fillGrid() ACCEPTS a reference to 2D STRING array parameter named myGrid and RETURNS NOTHING
+	 *   DECLARE VARIABLES
+	 *   INTEGER rowSize 
+	 *   INTEGER columnSize 
+	 *   INITIALIZE rowSize to the row size of the parameter array
+	 *   INITIALIZE columnSize to the column size of the parameter array
+	 *   FOR each row in the parameter array
+	 *     FOR each column in the row
+	 *       SET the current row/column cell to '-'
+	 *     END FOR
+	 *     DISPLAY a new line
+	 *   END FOR
+	 * END METHOD
+	 */
+	private static void fillGrid(String[][] myGrid)
+	{
+		int rowSize = myGrid.length;
+		int colSize = myGrid[0].length;
+		for (int row = 0; row < rowSize; row++)
+		{
+			for (int col = 0; col < colSize; col++)
+			{
+				myGrid[row][col] = "-";
+			}
+		}
+
+	}
+
+	// Recursive Fill method
+	/**
+	 * description This method recursively fills the contents of a 2 dimensional array with '@'s. 
+	 * Rows run horizontally and columns run vertically
+	 * @param pBoardMatrix, row, col
+	 * precondition pBoardMatrix parameter may not be null
+	 * row and col parameters must be within the indices of the array
+	 * postcondition referenced array is filled with '@'s
+	 * algorithm
+	 * BEGIN METHOD fillArea() ACCEPTS a reference to 2D STRING array parameter named myGrid, a row index and a column index and RETURNS NOTHING
+	 *   DECLARE VARIABLES
+	 *   INTEGER bottomRow 
+	 *   INTEGER rightCol 
+	 *   INITIALIZE bottomRow to the maximum row index of the parameter array
+	 *   INITIALIZE rightCol to the maximum column index of the parameter array
+	 *   RECURSIVE BASE CASE
+	 *   IF cell referenced at row and col EQUALS "@" 
+	 *     RETURN
+	 *   END IF
+	 *   
+	 *   SET cell referenced at row and col TO "@"
+	 *   CALL displayGrid(myGrid)
+	 *   
+	 *   GENERAL CASES
+	 *   IF row is GREATER THAN 0//is on board
+	 *     CALL fillArea(myGrid, row - 1, col); // call 1 go up
+	 *   END IF
+	 *   IF col is LESS THAN rightCol//is on board
+	 *     CALL fillArea(myGrid, row, col + 1); // call 1 go right
+	 *   END IF
+	 *   IF row is LESS THAN bottomRow//is on board
+	 *     CALL fillArea(myGrid, row + 1, col); // call 1 go down
+	 *   END IF
+	 *   IF col is GREATER THAN 0//is on board
+	 *     CALL fillArea(myGrid, row, col - 1); // call 1 go left
+	 *   END IF
+	 * END METHOD
+	 */
+	static void recursiveFill(String[][] pBoardMatrix, int row, int col)
+	{
+		if (row < 0 || row > pBoardMatrix.length - 1 || col < 0 || col > pBoardMatrix[0].length - 1)
+			return;
+		if (pBoardMatrix[row][col].equals("@"))
+		{
+			return;
+		}
+
+		pBoardMatrix[row][col] = "@";
+
+		displayGrid(pBoardMatrix);
+
+		// is on board
+		recursiveFill(pBoardMatrix, row - 1, col); // call 1 go up
+		recursiveFill(pBoardMatrix, row, col + 1); // call 2 go right
+		recursiveFill(pBoardMatrix, row + 1, col); // call 3 go down
+		recursiveFill(pBoardMatrix, row, col - 1); // call 4 go left
+
+	}
+
+}

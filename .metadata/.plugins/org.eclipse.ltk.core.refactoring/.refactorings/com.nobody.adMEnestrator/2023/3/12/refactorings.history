@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy element &apos;TextField.java&apos; to &apos;Recuperacion_BlasAvila/src/gui&apos;&#x0D;&#x0A;- Original project: &apos;com.nobody.adMEnestrator&apos;&#x0D;&#x0A;- Destination element: &apos;Recuperacion_BlasAvila/src/gui&apos;&#x0D;&#x0A;- Original element: &apos;Ventana.TextField.java&apos;" description="Copy compilation unit" destination="=Recuperacion_BlasAvila/src&lt;gui" element1="/src&lt;Ventana{TextField.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1679203265967" units="1" version="1.0"/>
+</session>

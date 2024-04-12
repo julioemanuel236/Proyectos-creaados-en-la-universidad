@@ -1,0 +1,28 @@
+package gui;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import javax.swing.JTextField;
+public class TextField extends JTextField implements KeyListener{
+	private boolean onlyNumber=false;
+	
+	@Override
+	public void keyTyped(KeyEvent e) {
+		if(onlyNumer) {
+			
+		}
+		
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

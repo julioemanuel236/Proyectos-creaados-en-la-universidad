@@ -1,0 +1,28 @@
+package aplicación;
+
+public class Producto {	
+	private String nombre;
+	private float coste;
+	private String vencimiento;
+	private Material envase;
+	private String  mercado;
+	public int[] 	produccion = new int[12];
+	
+	public Producto(String nombre,float coste,String vencimiento,Material envase,String mercado) {
+		this.nombre=nombre;
+		this.coste=coste;
+		this.vencimiento=vencimiento;
+		this.envase=envase;
+		this.mercado=mercado;
+	}
+	
+	public float getCosteFinal() {
+		if(mercado=="Nacional")return envase.getCoste()+this.coste;
+		else return (this.coste*1.75f)+envase.getCoste();
+	}
+	
+	public String getNombre() {
+		return this.nombre;
+	}
+	
+}

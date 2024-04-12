@@ -1,0 +1,175 @@
+package project;
+import java.util.Objects;
+import java.util.Random;
+public class Car {	 	
+	private static String MAKE[] = {"BMW","Mercedes-Benz","Audi","Lexus","Renault"};
+	private static String MODEL[][] = {{"i4 Berlina","iX 4x4","Serie 1 ","Serie 2 ","Serie 2 "} , 
+									   {"MERCEDES-BENZ Citan","MERCEDES-BENZ Clase A","MERCEDES-BENZ Clase B","MERCEDES-BENZ Clase C","MERCEDES-BENZ Clase CLA "} , 
+									   {"Audi A4 - Sedan ","Audi Q5 - SUV ","Audi RS7 - Sedan","Audi e-tron - SUV","Audi R8 - Carro"} ,
+									   {"Lexus ES - Sedan","Lexus RX - SUV","Lexus LS - Sedan","Lexus LC - esportivo","Lexus UX - SUV"} , 
+									   {"Renault Clio","Renault Captur ","Renault Megane ","Renault Kwid ","Renault Duster "} };
+	private static String COLOR[] = {"blue","red","green","white","black","yellow","orange","pink","lime"};
+	private final String make;
+	private final String model;
+	private final int year;
+	private	final double fuelTankSize;
+	private	final double fuelEconomy;// fuel economy at best speed
+	private	final double  optimalSpeed; // speed at which the car has the most efficient fuel economy
+
+	private double odometer;
+	private double tripOdometer;
+	private String color;
+	private double fuelLevel;
+	private double travelSpeed; //KM PER SECOND
+	private double travelDistance;	// KM
+	
+	public Car() {		
+		Random rand = new Random();
+		int mk = rand.nextInt(MAKE.length);
+		make = MAKE[mk];
+		model = MODEL[mk][rand.nextInt(MODEL[mk].length)];
+		year = 2000 + rand.nextInt(24);
+		color = COLOR[rand.nextInt(COLOR.length)];
+		odometer = rand.nextDouble(6.00f); 
+		fuelLevel = 0;
+		tripOdometer = 0.0f; 
+		fuelEconomy = 15.00f+rand.nextDouble(55.0f-15.0f); 
+		optimalSpeed = 45.00f+rand.nextDouble(65.0f-45.0f); 
+		fuelTankSize = 8.00f+rand.nextDouble(35.0f-8.0f);
+	
+	}
+
+
+	public Car(String make, String model, int year, double fuelTankSize, double fuelEconomy, double optimalSpeed,
+			double odometer, double tripOdometer, String color, double fuelLevel) {
+		super();
+		this.make = make;
+		this.model = model;
+		this.year = year;
+		this.fuelTankSize = fuelTankSize;
+		this.fuelEconomy = fuelEconomy;
+		this.optimalSpeed = optimalSpeed;
+		this.odometer = odometer;
+		this.tripOdometer = tripOdometer;
+		this.color = color;
+		this.fuelLevel = fuelLevel;
+	}
+
+
+	public double addFuel(double fuel) {
+		double toFill = fuelTankSize-fuelLevel;
+		fuelLevel+=toFill;
+		if(toFill==fuel)return -(fuelTankSize-fuelLevel);
+		return fuel-toFill;
+	}
+
+	public void clearTripOdometer() {
+		tripOdometer = 0.0;
+	}
+
+	
+	public void setUpTrip(double speed,double distance) {
+		travelSpeed=speed;
+		travelDistance=distance;
+	}
+	
+	public double kmhToKms(double kmh) {
+	    double kms = kmh / 3600.0 * 1000.0;
+	    return kms;
+	}
+	
+	public boolean driveCar() {
+		double travel = 0;		
+		double kms = kmhToKms(travelSpeed);
+		while(travel<travelDistance&&fuelLevel>0) {
+			travel+=kms;
+			odometer+=kms;
+			tripOdometer+=kms;
+		}
+		return fuelLevel>0;
+	}
+	
+	
+	public String toString() {
+		return "make:" + make + "\n model:" + model + "\n year:" + year + "\n fuelTankSize:" + fuelTankSize
+				+ "\n fuelEconomy:" + fuelEconomy + "\n optimalSpeed:" + optimalSpeed + "\n odometer:" + odometer
+				+ "\n tripOdometer:" + tripOdometer + "\n color:" + color + "\n fuelLevel:" + fuelLevel + "";
+	}
+
+	public boolean equals(Car other) {		
+		return Objects.equals(make, other.make) && Objects.equals(model, other.model) && year == other.year;
+	}
+
+
+	public double getOdometer() {
+		return odometer;
+	}
+
+
+	public void setOdometer(double odometer) {
+		this.odometer = odometer;
+	}
+
+
+	public double getTripOdometer() {
+		return tripOdometer;
+	}
+
+
+	public void setTripOdometer(double tripOdometer) {
+		this.tripOdometer = tripOdometer;
+	}
+
+
+	public String getColor() {
+		return color;
+	}
+
+
+	public void setColor(String color) {
+		this.color = color;
+	}
+
+
+	public double getFuelLevel() {
+		return fuelLevel;
+	}
+
+
+	public void setFuelLevel(double fuelLevel) {
+		this.fuelLevel = fuelLevel;
+	}
+
+
+	public String getMake() {
+		return make;
+	}
+
+
+	public String getModel() {
+		return model;
+	}
+
+
+	public int getYear() {
+		return year;
+	}
+
+
+	public double getFuelTankSize() {
+		return fuelTankSize;
+	}
+
+
+	public double getFuelEconomy() {
+		return fuelEconomy;
+	}
+
+
+	public double getOptimalSpeed() {
+		return optimalSpeed;
+	}
+	
+	
+	
+}

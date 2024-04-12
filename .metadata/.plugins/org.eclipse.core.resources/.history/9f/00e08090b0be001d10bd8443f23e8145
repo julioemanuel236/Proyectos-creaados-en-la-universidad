@@ -1,0 +1,22 @@
+package game;
+
+public class Bruja extends Enemigo {
+
+	public Bruja(Tablero t) {
+		super(150, 45, 3, true, t);
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public void atacar() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void die() {
+		// TODO Auto-generated method stub
+
+	}
+
+}

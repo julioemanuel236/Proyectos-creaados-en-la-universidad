@@ -1,0 +1,14 @@
+package medios_uci;
+import java.util.ArrayList;
+
+public class CONTROL {
+	static ArrayList<Medio> medios = new ArrayList<>();
+	
+	public static void addMedio(Medio m) {
+		medios.add(m);
+	}
+	
+	public static void cantidadEquipos() {
+		
+	}
+}

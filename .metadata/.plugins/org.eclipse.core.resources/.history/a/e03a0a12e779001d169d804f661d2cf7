@@ -1,0 +1,87 @@
+package cadena;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+
+public class Cadena {
+	private ArrayList<Hotel> hoteles;
+	private ArrayList<Cliente> clientes;
+
+	private String leer(String txt) {
+		return JOptionPane.showInputDialog(txt);
+	}
+	
+	private boolean sino(String txt) {
+		return (JOptionPane.showInternalInputDialog(null, txt, null, JOptionPane.YES_NO_OPTION)=="yes"?true:false);
+	}
+	
+	private Object seleccion(String txt,String arr[]) {
+		return JOptionPane.showInputDialog(null, txt,null, JOptionPane.QUESTION_MESSAGE,null,arr,null);
+	}
+	
+ 	public void nuevoHotel() {
+		String nombreHotel = leer("Nombre del Hotel");
+		
+		int cantidadPisos = Integer.parseInt(leer("Ccantidad de Pisos"));
+		
+		ArrayList<Piso> pisos = new ArrayList<>();
+		
+		int numerohab=1;
+		
+		for(int i=1;i<=cantidadPisos;i++){
+			int cantidadHabitaciones = Integer.parseInt(leer("Cantidad de Habitaciones en el piso "+i));
+			ArrayList<Habitacion> habitaciones = new ArrayList<>();
+			Piso p = new Piso(i,habitaciones);
+			pisos.add(p);
+			for(int j=0;j<cantidadHabitaciones;j++) {
+					float precio = Float.parseFloat(leer("Precio de la habitaion "+numerohab));
+					habitaciones.add(new Habitacion(p,numerohab++,precio));
+				}	
+			}
+		
+		int cantidadEmpleados = Integer.parseInt(leer("Cantidad de Empleados"));
+		ArrayList<Empleado> empleados = new ArrayList<>();
+		for(int i=0;i<cantidadEmpleados;i++) {
+			Empleado e;
+			String nombre = leer("Nombre empleado "+i);
+			String id = leer("ID empleado "+i);;
+			String sexo = leer("Sexo empleado "+i);;
+			int años = Integer.parseInt(leer("Años Trabajados empleado "+i));
+			boolean esJefe = sino("Es Jefe");
+			
+			if(esJefe) {
+				e = new Jefe(nombre,id,sexo,años,Integer.parseInt("Anos de Jefe empleado "+i));
+			}
+			else e = new Empleado(nombre,id,sexo,años);
+			
+			empleados.add(e);
+		}
+		Hotel h = new Hotel(nombreHotel, pisos, empleados);
+		hoteles.add(h);
+	}
+
+	public void nuevaReservacion() {
+		Cliente c;
+		String tipoHabitacion = seleccion("Tipo Habitacion",new String[]{"Simple","Doble","Triple"});
+		String nombre = leer("Nombre Cliente");
+		String id = leer("ID Cliente");
+		String sexo = leer("Sexo Cliente");
+		String entrada = leer("Fecha Entrada Cliente");
+		String salida = leer("Fecha Salida Cliente");
+		
+		boolean vip = sino("Es Cliente VIP");
+		
+		if(vip) {
+			String cargo = leer("Cargo Cliente");
+			c = new Vip(nombre,id,sexo,entrada,salida,cargo);
+		}
+		
+		else c = new Cliente(nombre,id,sexo,entrada,salida);
+		
+		clientes.add(c);
+	}
+	
+	public static void main(String args[]) {
+		new Cadena().nuevoHotel();
+	}
+	
+}

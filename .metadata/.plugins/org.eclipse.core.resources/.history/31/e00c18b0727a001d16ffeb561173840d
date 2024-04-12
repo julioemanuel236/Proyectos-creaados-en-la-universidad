@@ -1,0 +1,80 @@
+package clases;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class Ventana extends JFrame{
+	Subdireccion estudiantil = new Subdireccion("Estudiante","Havana");
+
+	private JPanel opciones;
+	Dimension tamannoPanel = new Dimension(600,500);
+	JPanel  interaccion;
+	
+	
+	void SubdireccionEstudiantil() {
+		JPanel panel = new JPanel();
+		
+		String textos[] = {"Becados","Medios","Edificios","Apartamentos"};
+		
+		JPanel becados = new JPanel();
+		becados.setSize(200,450);
+		
+		JLabel zona = new JLabel("Becados");
+		zona.setSize(200,30);
+		becados.add(zona);
+		JButton nuevo = new JButton("+");
+		nuevo.setSize(200,40);
+		becados.add(nuevo);
+		for(Becado i:estudiantil.becados) {
+			JButton jb = new JButton(i.getSolapin());
+			jb.setSize(200,30);
+			jb.addActionListener((ActionEvent)->{
+				JOptionPane.showMessageDialog(zona, i.datos());
+			});
+			becados.add(jb);
+		}
+		panel.add(becados);
+		
+		opciones.removeAll();
+		opciones.add(panel);
+	}
+	
+	void menuSuperior(){
+		JPanel menu = new JPanel();
+		opciones = new JPanel();
+		opciones.setSize(800,450);
+		opciones.setLocation(0,50);
+		menu.setSize(800,50);
+		menu.setLocation(0,0);
+		add(opciones);
+		add(menu);
+		JButton estudiantil = new JButton("Estudiantil");
+		estudiantil.setSize(100,40);
+		estudiantil.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				SubdireccionEstudiantil();
+				
+			}
+			
+		});
+		menu.add(estudiantil); 
+	}
+	
+	public Ventana(){
+		setResizable(false);
+		setSize(800,500);
+		setLayout(null);
+		menuSuperior();
+		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		this.setVisible(true);
+	}
+
+	
+	public static void main(String args[]) {
+		new Ventana();
+	}
+}

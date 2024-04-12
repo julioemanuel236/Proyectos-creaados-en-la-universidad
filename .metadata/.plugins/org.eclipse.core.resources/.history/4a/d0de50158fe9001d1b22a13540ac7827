@@ -1,0 +1,114 @@
+package tareas;
+import java.util.Scanner;
+
+public class Cifrado {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Ingrese la frase a cifrar: ");
+        String frase = scanner.nextLine();
+        System.out.println("La frase ingresada es: " + frase);
+
+        System.out.println("Ingrese la matriz de cifrado:");
+        int[][] matrizCifrado = new int[2][2];
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < 2; j++) {
+                System.out.print("Ingrese el elemento [" + i + "][" + j + "]: ");
+                matrizCifrado[i][j] = scanner.nextInt();
+            }
+        }
+
+        // Validar que la matriz de cifrado sea invertible
+        double determinante = matrizCifrado[0][0] * matrizCifrado[1][1] - matrizCifrado[0][1] * matrizCifrado[1][0];
+        if (determinante == 0) {
+            System.out.println("La matriz de cifrado no es invertible");
+            return;
+        }
+        
+        // Convertir la frase a una matriz de caracteres
+        char[] characters = frase.toCharArray();
+        int[] caracteres = new int[characters.length];
+        int n = caracteres.length;
+        int m = (int) Math.ceil((double) n / matrizCifrado.length);
+        int[][] fraseMatriz = new int[m][matrizCifrado.length];
+        int indice = 0;
+        
+        for(int i=0;i<characters.length;i++) {
+        	if(characters[i]==' ')caracteres[i]=28;
+        	else caracteres[i] =(1+(int)characters[i]%27);
+        }
+        	
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < matrizCifrado.length; j++) {
+                if (indice < n) {
+                    fraseMatriz[i][j] = caracteres[indice];
+                    indice++;
+                } else {
+                    fraseMatriz[i][j] = ' ';
+                }
+            }
+        }
+
+        
+        // Multiplicar la matriz de la frase por la matriz de la clave de cifrado
+        int[][] cifradoMatriz = new int[m][matrizCifrado[0].length];
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < matrizCifrado[0].length; j++) {
+                cifradoMatriz[i][j] = 0;
+                for (int k = 0; k < matrizCifrado.length; k++) {
+                    cifradoMatriz[i][j] += fraseMatriz[i][k] * matrizCifrado[k][j];
+                }
+            }
+        }
+
+        // Convertir la matriz cifrada en texto cifrado
+        StringBuilder cifrado = new StringBuilder();
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < cifradoMatriz[0].length; j++) {
+                cifrado.append((char)cifradoMatriz[i][j]);
+            }
+        }
+
+        System.out.println("La frase cifrada es: " + cifrado.toString());
+        
+        double inversaDeterminante = 1.0 / determinante;
+        int[][] matrizInversa = new int[2][2];
+        matrizInversa[0][0] = (int) (matrizCifrado[1][1] * inversaDeterminante);
+        matrizInversa[1][1] = (int) (matrizCifrado[0][0] * inversaDeterminante);
+        matrizInversa[0][1] = (int) (-matrizCifrado[0][1] * inversaDeterminante);
+        matrizInversa[1][0] = (int) (-matrizCifrado[1][0] * inversaDeterminante);
+
+        // Convertir la frase cifrada a una matriz de enteros
+        n = cifrado.length();
+        m = matrizCifrado.length;
+        cifradoMatriz = new int[m][n / m];
+        indice = 0;
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n / m; j++) {
+                cifradoMatriz[i][j] = cifrado.charAt(indice) % 256;
+                indice++;
+            }
+        }
+
+        // Multiplicar la matriz cifrada por la matriz inversa de la clave de cifrado
+        int[][] descifradoMatriz = new int[m][n / m];
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n / m; j++) {
+                descifradoMatriz[i][j] = 0;
+                for (int k = 0; k < matrizInversa.length; k++) {
+                    descifradoMatriz[i][j] += cifradoMatriz[k][j] * matrizInversa[i][k];
+                }
+            }
+        }
+
+        // Convertir la matriz descifrada en texto
+        StringBuilder descifrado = new StringBuilder();
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n / m; j++) {
+                descifrado.append((char) descifradoMatriz[i][j]);
+            }
+        }
+
+        System.out.println("La frase descifrada es: " + descifrado.toString());
+    }
+}

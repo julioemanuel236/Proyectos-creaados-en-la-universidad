@@ -1,0 +1,10 @@
+package game;
+
+public abstract class Heroe extends Mob {
+
+	public Heroe(int vida, int movimientos, int damage,Tablero t) {
+		super(vida, movimientos, damage,t);
+		// TODO Auto-generated constructor stub
+	}	
+
+}

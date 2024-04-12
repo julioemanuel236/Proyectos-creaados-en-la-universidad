@@ -1,0 +1,18 @@
+package correo;
+
+public class Correo {
+	Correspondencia correo[];
+	int cC=0;
+	
+	Correo(){
+		if(!cargar())correo = new Correspondecia[10000];
+	}
+	
+	public boolean cargar() {
+		
+	}
+	
+	public boolean guardar() {
+		
+	}
+}

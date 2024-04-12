@@ -1,0 +1,192 @@
+package mainwindow;
+
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.event.MouseEvent;
+
+import ventana.Imagen;
+
+public class Button extends Component{
+
+	private boolean over=false;
+	private boolean clicked=false;
+	private boolean reseting = false;
+	
+	private int maxwidth;
+	private int maxheight;
+	private int minwidth;
+	private int minheight;
+	private int delay = 1000/144;
+	private int recoverX;
+	private int recoverY;
+	
+	private int crecimiento = 2;
+	private int dx = 1;
+	private int dy = 1;
+	
+	private long lastEnterTime;
+	private long lastExitTime;
+	private long reactionTime = 0;
+	private Image recoverImg;
+	
+	public Button() {
+		super();
+	}
+
+	public Button(Image img) {
+		super(img);		
+		setRecoverImg(img);		
+		
+	}
+	
+	@Override
+	public void paint(Graphics g) {
+		super.paint(g);
+	}
+	
+	@Override
+	public void mouseEnter(){
+		//System.out.println("ENTRANDO");
+		over=true;
+		(new Thread(){
+			public void run() {
+				long ini = System.currentTimeMillis();
+				long fin = System.currentTimeMillis()+reactionTime;
+				while(System.currentTimeMillis()<fin) {
+					try {
+						Thread.sleep(1);
+					}
+					catch(Exception e) {
+						
+					}
+				
+				}
+				while(over&&(getWidth()<maxwidth||getHeight()<maxheight)) {
+					while(reseting) {
+						try {
+							Thread.sleep(1);
+						}
+						catch(Exception e) {
+							
+						}
+					}
+					Button.super.setSize(getWidth()+crecimiento,getHeight()+crecimiento);
+					Button.super.setLocation(getX()-dx,getY()-dy);
+					Button.super.setImg(recoverImg.getScaledInstance(getWidth(), getHeight(), Image.SCALE_SMOOTH));
+					repaint();
+				
+					try {
+						sleep(delay);
+					}
+					catch(Exception e) {
+						
+					}
+				}
+				
+				
+			}
+		}).start();
+					
+	}
+	
+	@Override
+	public void mouseExit() {
+		//System.out.println("SALIENDO");
+		over=false;
+		(new Thread() {
+			public void run() {
+				while (!over && (getWidth() > minwidth || getHeight() > minheight)) {
+					while(reseting) {
+						try {
+							Thread.sleep(1);
+						}
+						catch(Exception e) {
+							
+						}
+					}
+					Button.super.setSize(getWidth() - 2, getHeight() - 2);
+					Button.super.setLocation(getX() + dx, getY() + dy);
+					Button.super.setImg(recoverImg.getScaledInstance(getWidth(), getHeight(), Image.SCALE_SMOOTH));
+					repaint();
+					try {
+						sleep(delay);
+					} catch (Exception e) {
+
+					}
+					
+				}
+				reseting = true;
+				Button.super.setSize(minwidth, minheight);
+				Button.super.setLocation(recoverX,recoverY);
+				Button.super.setImg(recoverImg);
+				reseting = false;
+			}
+		}).start();
+		
+	}
+	
+	public void setRecoverImg(Image img) {
+		recoverImg = img.getScaledInstance(img.getWidth(null), img.getHeight(null), Image.SCALE_SMOOTH);
+	}
+	
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		action();		
+	}
+	
+	public void action() {
+		
+	}
+	
+	@Override
+	public void setLocation(int x,int y) {
+		super.setLocation(x, y);
+		recoverX = x;
+		recoverY = y;		
+	}
+	
+	@Override
+	public void setSize(int w,int h) {
+		super.setSize(w,h);
+		setRecoverImg(getRecoverImg().getScaledInstance(w, h, Image.SCALE_SMOOTH));
+		maxwidth=(int)(getWidth()*1.25f);
+		maxheight=(int)(getHeight()*1.25f);
+		minwidth=getWidth();
+		minheight=getHeight();
+		
+	}
+	
+	
+
+	
+	public Image getRecoverImg() {
+		return recoverImg;
+	}
+
+	public int getCrecimiento() {
+		return crecimiento;
+	}
+
+	public void setCrecimiento(int crecimiento) {
+		this.crecimiento = crecimiento;
+	}
+
+	public int getDx() {
+		return dx;
+	}
+
+	public void setDx(int dx) {
+		this.dx = dx;
+	}
+
+	public int getDy() {
+		return dy;
+	}
+
+	public void setDy(int dy) {
+		this.dy = dy;
+	}
+	
+	
+}

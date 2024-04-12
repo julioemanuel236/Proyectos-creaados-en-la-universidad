@@ -1,0 +1,29 @@
+package gui;
+import java.awt.Image;
+
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+import app.App;
+
+public class GUI extends JFrame{
+
+	App app;
+	
+	private class EntradaPanel extends JPanel{
+		
+		public 
+	}
+	
+	public GUI(App app) {
+		this.app=app;
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setIconImage(new ImageIcon(getClass().getResource("/imagenes/Database.png")).getImage());
+		setSize(1000,700);
+		setLocationRelativeTo(null);
+		setResizable(false);
+		setVisible(true);
+	}
+	
+}

@@ -1,0 +1,83 @@
+package pieza;
+import java.awt.Point;
+
+
+public abstract class Pieza{
+	
+	//atributos
+
+	private int i;
+	private int j;
+	private boolean color;
+	
+	private char[][] matrix;
+	public Pieza(int i,int j,boolean color,char[][] matrix) {
+		this.i = i;
+		this.j = j;
+		this.color = color;		
+		this.matrix = matrix;
+	}
+	
+	
+	
+	public abstract Point[] getMovimientosValidas();
+
+
+
+	public int getI() {
+		return i;
+	}
+
+
+
+	public void setI(int i) {
+		this.i = i;
+	}
+
+
+
+	public int getJ() {
+		return j;
+	}
+
+
+
+	public void setJ(int j) {
+		this.j = j;
+	}
+
+
+
+	public boolean isColor() {
+		return color;
+	}
+
+
+
+	public void setColor(boolean color) {
+		this.color = color;
+	}
+
+
+
+	public char[][] getMatrix() {
+		return matrix;
+	}
+
+
+
+	public void setMatrix(char[][] matrix) {
+		this.matrix = matrix;
+	}
+	
+	public void mover(int newI,int newJ) {
+		matrix[i][j] = '\0';
+		matrix[newI][newJ] = getChar();
+	}
+
+	
+	public abstract char getChar() {
+		
+	}
+	
+}

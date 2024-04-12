@@ -1,0 +1,58 @@
+package fixer;
+
+import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Scanner;
+
+public class Fixer {
+
+	String fileRute = "50Names.txt";
+	ArrayList<Person> persons;
+	
+	public Fixer() {
+		try {
+			loadPersons();
+		}
+		catch(Exception e) {
+			
+		}
+		
+	}
+	
+	public void loadPersons()throws Exception {
+		FileReader fr = new FileReader(fileRute);
+		Scanner entry = new Scanner(fr);
+		entry.useDelimiter("[,\n\r]+");
+		persons = new ArrayList<>();
+		String data[] = new String[4];//temporary data
+		int pos=0;//pos of what its loading  0 first name, 1 middle name, 2 last name, 3 city
+		while(entry.hasNext()) {
+			String line[] = entry.nextLine().split(",");//get line a split
+			for(int j=0;j<line.length;j++) {//move from data
+				if(pos==4)persons.add(new Person(data[0],data[1],data[2],data[3]));	//if pos == 4 means its a full person in data
+				pos%=4;				
+				data[pos]=line[j];
+				pos++;
+			}
+		}
+		
+		Comparator<Person> cmp = new Comparator<>() {
+
+			@Override
+			public int compare(Person o1, Person o2) {
+				
+				return 0;
+			}
+			
+		};
+		
+		Collections.sort(persons,cmp);
+	}
+	
+	
+	public static void main(String[] args) {
+		new Fixer();
+	}
+}

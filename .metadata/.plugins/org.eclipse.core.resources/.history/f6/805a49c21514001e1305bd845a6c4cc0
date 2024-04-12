@@ -1,0 +1,118 @@
+package todolist;
+
+public class HeapPriQueue implements PriQueueInterface<Task> {
+    private Task[] elements;
+    private int numElements;
+    private int maxElements;
+    private int sequenceNumber;
+
+    public HeapPriQueue(int maxSize) {
+        maxElements = maxSize;
+        elements = new Task[maxSize];
+        numElements = 0;
+        sequenceNumber = 0;
+    }
+
+    @Override
+    public void enqueue(Task element) {
+        if (isFull()) {
+            throw new PriQOverflowException("Enqueue attempted on a full priority queue.");
+        } else {
+            element.setSequenceNumber(sequenceNumber);
+            sequenceNumber++;
+            elements[numElements] = element;
+            numElements++;
+            reHeapUp(numElements - 1);
+        }
+    }
+
+    private void reHeapUp(int index) {
+        while (index > 0 && elements[(index - 1) / 2].compareTo(elements[index]) < 0) {
+            Task temp = elements[(index - 1) / 2];
+            elements[(index - 1) / 2] = elements[index];
+            elements[index] = temp;
+            index = (index - 1) / 2;
+        }
+    }
+
+    @Override
+    public Task dequeue() {
+        if (isEmpty()) {
+            throw new PriQUnderflowException("Dequeue attempted on an empty priority queue.");
+        } else {
+            Task toReturn = elements[0];
+            elements[0] = elements[numElements - 1];
+            numElements--;
+            reHeapDown(0);
+            return toReturn;
+        }
+    }
+
+    private void reHeapDown(int index) {
+        int leftChildIndex = index * 2 + 1;
+        int rightChildIndex = index * 2 + 2;
+        if (leftChildIndex < numElements) {
+            int maxChildIndex;
+            if (rightChildIndex >= numElements || elements[leftChildIndex].compareTo(elements[rightChildIndex]) > 0) {
+                maxChildIndex = leftChildIndex;
+            } else {
+                maxChildIndex = rightChildIndex;
+            }
+            if (elements[index].compareTo(elements[maxChildIndex]) < 0) {
+                Task temp = elements[index];
+                elements[index] = elements[maxChildIndex];
+                elements[maxChildIndex] = temp;
+                reHeapDown(maxChildIndex);
+            }
+        }
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return numElements == 0;
+    }
+
+    @Override
+    public boolean isFull() {
+        return numElements == maxElements;
+    }
+
+    @Override
+    public int size() {
+        return numElements;
+    }
+/*
+    public void printList() {
+        for (int i = 0; i < numElements; i++) {
+            System.out.println(elements[i] + " priority: " + elements[i].getPriority());
+        }
+    }
+*/
+    public void printList() {
+        HeapPriQueue tempQueue = new HeapPriQueue(numElements);
+        for (int i = 0; i < numElements; i++) {
+            tempQueue.enqueue(elements[i]); // Copia los elementos a una nueva priority queue
+        }
+        while (!tempQueue.isEmpty()) {
+            Task element = tempQueue.dequeue(); // Extrae el elemento con mayor prioridad
+            System.out.println(element + " priority: " + element.getPriority());
+        }
+    }
+
+    public void promote(int index) {
+        if (index >= 0 && index < numElements) {
+            elements[index].increasePriority();
+            reHeapUp(index);
+        }
+    }
+
+    public void demote(int index) {
+        if (index >= 0 && index < numElements) {
+            elements[index].decreasePriority();
+            reHeapDown(index);
+        }
+    }
+
+
+}
+

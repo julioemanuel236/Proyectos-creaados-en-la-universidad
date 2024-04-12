@@ -1,0 +1,21 @@
+package cadena;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+
+public class Hotel {
+	
+	private String nombre;
+	private ArrayList<Piso> pisos = new ArrayList<>();
+	private ArrayList<Empleado> empleados = new ArrayList<>();
+	private ArrayList<Cliente> clientes = new ArrayList<>();
+
+	public Hotel(String nombre, ArrayList<Piso> pisos, ArrayList<Empleado> empleados, ArrayList<Cliente> clientes) {
+		super();
+		this.nombre = nombre;
+		this.pisos = pisos;
+		this.empleados = empleados;
+		this.clientes = clientes;
+	}
+	
+
+}

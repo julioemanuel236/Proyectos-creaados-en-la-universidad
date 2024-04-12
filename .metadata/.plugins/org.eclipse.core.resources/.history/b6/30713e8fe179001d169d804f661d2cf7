@@ -1,0 +1,15 @@
+package cadena;
+
+public class Empleado extends Persona{
+	private int años;
+
+	public Empleado(String nombre, String id, String sexo, int años) {
+		super(nombre, id, sexo);
+		this.años = años;
+	}
+
+	public int getAños() {
+		return años;
+	}
+	
+}

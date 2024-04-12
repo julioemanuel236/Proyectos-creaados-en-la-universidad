@@ -1,0 +1,41 @@
+package Algoritmos;
+
+public class Proceso {
+	private int id;
+	private int inicio;
+	private int tiempo;
+	private int prioridad;
+	public Proceso(int id, int inicio, int tiempo,int prioridad) {
+		super();
+		this.id = id;
+		this.inicio = inicio;
+		this.tiempo = tiempo;
+		this.prioridad=prioridad;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public int getInicio() {
+		return inicio;
+	}
+
+	public int getTiempo() {
+		return tiempo;
+	}
+	
+	public int getPriority() {
+		return this.prioridad;
+	}
+	
+	public void procces() {
+		tiempo--;
+	}
+	
+	public boolean isTerminated() {
+		return tiempo==0;
+	}
+	
+
+}

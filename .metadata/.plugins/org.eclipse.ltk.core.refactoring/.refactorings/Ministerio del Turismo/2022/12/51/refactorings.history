@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy element &apos;Utiles.java&apos; to &apos;Diane Residencia/src/clases&apos;&#x0D;&#x0A;- Original project: &apos;Ministerio del Turismo Rosaura&apos;&#x0D;&#x0A;- Destination element: &apos;Diane Residencia/src/clases&apos;&#x0D;&#x0A;- Original element: &apos;cadena.Utiles.java&apos;" description="Copy compilation unit" destination="=Diane Residencia/src&lt;clases" element1="/src&lt;cadena{Utiles.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1670875413168" units="1" version="1.0"/>
+</session>

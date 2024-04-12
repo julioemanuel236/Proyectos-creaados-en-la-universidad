@@ -1,0 +1,27 @@
+package correo;
+
+public class BultoPostal extends Correspondencia{
+	private float peso;
+	private int urgencia;
+	public BultoPostal(String nombre, String direccion, String remitente, float peso, int urgencia) {
+		super(nombre, direccion, remitente);
+		this.peso = peso;
+		this.urgencia = urgencia;
+	}
+	public float getPeso() {
+		return peso;
+	}
+	/**
+	 * @return the urgencia
+	 */
+	public int getUrgencia() {
+		return urgencia;
+	}
+	
+	public String Urgencia() {
+		if(urgencia==0)return "Urgente";
+		else if(urgencia==1)return "Medio Urgente";
+		else return "Indiferente";
+	}
+	
+}

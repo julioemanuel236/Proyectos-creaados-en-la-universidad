@@ -1,0 +1,5 @@
+package gui;
+import java.awt.event.KeyAdapter;
+public class TextField extends JTextField implements KeyAdapter{
+
+}

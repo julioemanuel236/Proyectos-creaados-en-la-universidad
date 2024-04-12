@@ -1,0 +1,54 @@
+package correo;
+
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
+public class Correo {
+	Correspondencia correo[];
+	int cC=0;
+	
+	Correo(){
+		if(!cargar())correo = new Correspondencia[10000];
+	}
+	
+	public void nuevaCorrespondencia(Correspondencia c) {
+		correo[cC++] = c;
+	}
+	
+	public boolean guardar() {
+		try {
+			FileOutputStream fos = new FileOutputStream("CORREO.dat");
+			ObjectOutputStream oos = new ObjectOutputStream(fos);
+			
+			oos.writeObject(correo);
+			
+			oos.close();
+			
+			return true;
+		}
+		catch(Exception e) {
+			return false;
+		}
+	}
+	
+	public boolean cargar() {
+		try {
+			FileInputStream fis = new FileInputStream("CORREO.dat");
+			ObjectInputStream ois = new ObjectInputStream(fis);
+			
+			correo = (Correspondencia[]) ois.readObject();
+
+			for(int i=0;correo[i]!=null;i++)
+				cC++;
+			System.out.println(cC);
+			
+			ois.close();
+			return true;
+		}
+		catch(Exception e) {
+			return false;
+		}
+	}
+}

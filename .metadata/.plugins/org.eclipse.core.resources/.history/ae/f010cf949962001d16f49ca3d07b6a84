@@ -1,0 +1,58 @@
+package aplicación;
+
+public class Producto {	
+	private String nombre;
+	private float coste;
+	private String vencimiento;
+	private Material envase;
+	private String  mercado;
+	private int[] 	produccion = new int[12];
+	
+	public Producto(String nombre,float coste,String vencimiento,Material envase,String mercado) {
+		this.nombre=nombre;
+		this.coste=coste;
+		this.vencimiento=vencimiento;
+		this.envase=envase;
+		this.mercado=mercado;
+	}
+	
+	public Producto(Producto p) {
+		this.nombre=p.nombre;
+		this.coste=p.coste;
+		this.vencimiento=p.vencimiento;
+		this.envase=p.envase;
+		this.mercado=p.mercado;
+	}
+	
+	public boolean exportacion() {
+		return (this.mercado.equals("Nacional")?false:true);
+	}
+	
+	public String informacion() {
+		return this.nombre+'|'+this.coste+'|'+this.getCosteFinal()+'|'+this.vencimiento+'|'+mercado+'|'+this.envase.informacion()+"\n";
+	}
+	
+	public float getCosteFinal() {
+		if(mercado=="Nacional")return envase.getCoste()+this.coste;
+		else return (this.coste*1.75f)+envase.getCoste();
+	}
+	
+	public String getNombre() {
+		return this.nombre;
+	}
+	
+	public int getProduccionAnual() {
+		int c = 0;
+		for(int i=0;i<12;i++)
+			c+=produccion[i];
+		return c;
+	}
+	
+	public int getProduccion(int mes) {
+		return produccion[mes];
+	}
+	
+	public void setProduccion(int mes,int pro) {
+		produccion[mes]=pro;
+	}
+}

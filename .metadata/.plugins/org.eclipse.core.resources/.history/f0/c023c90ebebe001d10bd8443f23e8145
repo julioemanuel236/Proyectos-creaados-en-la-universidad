@@ -1,0 +1,21 @@
+package game;
+
+import java.util.ArrayList;
+
+public class Tienda {
+
+	ArrayList<Heroe> heroes;
+	Item items[] = new Item[3];
+	
+	public Tienda(Tablero t) {
+		heroes.add(new Caballero(t));
+		heroes.add(new Arquero(t));
+		heroes.add(new Mago(t));
+		heroes.add(new Gigante(t));
+		heroes.add(new Dragon(t));
+		
+	}
+	
+	
+
+}

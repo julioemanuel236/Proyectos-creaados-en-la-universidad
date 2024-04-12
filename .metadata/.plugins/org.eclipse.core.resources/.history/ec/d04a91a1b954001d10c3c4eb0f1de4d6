@@ -1,0 +1,16 @@
+package decanato;
+
+public class Asignatura {
+	private String nombre;
+	private float promedio;
+	private int	  year;
+
+	public Asignatura(String nombre,float promedio,int year) {
+		this.nombre=nombre;
+		this.promedio=promedio;
+		this.year=year;
+	}
+	
+		
+}
+

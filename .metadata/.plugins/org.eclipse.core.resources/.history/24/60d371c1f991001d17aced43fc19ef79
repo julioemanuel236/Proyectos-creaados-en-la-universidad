@@ -1,0 +1,18 @@
+package acm;
+import java.util.ArrayList;
+public class Equipo {
+	ArrayList<Participante> miembros = new ArrayList<Participante>();
+	private float puntos=0;
+	
+	public void addMiembro(Participante p) {
+		if(miembros.size()<3)miembros.add(p);
+	}
+	
+	public void addPuntos(float p) {
+		puntos+=p;
+	}
+	
+	public float getPuntos() {
+		return puntos;
+	}
+}

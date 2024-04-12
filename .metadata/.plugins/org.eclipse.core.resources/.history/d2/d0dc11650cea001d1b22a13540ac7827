@@ -1,0 +1,30 @@
+package gui;
+
+import java.awt.Container;
+import javax.swing.*;
+import java.awt.Image;
+public class SlidePanel extends JPanel{
+
+	Image right;
+	Image left;
+	
+	public SlidePanel(Container c) {				
+		setSize(Math.min(150,c.getWidth()),c.getHeight());
+		ini();
+		c.add(this);
+	}
+	
+	private void ini() {
+		
+	}
+	
+	public static void main(String args[]) {
+		JFrame fr = new JFrame();
+		fr.setSize(1000,600);
+		fr.setLayout(null);
+		fr.setDefaultCloseOperation(fr.EXIT_ON_CLOSE);
+		fr.setVisible(true);		
+		new SlidePanel(fr);
+		fr.repaint();		
+	}
+}

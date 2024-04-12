@@ -1,0 +1,58 @@
+package App;
+
+import javax.swing.*;
+
+import algoritmos.*;
+
+import java.util.PriorityQueue;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.util.LinkedList;
+public class Ventana extends JFrame{
+
+	PriorityQueue<Proceso> pqp = new PriorityQueue<>();
+	LinkedList<Proceso> lsp = new LinkedList<>();
+	ScrollPanel zone;
+	ScrollPanel table;
+	Ventana(){
+		setLayout(null);
+		setResizable(false);
+		setSize(900,500);
+		iniTable();
+		iniZone();
+		iniButtons();
+		setLocationRelativeTo(null);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setVisible(true);
+	}
+	
+	private void iniButtons() {
+		JComboBox<String> jcb = new JComboBox<>();
+		jcb.setSize(150,50);
+		jcb.setLocation(getWidth()-jcb.getWidth()-20,15);
+		jcb.addItem("Prioridad Apropiativo");
+		jcb.addItem("SJF");
+		jcb.addItem("Round Robin");
+		
+		add(jcb);
+	}
+	
+	private void iniTable() {
+		table = new ScrollPanel(zone.getX(),getHeight()-20);
+		table.setLocation(0,20);
+		add(table);
+	}
+	
+	private void iniZone() {
+		zone= new ScrollPanel ();
+		zone.setSize(getWidth()-200,getHeight()-100);
+		zone.setLocation(180,80);
+		zone.setOpaque(true);
+		zone.setBackground(Color.gray);
+		add(zone);
+	}
+	
+	public static void main(String args[]) {
+		new Ventana();
+	}
+}

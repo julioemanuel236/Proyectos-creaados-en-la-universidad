@@ -1,0 +1,37 @@
+package gui;
+import java.awt.Color;
+
+import javax.swing.*;
+public class SelectTypePanel extends JPanel{
+
+	int ewidth,eheight;
+	public SelectTypePanel(int w,int h) {
+		setSize(w,h);
+		ewidth=w/5;
+		eheight=ewidth+(int)(ewidth*0.1);
+		setLayout(null);
+		setBackground(Color.LIGHT_GRAY);
+		
+		iniLabels();
+		iniButtons();
+	}
+	
+	private void iniButtons() {
+		
+	}
+	
+	private void iniLabels() {
+		String texts[]= {"Basic Bike","EBike","MountainBike","Road Bike","Road EBike"};
+		
+	}
+	
+	
+	public static void main(String args[]) {
+		JFrame fr = new JFrame();
+		fr.setSize(500,500);
+		fr.setDefaultCloseOperation(fr.EXIT_ON_CLOSE);
+		fr.setVisible(true);
+		fr.add(new SelectTypePanel(200,200));
+		
+	}
+}

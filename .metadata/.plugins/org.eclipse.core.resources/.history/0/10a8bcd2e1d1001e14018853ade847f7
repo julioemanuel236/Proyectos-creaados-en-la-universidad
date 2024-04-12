@@ -1,0 +1,65 @@
+
+public class Arbol<T> {
+	
+	private Arbol<T> hijoIzq,hijoDer;
+	private T dato;
+
+	public Arbol() {}
+	
+	public Arbol(T dato) {
+		this.dato = dato;
+	}
+	
+	public Arbol<T> getHijoIzquierdo(){
+		return hijoIzq;
+	}
+	
+	public Arbol<T> getHijoDerecho(){
+		return hijoIzq;
+	}
+	
+	public void setHijoIzquierdo(Arbol<T> hijo) {
+		this.hijoIzq = hijo;
+	}
+	
+	public void setHijoDerecho(Arbol<T> hijo) {
+		this.hijoDer = hijo;
+	}
+	
+	public void recorridoPreorden(Arbol<T> arbol) {
+		
+	}
+	
+	
+
+	
+	public static void main(String args[]) {
+		Arbol<Integer> arbol = new Arbol<>();
+		arbol.setHijoIzquierdo(new Arbol<Integer>());
+		System.out.println(altura(arbol));
+	}
+	
+	public static int cantidadNodos(Arbol arbol) {
+		int cont = 0;
+		if(arbol.getHijoIzquierdo() !=null )
+			cont += cantidadNodos(arbol.getHijoIzquierdo());
+		if(arbol.getHijoDerecho() != null)
+			cont += cantidadNodos(arbol.getHijoDerecho());
+		
+		return  1 + cont;
+	}
+	
+	public static int altura(Arbol arbol) {		
+		int a1 = 0,a2 = 0;
+		if(arbol.getHijoIzquierdo()!=null) {
+			a1 = altura(arbol.getHijoIzquierdo());
+			
+		}
+		if(arbol.getHijoDerecho()!=null) {
+			a2 = altura(arbol.getHijoIzquierdo());			
+		}
+		
+		return Math.max(a1, a2);
+		
+	}
+}

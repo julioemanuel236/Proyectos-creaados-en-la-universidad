@@ -1,0 +1,59 @@
+package empresa;
+
+public class Equipo{
+	private String nombre;
+	private Lider lider;
+	private Programador programadores[];
+	private Proyecto proyecto;
+	
+	public Equipo(String nombre,Lider lider,Programador[] programadores){
+		this.nombre=nombre;
+		this.lider=lider;
+		this.programadores=programadores;
+	}
+	
+	public Lider getLider() {
+		return lider;
+	}
+	
+	public Programador[] getProgramadores() {
+		return programadores;
+	}
+	
+	public Proyecto getProyect() {
+		return proyecto;
+	}
+
+	public void setProgramadores(Programador[] p) {
+		this.programadores=p;
+	}
+	
+	public void setProyecto(Proyecto proyecto) {
+		this.proyecto=proyecto;
+		for(Programador i:programadores) {
+			if(i==null)break;
+			i.setProyecto(proyecto);
+		}
+	}
+	
+	public boolean ocupado() {
+		return (proyecto==null?false:true);
+	}
+	
+	public boolean desocupado() {
+		return (proyecto==null?true:false);
+	}
+	
+	public String getNombre() {
+		return nombre;
+	}
+	
+	public String getInfo() {
+		String s=lider.getInfo()+"\n";
+		for(Programador i:programadores) {
+			if(i==null)break;
+			s+=i.getInfo()+"\n";
+		}
+		return s;
+	}
+}

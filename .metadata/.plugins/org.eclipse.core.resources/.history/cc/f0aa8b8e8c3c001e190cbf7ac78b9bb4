@@ -1,0 +1,21 @@
+package simulacion;
+
+import elementos.Matriz;
+import elementos.serpiente.*;
+
+public class Main {
+	
+	public static void main(String[] args) {
+		int size,serpientes,serpientesSize,pasos;
+		try {
+			size = 				Integer.parseInt(args[0]);
+			serpientes = 		Integer.parseInt(args[1]);
+			serpientesSize = 	Integer.parseInt(args[2]);
+			pasos = 			Integer.parseInt(args[3]);
+		}
+		catch(Exception e) {
+			
+		}
+	}
+	
+}

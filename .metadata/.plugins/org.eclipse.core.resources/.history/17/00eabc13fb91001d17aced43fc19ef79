@@ -1,0 +1,26 @@
+package acm;
+import Vista.*;
+import java.util.*;
+
+public class ACM {
+
+	protected ArrayList<Participante> participantes = new ArrayList<Participante>();
+	
+	public void addParticipante(Participante p) {
+		participantes.add(p);
+	}
+	
+	public static void main(String[] args) {
+       
+    }
+	
+	public ArrayList<Equipo> listaEquiposPuntos(){
+		
+		Comparator<Equipo> cmp = new Comparator<>() {
+			int compareTo(Equipo e1,Equipo e2) {
+				if(eq.get)
+			}
+		}
+	}
+    
+}

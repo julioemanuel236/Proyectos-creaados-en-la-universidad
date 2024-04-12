@@ -1,0 +1,60 @@
+package game;
+
+import java.util.Scanner;
+import java.util.ArrayList;
+public class Arquero extends Heroe {
+
+	public Arquero() {
+		super(150,100,1,false,'a');
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public void atacar() {
+		Tablero tablero = App.tablero;
+		int arr[]= {0,2,4,6};
+		ArrayList<Entity> attack = new ArrayList<>();
+		
+		for(int i=0;i<4;i++) {
+			for(int j=1;j<4;j++) {
+				int ax=x+(dx[i]*j);
+				int ay=y+(dy[i]*j);
+				if(ax<1||ax>tablero.width||ay<1||ay>tablero.height)continue;
+				else if(tablero.map[ay][ax] instanceof Entity) {
+					attack.add((Entity)tablero.map[ay][ax]);
+				}
+			}
+		}
+		for(int i=0;i<attack.size();i++) {
+			System.out.println(i+" "+attack.get(i).info());
+		}
+		
+		Scanner cin = new Scanner(System.in);
+		
+		int a=cin.nextInt();
+		
+		try {
+			this.hit(attack.get(a));
+		}
+		catch(Exception e) {
+			System.out.println("Seleccion invalida\n");
+		}
+		
+	}
+
+	@Override
+	public void die() {
+		// TODO Auto-generated method stub
+
+	}
+
+	public String inf() {
+		return "Arquero "+super.info();
+	}
+	
+	@Override
+	public String shopping() {
+		return "Arquero: "+super.shopping();
+	}
+
+}

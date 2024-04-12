@@ -1,0 +1,127 @@
+package App;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Image;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import javax.swing.border.LineBorder;
+import javax.swing.plaf.basic.BasicBorders;
+
+public class Reporte extends JDialog{
+
+	private final int INICIO;
+	
+	private String texts[][]= {{"Board","Board Type","Part 1","Part 2",""},
+			                   {"","","Location","Warehouse","Conv","Location","Warehouse","Conv","Date"}};
+	
+	private JLabel labels[][];
+	private JTextField table[][] = new JTextField[20][9];
+	
+	public Reporte(){
+		setLayout(null);
+		setResizable(false);
+		setSize(850,700);
+		INICIO=80;
+		iniMenu();
+		iniTable();
+		setVisible(true);
+	}
+	
+	private void iniMenu() {
+		JButton next,back,forward,backward;
+		Image nextImg=null,backImg=null,forwardImg=null,backwardImg=null;
+		try {			
+			nextImg = ImageIO.read(getClass().getResource("/img/next.png"));
+			backImg = ImageIO.read(getClass().getResource("/img/back.png"));
+			forwardImg = ImageIO.read(getClass().getResource("/img/forward.png"));
+			backwardImg = ImageIO.read(getClass().getResource("/img/backward.png"));
+		}		
+		catch(Exception e) {
+			System.out.println("Error al cargar imagenes");
+			return;
+		}
+		
+		next = new JButton();
+		next.setSize(20,20);
+		next.setIcon(new ImageIcon(nextImg.getScaledInstance(next.getWidth(), next.getHeight(), Image.SCALE_SMOOTH)));
+		
+		back = new JButton();
+		back.setSize(20,20);
+		back.setIcon(new ImageIcon(backImg.getScaledInstance(next.getWidth(), next.getHeight(), Image.SCALE_SMOOTH)));
+		
+		forward = new JButton();
+		forward.setSize(20,20);
+		forward.setIcon(new ImageIcon(forwardImg.getScaledInstance(next.getWidth(), next.getHeight(), Image.SCALE_SMOOTH)));
+		
+		backward = new JButton();
+		backward.setSize(20,20);
+		backward.setIcon(new ImageIcon(backwardImg.getScaledInstance(next.getWidth(), next.getHeight(), Image.SCALE_SMOOTH)));
+	
+	}
+	
+	private void iniTable() {
+		JLabel nombre = new JLabel("Reporte BOOM Board Location");
+		nombre.setSize(775,40);
+		nombre.setBorder(new LineBorder(Color.lightGray,1));
+		nombre.setForeground(Color.BLUE);
+		nombre.setLocation(0,40);
+		nombre.setFont(new Font("Arial",Font.BOLD,30));
+		add(nombre);
+		labels = new JLabel[texts.length][0];
+		int widts[][] = {{75,125,225,225,125},
+						 {75,125,75,75,75,75,75,75,125}};
+		for(int i=0;i<texts.length;i++) {
+			labels[i] = new JLabel[texts[i].length];
+			int x=0;
+			int y=INICIO+i*20 ;
+			for(int j=0;j<texts[i].length;j++) {
+				JLabel jl = new JLabel(texts[i][j]);
+				jl.setSize(widts[i][j],20);
+				jl.setLocation(x,y);
+				jl.setOpaque(true);
+				jl.setBackground(Color.blue);
+				jl.setBorder(new LineBorder(Color.lightGray,1));
+				jl.setForeground(Color.white);
+				jl.setFont(new Font("Arial",Font.BOLD,jl.getFont().getSize()));
+				jl.setHorizontalTextPosition(JLabel.TRAILING);;
+				if(texts[i][j].contains("Part"))jl.setHorizontalAlignment(JLabel.CENTER);
+				x+=jl.getWidth();
+				labels[i][j]=jl;
+				
+				add(jl);
+			}
+			
+		}
+		
+		for(int i=0;i<table.length;i++) {
+			int x=0;
+			int y=INICIO+40+(i*20);
+			for(int j=0;j<table[i].length;j++) {
+				JTextField jl = new JTextField();
+				jl.setSize(widts[1][j],20);
+				jl.setLocation(x,y);
+				jl.setOpaque(true);
+				jl.setBackground(Color.white);
+				jl.setBorder(new LineBorder(Color.LIGHT_GRAY,1));
+				jl.setForeground(Color.black);
+				jl.setFont(new Font("Arial",Font.PLAIN,jl.getFont().getSize()));
+				jl.setEditable(false);
+				x+=jl.getWidth();
+				add(jl);
+				table[i][j]=jl;
+			}
+		}
+		JPanel fondo = new JPanel();
+		fondo.setSize(getSize());
+		fondo.setOpaque(true);
+		fondo.setBackground(Color.white);
+		add(fondo);
+	}
+	
+	public static void main(String[] args) {
+		new Reporte();
+	}
+}

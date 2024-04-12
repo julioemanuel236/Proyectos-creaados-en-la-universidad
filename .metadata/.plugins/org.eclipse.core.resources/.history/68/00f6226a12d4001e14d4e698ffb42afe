@@ -1,0 +1,16 @@
+package mainwindow;
+
+import java.awt.Image;
+
+public class UserNameDisplayer extends Component{
+
+	private Usuario user;
+	
+	public UserNameDisplayer(Usurio user,Image img) {
+		super(img);
+		this.user = user;
+
+	}
+
+	
+}

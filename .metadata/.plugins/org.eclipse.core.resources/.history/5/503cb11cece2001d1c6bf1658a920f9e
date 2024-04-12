@@ -1,0 +1,105 @@
+package App;
+
+import javax.swing.*;
+import javax.swing.border.LineBorder;
+
+import algoritmos.*;
+
+import java.util.PriorityQueue;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.util.LinkedList;
+import java.util.List;
+public class Ventana extends JFrame{
+
+	PriorityQueue<Proceso> pqp = new PriorityQueue<>();
+	LinkedList<Proceso> lsp = new LinkedList<>();
+	ScrollPanel zone;
+	ScrollPanel table;
+	
+	Ventana(){
+		setLayout(null);
+		setResizable(false);
+		setSize(900,500);
+		iniZone();
+		iniTable();		
+		iniButtons();
+		setLocationRelativeTo(null);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		JPanel p = new JPanel();
+		p.setSize(getSize());
+		p.setBackground(Color.DARK_GRAY);
+		add(p);
+		setVisible(true);
+	}
+	
+	private void iniButtons() {
+		JComboBox<String> jcb = new JComboBox<>();
+		jcb.setSize(150,50);
+		jcb.setLocation(getWidth()-jcb.getWidth()-20,15);
+		jcb.addItem("Prioridad Apropiativo");
+		jcb.addItem("SJF");
+		jcb.addItem("Round Robin");
+		
+		add(jcb);
+	}
+	
+	private void iniTable() {
+		table = new ScrollPanel(zone.getX(),getHeight()-55);
+		table.border.color("all",Color.blue);
+		table.back.setBackground(Color.darkGray);
+		table.setLocation(0,20);
+		String arr[]= {"ID","T","Ti","P"};
+		for(int i=0;i<arr.length;i++) {
+			JLabel jl = new JLabel(arr[i]);
+			jl.setSize(table.getWidth()/4,20);			
+			jl.setBorder(new LineBorder(Color.blue));
+			jl.setLocation(0+(i*jl.getWidth()),0);
+			jl.setHorizontalAlignment(JLabel.CENTER);
+			jl.setForeground(Color.white);
+			add(jl);
+		}
+		add(table);
+	}
+	
+	private void iniZone() {
+		zone= new ScrollPanel (getWidth()-200,getHeight()-115);	
+		zone.border.color("all",Color.blue);
+		zone.back.setBackground(Color.darkGray);		
+		zone.hsb.inactive = Color.white;
+		zone.setLocation(180,80);
+		zone.setOpaque(true);
+		zone.setBackground(Color.gray);
+		add(zone);
+					
+	}
+	
+	void run() {
+		
+		for(int i=0;i<5;i++) {
+			JLabel jl = new JLabel(""+i);
+			jl.setSize(25,25);
+			jl.setLocation(25+(i*jl.getWidth())+(i*5),0);
+			jl.setForeground(Color.white);
+			zone.back.setSize(Math.max(zone.back.getWidth(), i*25),zone.back.getHeight());
+			zone.back.add(jl);
+		}
+		List ls;
+		if(pqp.isEmpty()) ls =lsp;
+		else ls = pqp;
+		for(int i=0;i<5;i++) {
+			JLabel jl = new JLabel();
+			jl.setSize(25,25);
+			jl.setText(""+i);
+			jl.setLocation(5,25+(i*25));
+			jl.setForeground(Color.white);
+			zone.back.setSize(Math.max(zone.back.getWidth(), i*25),zone.back.getHeight());
+			zone.back.add(jl);
+		}
+		
+	}
+	
+	public static void main(String args[]) {
+		new Ventana();
+	}
+}

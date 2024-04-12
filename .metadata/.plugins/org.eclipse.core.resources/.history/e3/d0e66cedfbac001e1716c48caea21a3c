@@ -1,0 +1,73 @@
+package visorgasto;
+
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.GraphicsEnvironment;
+import java.io.File;
+
+import data.Gasto;
+import ventana.configs;
+
+import java.awt.Component;
+import java.awt.Font;
+
+public class VerticalScrollBar extends Component{
+		
+	private static final long serialVersionUID = 1L;
+
+	Color activeColor;
+	Color inactiveColor;
+	Color fondoColor;
+	public VerticalScrollBar() {
+		ini();
+	}
+	
+	private void ini() {
+		activeColor = configs.MAIN_COLOR;
+		inactiveColor = configs.ALTERN_COLOR;
+		fondoColor = new Color(0,0,0,100);
+	}
+	
+	public void pintarFondo(Graphics g) {
+		g.setColor(fondoColor);
+		g.fillRect(0, 0, getWidth(), getHeight());
+	}
+	
+	public void pintarIndicador() {
+		
+	}
+	
+	public void paint(Graphics g) {
+		
+		pintarFondo(g);
+	}
+
+	
+	public static void main(String[] args) {
+		
+		try {
+			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+			ge.registerFont(Font.createFont(Font.TRUETYPE_FONT,new File(VisorGasto.class.getResource("/fonts/Arciform.otf").getFile())));
+			
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		javax.swing.JFrame root = new javax.swing.JFrame();
+		javax.swing.JPanel p = new javax.swing.JPanel();
+		root.setSize(500,500);
+		root.add(p);
+		p.setLayout(null);
+		p.setBackground(Color.white);
+		VerticalScrollBar vg = new VerticalScrollBar();
+		vg.setSize(150,60);
+		vg.setLocation(1,1);
+		p.add(vg);
+		
+		root.setVisible(true);
+		root.setDefaultCloseOperation(root.EXIT_ON_CLOSE);
+	}
+	
+}
+

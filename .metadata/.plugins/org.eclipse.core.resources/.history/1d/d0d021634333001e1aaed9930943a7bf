@@ -1,0 +1,81 @@
+package controlador;
+
+import javax.swing.JPanel;
+import java.awt.event.KeyEvent;
+
+import modelo.*;
+public class GameControl {
+
+	private PlayerControl player = new PlayerControl();
+	private MapControl mapa;
+	int fps = 50;
+	JPanel panel;
+	
+	public GameControl(JPanel panel) {
+		this.panel = panel;
+		mapa = new MapControl(panel.getWidth(),panel.getHeight());
+		
+	}
+	public void proccesAction(KeyEvent e) {
+		player.proccesAction(e);		
+		mapa.proccesAction(e);
+	}
+	
+	public void startAnimation() {
+		
+		panel.add(mapa.getMapa());
+		mapa.getMapa().add(player.getPlayer());
+		player.getPlayer().setLocation(100,100);
+
+		while (true) {											
+			player.update();
+			mapa.reLocate(player.getPlayer().getLocation());
+
+			//APLICAR GRAVEDAD
+			for(int i=0;i<EntityControl.entidades.size();i++) {
+				Mob a = EntityControl.entidades.getNext();						
+				if(a.haveGravity()) {
+					//SI A ESTA EN EL AIRE AUMENTAR LA FUERA DE GRAVEDAD EN 1
+					//SI NO ESTABLECERLA A 5						
+					if(a.isInAir())a.setGravityForce(a.getGravityForce()+1);
+					else a.setGravityForce(5);
+					int n = a.getGravityForce();
+					for(int k=0;k<n;k++) {						
+						boolean ok = true;
+						a.setLocation(a.getX(),a.getY()+1);						
+						for(int j=0;j<EntityControl.entidades.size();j++) {							
+							Mob b = EntityControl.entidades.getNext();
+							if(a == b)continue;
+							if(EntityControl.colision(a,b)) {
+								if(a instanceof Samus) {									
+								}
+								ok = false;
+								break;
+							}
+						}
+						if(ok) {
+							a.setLastX(a.getX());
+							a.setLastY(a.getY());
+						}
+					}
+				}
+				else {
+					a.setLastX(a.getX());
+					a.setLastY(a.getY());
+				}
+				
+			}
+			panel.repaint();
+			try {
+				Thread.currentThread().sleep(10);
+			} 
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+			
+
+	}
+
+	
+}

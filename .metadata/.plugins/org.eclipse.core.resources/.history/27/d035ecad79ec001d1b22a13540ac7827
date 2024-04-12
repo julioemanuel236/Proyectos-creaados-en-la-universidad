@@ -1,0 +1,88 @@
+package project;
+import java.util.Scanner;
+public class InputRead {
+	private static Scanner entry = new Scanner(System.in);
+
+	static public int nextInt() {		
+		while(true) {
+			try {
+				return Integer.parseInt(entry.next());				 
+			}
+			catch(Exception e) {
+				System.out.println("Invalid Input");
+			}
+		}				
+	}
+	
+	static public double nextDouble() {
+		while(true) {
+			
+			try {
+				return Double.parseDouble(entry.next());
+				
+			}
+			catch(Exception e) {
+				System.out.println("Invalid Input");
+			}
+		}
+	}
+
+	static public double fuelTankSize() {
+		while(true) {
+			System.out.println("Please enter a value between 8.0 and 34.99.");
+			double fts = nextDouble();
+			if(fts<8.0 || fts>34.99)
+				System.out.println("Not valide");
+			else return fts;
+			
+		}
+	}
+	
+	
+	static public double optimalSpeed() {
+		while(true) {
+			System.out.println("Please enter a value between 45.0 and 64.99.");
+			double os = nextDouble();
+			if(os<45.0 || os>64.99)
+				System.out.println("Not valide");
+			else return os;
+			
+		}
+	}
+	
+	static public double fuelEconomy() {
+		while(true) {
+			System.out.println("Please enter a value between 15.0 and 54.99.");
+			double fe = nextDouble();
+			if(fe<15.0 || fe>54.99)
+				System.out.println("Not valide");
+			else return fe;
+			
+		}
+	}
+	
+	static public int parkingSize() {
+		while(true) {
+			System.out.println("The number should be between 1 and 10 inclusive.");
+			int ps = nextInt();
+			if(ps<1 || ps>10)
+				System.out.println("Not valide");
+			else return ps;
+			
+		}
+	}
+	
+	static public int carYear() {
+		while(true) {
+			System.out.println("Please enter a date between 1920 and 2021.");
+			int cy = nextInt();
+			if(cy<1920 || cy>2023)
+				System.out.println("Not valide");
+			else return cy;
+			
+		}
+		
+	}
+
+	
+}

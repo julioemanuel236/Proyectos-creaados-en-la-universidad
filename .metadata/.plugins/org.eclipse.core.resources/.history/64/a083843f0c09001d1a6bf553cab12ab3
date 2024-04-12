@@ -1,0 +1,17 @@
+package vector;
+
+public class Vector {
+	int first;
+	int last;
+	
+	public class nodo{
+		int valor;
+		int next;
+		int index;
+		public nodo(int x) {
+			this.valor=x;
+		}
+	}
+	
+	public void add()
+}

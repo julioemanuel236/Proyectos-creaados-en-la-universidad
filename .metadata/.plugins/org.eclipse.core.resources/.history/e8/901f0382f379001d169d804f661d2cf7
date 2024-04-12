@@ -1,0 +1,20 @@
+package cadena;
+
+import java.util.ArrayList;
+
+public class Jefe extends Empleado{
+	private int tiempoCargo;
+
+	public Jefe(String nombre, String id, String sexo, int años, int tiempoCargo) {
+		super(nombre, id, sexo, años);
+		this.tiempoCargo = tiempoCargo;
+	}
+
+	public int getTiempoCargo() {
+		return tiempoCargo;
+	}
+
+	public float Salario() {
+		return getSalario() + (años*0.1f) + 100 ;
+	}
+}

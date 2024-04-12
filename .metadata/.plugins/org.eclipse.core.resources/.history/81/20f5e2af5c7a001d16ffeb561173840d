@@ -1,0 +1,54 @@
+package clases;
+import java.util.ArrayList;
+
+public class Subdireccion {
+	protected ArrayList<Medio> medios = new ArrayList<>();
+	protected ArrayList<Edificio> edificios = new ArrayList<>();
+	protected ArrayList<Becado> becados = new ArrayList<>();
+	
+	private String nombre;
+	private String ubicacion;
+	
+	public Subdireccion(String nombre,String ubicacion) {
+		this.nombre=nombre;
+		this.ubicacion=ubicacion;
+	}
+	
+	public void nuevoEdificio() {
+		String nombre = Utiles.leer("Nombre");
+		int    numero = Integer.parseInt(Utiles.leer("Numero"));
+		
+		Edificio e = new Edificio(nombre,numero);
+		
+		int capt = Integer.parseInt(Utiles.leer("Cantidad de apartamentos"));
+		
+		for(int i=0;i<capt;i++) {
+			String    tipo = (String)Utiles.seleccion("Tipo de Apartamento",new String[]{"Profesores","Estudiantes","Inhabilitado"});
+			String numeroa = Utiles.leer("Numero");
+			String telefono = Utiles.leer("Telefono");
+			int    capacidad = Integer.parseInt(Utiles.leer("Capacidad"));
+			int    ocupado = 0;
+			String    razon = "";
+			if(tipo.equals("Inhabilitado")) {
+				razon = Utiles.leer("Razon por la que está inhabilitado");
+			}
+			
+			e.AddApartamento(new Apartamento(tipo,numeroa,telefono,capacidad,ocupado,razon));
+		}
+	}
+
+	public void nuevoBecado() {
+		String solapin = Utiles.leer("Solapin");
+		String carnet = Utiles.leer("Carnet");
+		String nombre = Utiles.leer("Nombre");
+		String apellidos = Utiles.leer("Apellido");
+		char   sexo = Utiles.leer("Sexo (M o F)").charAt(0);
+		String provincia = Utiles.leer("Provincio");
+		Edificio edificio = (Edificio)Utiles.seleccion("Edificio",edificios.toArray());
+		Apartamento apartamento = (Apartamento) Utiles.seleccion("Solapin",edificio.getApartamentos().toArray());
+		String correo = Utiles.leer("Correo");
+		String ingreso = Utiles.leer("Fecha Ingreso");
+		
+		String tipo = Utiles.leer("Tipo",new String[]{"Estudiante","Profesor","Transitorio"});
+	}
+}

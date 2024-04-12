@@ -1,0 +1,8 @@
+package cadena;
+
+public class Habitacion {
+	private Piso piso;
+	private int numero;
+	private Cliente cliente;
+	private Empleado empledo;
+}

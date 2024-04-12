@@ -1,0 +1,113 @@
+package gui;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+import javax.swing.*;
+public class SelectTypePanel extends JPanel{
+
+	int seleccion;
+	boolean waiting;	
+	int ewidth,eheight;
+	int fontSize = 25;
+	Image backgroundImage;
+	
+	public SelectTypePanel(int w,int h) {
+		ini(w,h);
+	}
+	
+	public SelectTypePanel(int w,int h,int f) {
+		ini(w,h);
+		this.fontSize=f;
+	}
+	
+	private void ini(int w,int h) {
+		setSize(w,h);
+		ewidth=w/5;
+		eheight=ewidth+(int)(ewidth*0.1);
+		setLayout(null);
+		setBackground(Color.LIGHT_GRAY);
+		try {
+			backgroundImage = ImageIO.read(getClass().getResource("/img/selectbackground.jpg")).getScaledInstance(w, h, Image.SCALE_SMOOTH);			
+			iniLabels();
+			iniButtons();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		repaint();
+	}
+
+	
+	private void iniButtons() throws IOException {
+		int x=0,y=(getHeight()/2)-(eheight/2);
+		String img[] = {"/img/basicbike.jpg","/img/electricbike.jpg","/img/mountainbike.jpg","/img/roadbike.jpg","/img/roadelectricbike.jpg"};
+		
+		for(int i=0;i<img.length;i++) {
+			Image image = ImageIO.read(getClass().getResource(img[i]));
+			JButton jb = new JButton();
+			jb.setIcon(new ImageIcon(image.getScaledInstance(ewidth, eheight, Image.SCALE_SMOOTH)));
+			jb.setSize(ewidth,eheight);
+			jb.setLocation(x,y);
+			final int k = i;
+			jb.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					seleccion = k;
+					waiting=false;
+				}
+			});
+			x+=jb.getWidth();
+			add(jb);
+		}
+	}
+	
+	private void iniLabels() {
+		String texts[] = {"Basic Bike","EBike","MountainBike","Road Bike","Road EBike"};
+		Font font = new Font("Arial",Font.BOLD,fontSize);
+		int x=0,y=(getHeight()/2)-(eheight/2)-(eheight/2);
+		for(int i=0;i<texts.length;i++) {
+			JLabel jl = new JLabel(texts[i]);
+			jl.setSize(ewidth,eheight/2);
+			jl.setFont(font);
+			jl.setHorizontalAlignment(jl.CENTER);
+			jl.setLocation(x,y);			
+			x+=jl.getWidth();
+			add(jl);
+		}
+		JLabel back = new JLabel();
+		back.setSize(getSize());
+		back.setIcon(new ImageIcon(backgroundImage));
+		add(back);
+	}
+		
+	public int select() {
+		waiting=true;
+		while(waiting) {
+			try {
+				wait(10);
+			}
+			catch(Exception e) {
+				
+			}
+		}
+		return seleccion;
+	}
+	
+	public static void main(String args[]) {
+		JFrame fr = new JFrame();
+		fr.setSize(1000,600);
+		fr.setLayout(null);
+		fr.setDefaultCloseOperation(fr.EXIT_ON_CLOSE);
+		fr.setVisible(true);
+		SelectTypePanel sp = new SelectTypePanel(500,300,15);
+		fr.add(sp);				
+		System.err.println(sp.select());
+	}
+}

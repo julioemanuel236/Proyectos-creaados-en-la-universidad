@@ -1,0 +1,36 @@
+package empresa_turistica;
+
+import java.io.Serializable;
+
+public class Carro implements Serializable{
+	String chapa;
+	Persona chofer;
+	int cantidadAsientos;
+	int ocupados=0;
+	String tipo;
+	
+	Carro(String chapa,Persona chofer,int asientos,String tipo){
+		this.chapa=chapa;
+		this.chofer=chofer;
+		this.cantidadAsientos=asientos;
+	}
+	
+	Carro(){
+		
+	}
+	
+	Carro(Carro c){
+		this.chapa=c.chapa;
+		this.chofer=new Persona(c.chofer);
+		this.cantidadAsientos=c.cantidadAsientos;
+		this.ocupados=c.ocupados;
+	}
+	
+	public String Reporte() {
+		return "VEHICULO: \n\t"+"Chapa: "+chapa+"\n\tTipo: "+tipo+"\n\tCantidad de Asientos: "+cantidadAsientos+"\n"+chofer.Reporte();
+	}
+	
+	public String toString() {
+		return "Carro: "+" "+chapa;
+	}
+}

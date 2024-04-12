@@ -1,0 +1,38 @@
+package snippet;
+
+public class Snippet {
+	private void generar_paneles() {
+			for(int i=0;i<ops.length;i++) {
+				JPanel p = new JPanel();
+				paneles[i] = p;
+				p.setLayout(null);
+				p.setOpaque(true);
+				p.setBackground(Color.gray);
+				p.setSize(this.getWidth()-opciones.getWidth()-15,opciones.getHeight());
+				p.setLocation(opciones.getWidth(),0);
+				p.setVisible(false);
+				this.add(p);
+			}
+		}
+		
+		private void generar_opciones() {
+			
+			for(int i=0;i<ops.length;i++) {
+				JButton jtf = new JButton(ops[i]);
+				jtf.setSize(175,50);
+				jtf.setLocation((opciones.getWidth()/2)-(jtf.getWidth()/2),5+(i*jtf.getHeight())+(i*5));
+				final int pos=i;
+				jtf.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						if(panel_visible!=null)
+							panel_visible.setVisible(false);
+						paneles[pos].setVisible(true);
+						panel_visible=paneles[pos];
+					}
+				});
+				opciones.add(jtf);
+			}
+		}
+		
+}
+

@@ -1,0 +1,20 @@
+package cadena;
+
+public class Socio {
+	String pais;
+	float porcentajeGanancias;
+	
+	public Socio(String pais, float porcentajeGanancias) {
+		super();
+		this.pais = pais;
+		this.porcentajeGanancias = porcentajeGanancias;
+	}
+	
+	public String getPais() {
+		return pais;
+	}
+	public float getPorcentajeGanancias() {
+		return porcentajeGanancias;
+	}
+	
+}

@@ -1,0 +1,63 @@
+package controlador;
+
+import javax.swing.JPanel;
+import java.awt.event.KeyEvent;
+
+import modelo.*;
+public class GameControl {
+
+	private PlayerControl player = new PlayerControl();
+	private MapControl mapa;
+	private ShotControl balas = new ShotControl();
+	
+	int fps = 50;
+	JPanel panel;
+	
+	public GameControl(JPanel panel) {
+		this.panel = panel;
+		mapa = new MapControl(panel.getWidth(),panel.getHeight(),panel);
+		
+	}
+	public void proccesAction(KeyEvent e) {
+		player.proccesAction(e);				
+	}
+	
+	public void startAnimation() {
+		
+		panel.add(mapa.getMapa());
+		mapa.getMapa().add(player.getPlayer());		
+		player.getPlayer().setLocation(200,250);		
+		/*
+			player.getPlayer().setGodMode(true);
+			if(true)return;
+			int c = 0;
+			long now = System.currentTimeMillis();
+		*/
+		while (true) {
+		/*
+			c++;
+			if(System.currentTimeMillis() - now >1000) {
+				System.out.println(c);
+				c = 0;
+				/now = System.currentTimeMillis();
+			}
+		*/
+			//actualizar todas las entidades del mapa
+			player.update();
+			balas.update();
+			mapa.reLocate(player.getPlayer().getLocation());
+			
+			try {
+				Thread.sleep(15);
+			} 
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+			Global.frame++;
+		}
+			
+
+	}
+
+	
+}

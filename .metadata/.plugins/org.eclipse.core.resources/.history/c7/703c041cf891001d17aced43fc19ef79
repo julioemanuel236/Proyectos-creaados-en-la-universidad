@@ -1,0 +1,145 @@
+package consumo;
+
+import javax.swing.*;
+import java.io.Serializable;
+import java.util.ArrayList;
+
+@SuppressWarnings("serial")
+public class Trabajador implements Serializable{
+	protected static ArrayList<Trabajador> trabajadores = new ArrayList<Trabajador>();
+	static Trabajador nuevo;
+	static Trabajador tiempo;
+	
+	private String nombre;
+	private String carnet;
+	private int    trabajado;
+	
+	static JDialog panel;
+	static JTextField nombret,carnett,trabajadot;
+	static JButton aceptar;
+	
+	public Trabajador(String nombre,String carnet,int trabajado) {
+		this.nombre=nombre;
+		this.carnet=carnet;
+		this.trabajado=trabajado;
+		Trabajador.add(this);
+
+	}
+	
+	public String getNombre() {
+		return this.nombre;
+	}
+	
+	public String getCarnet() {
+		return this.carnet;
+	}
+	
+	public int getAnios() {
+		return this.trabajado;
+	}
+	
+	public static void newTrabajador() {
+		if(panel!=null)panel.setVisible(false);
+		panel = new JDialog();
+		panel.setLayout(null);
+		panel.setSize(220,185);
+		panel.setTitle("Nuevo Trabajador");
+		panel.setResizable(false);
+		
+		nombret = new JTextField("Nombre");
+		nombret.setSize(200,35);
+		nombret.setLocation(0,0);
+		panel.add(nombret);
+		
+		carnett = new JTextField("Carnet");
+		carnett.setSize(200,35);
+		carnett.setLocation(0,35);
+		panel.add(carnett);
+		
+		trabajadot = new JTextField("Años trabajados");
+		trabajadot.setSize(200,35);
+		trabajadot.setLocation(0,70);
+		panel.add(trabajadot);	
+		
+		panel.setLocationRelativeTo(null);
+		panel.setVisible(true);
+		
+		aceptar = new JButton("Aceptar");
+		aceptar.setSize(200,35);
+		aceptar.setLocation(0,105);
+		panel.add(aceptar);
+		aceptar.addActionListener((ActionEvent)->{
+			try {
+			nuevo = new Trabajador(nombret.getText(),
+					 carnett.getText(),
+					 Integer.parseInt(trabajadot.getText()));
+			JOptionPane.showMessageDialog(null, "Trabajador Añadido con exito");
+			System.out.println(nuevo.getInfo());
+			panel.setVisible(false);
+			panel=null;
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+				JOptionPane.showMessageDialog(null, "Datos Invalidos");
+			}
+		});
+
+	}
+
+	private static boolean first(Trabajador a,Trabajador b) {
+		String s1=a.getNombre();
+		String s2=b.getNombre();
+		int n = Math.min(s1.length(), s2.length());
+		for(int i=0;i<n;i++)
+			if(s1.charAt(i)<s2.charAt(i))return true;
+			else if(s1.charAt(i)>s2.charAt(i))return false;
+		return false;
+	}
+	
+	public static void add(Trabajador nuevo) {
+		if(tiempo==null)tiempo=nuevo;
+		else if(tiempo.getAnios()<nuevo.getAnios())
+			tiempo=nuevo;
+		for(int i=0;i<trabajadores.size();i++) {
+			Trabajador e = trabajadores.get(i);
+			if(first(nuevo,e)) {
+				trabajadores.add(i,nuevo);
+				return;
+			}
+		}
+		trabajadores.add(nuevo);
+	}
+	
+	public static void add(Director nuevo) {
+		if(tiempo==null)tiempo=nuevo;
+		else if(tiempo.getAnios()<nuevo.getAnios())
+			tiempo=nuevo;
+		for(int i=0;i<trabajadores.size();i++) {
+			Trabajador e = trabajadores.get(i);
+			if(first(nuevo,e)) {
+				trabajadores.add(i,nuevo);
+				return;
+			}
+		}
+		trabajadores.add(nuevo);
+	}
+	
+	public static void showTrabajadores() {
+		if(trabajadores.isEmpty())return;
+		String s="";
+		for(Trabajador i:trabajadores)
+			s+=i.nombre+" "+i.carnet+'\n';
+		JOptionPane.showMessageDialog(null, s);
+	}
+	
+	public static void masTiempo() {
+		 JOptionPane.showMessageDialog(null, tiempo.getInfo());;
+	}
+	
+	public String getInfo() {
+		return "Nombre: "+nombre+'\n'+
+			   "Carnet: "+carnet+'\n'+
+			   "Años Trabajados: "+trabajado+'\n';
+	}
+	
+}

@@ -1,0 +1,47 @@
+package game;
+
+import java.util.Random;
+
+public abstract class Enemigo extends Mob {
+	int vision;
+	public Enemigo(int vida, int damage,int mM,boolean volar,char c) {
+		super(vida,damage,mM,volar,c);
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public boolean mover() {
+		if(maxMov==0)return false;
+		Tablero tablero=App.tablero;
+		int dir=0;
+		int arr[]= {0,2,4,6};
+		Random rand = new Random();
+		dir = arr[rand.nextInt(4)];
+		int k=rand.nextInt((maxMov+1));
+		int x=getX()+(dx[dir]*k);
+		int y=getY()+(dy[dir]*k);
+		
+		if(x<0||x>=tablero.width||y<0||y>=tablero.height)return false;
+		if(volar) {
+			if((tablero.map[y][x] instanceof Mob))return false;
+		}
+		else {
+			if(!(tablero.map[y][x] instanceof Planicie))return false;
+		}						
+		moveTo(x,y);
+		
+		return true;
+	}
+	
+	@Override
+	public boolean noHit() {
+		Random rand = new Random();
+		int n=1+ rand.nextInt()%100;
+		return n>60;
+	}
+
+	public boolean inRange(Heroe e) {
+		
+	}
+	
+}

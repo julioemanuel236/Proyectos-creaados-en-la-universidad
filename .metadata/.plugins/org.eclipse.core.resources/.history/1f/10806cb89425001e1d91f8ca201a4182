@@ -1,0 +1,28 @@
+package entitys;
+import sprites.PlayerSprite;
+
+public class Player extends Entity{
+
+	
+	private int life;
+	private PlayerSprite sprite;
+	
+	public Player() {
+		life = 3;
+		sprite = new PlayerSprite();
+	}
+
+	
+	public int getLife() {
+		return life;
+	}
+
+	public void setLife(int life) {
+		this.life = life;
+	}
+		
+	public void UpdateUI() {
+		sprite.setLocation(getX(),getY());
+	}
+	
+}

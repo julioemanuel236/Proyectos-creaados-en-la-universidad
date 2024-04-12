@@ -1,0 +1,45 @@
+package empresa;
+public class Programador extends Persona{
+	String lenguajes[];
+	char   categoria;
+
+	public Programador(String nombre,int edad,String sexo,float salario,String ID,String lenguajes[],char categoria){
+		super(nombre,edad,sexo,salario,ID);
+		this.lenguajes=lenguajes;
+		this.categoria=categoria;
+	}	
+	
+	public float salario() {
+		return this.getSalario()+(this.getProyecto().getPrecio()*0.05f)+3*lenguajes.length;
+	}
+	
+
+	public void cambiarProyecto(Proyecto proyecto) {
+		Programador[] enviar = proyecto.getEquipo().getProgramadores();
+		Programador[] actual = getEquipo().getProyect().getEquipo().getProgramadores();
+		Programador[] temp= new Programador[actual.length-1];
+		Programador[] ntemp= new Programador[enviar.length+1];
+		for(int i=0;i<actual.length;) {
+			if(actual[i]!=this)temp[i]=actual[i++];
+		}
+		actual=temp;
+		for(int i=0;i<enviar.length;i++) {
+			ntemp[i]=enviar[i];
+		}
+		ntemp[ntemp.length-1]=this;
+		enviar=ntemp;
+	}
+	
+	public String getInfo() {
+		String s = super.getInfo()+"\n"+
+				"Cargo: Programdor\n"+
+				"Categoria: "+categoria+"\n"+
+				"Lenguajes: ";
+		for(String i:lenguajes) {
+			if(i==null)break;
+			s+=i+" ";
+		}
+		return s+"\n";
+	}
+	
+}

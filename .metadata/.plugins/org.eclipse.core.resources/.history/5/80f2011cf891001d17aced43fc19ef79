@@ -1,0 +1,125 @@
+package consumo;
+import java.io.FileWriter;
+import java.io.Serializable;
+import java.util.ArrayList;
+
+import javax.swing.JOptionPane;
+@SuppressWarnings("serial")
+public abstract class Equipo implements Serializable{
+	public static ArrayList<Equipo> equipos = new ArrayList<Equipo>();
+	public static Equipo consumidor;
+	
+	private String noSerie;
+	private String tipo;
+	private float  costo;
+	
+	public String getNoSerie() {
+		return this.noSerie;
+	}
+	
+	public Equipo(String noSerie,float costo) {
+		this.noSerie=noSerie;
+		this.costo=costo;
+		equipos.add(this);
+	}
+	
+	public void setTipo(String tipo) {
+		this.tipo=tipo;
+	}
+	
+	public String getTipo() {
+		return this.tipo;
+	}
+	
+	public float getCosto() {
+		return this.costo;
+	}
+
+	public abstract float getConsumo(); 
+		
+	public static void add(Centrifuga nuevo) {
+		if(consumidor==null)consumidor=nuevo;
+		else if(nuevo.getConsumo()>consumidor.getConsumo())
+			consumidor=nuevo;
+
+		for(int i=0;i<Equipo.equipos.size();i++) {
+			Equipo e = Equipo.equipos.get(i);
+			if(nuevo.getConsumo()>e.getConsumo()) {
+				Equipo.equipos.add(i,nuevo);
+				return;
+			}
+			equipos.add(nuevo);
+		}
+	}
+
+	public static void add(Embolo nuevo) {
+		if(consumidor==null)consumidor=nuevo;
+		else if(nuevo.getConsumo()>consumidor.getConsumo())
+			consumidor=nuevo;
+		
+		for(int i=0;i<Equipo.equipos.size();i++) {
+			Equipo e = Equipo.equipos.get(i);
+			if(nuevo.getConsumo()>e.getConsumo()) {
+				Equipo.equipos.add(i,nuevo);
+				return;
+			}
+		}
+		equipos.add(nuevo);
+	}
+	
+	public static void add(Intercambiador nuevo) {
+		if(consumidor==null)consumidor=nuevo;
+		else if(nuevo.getConsumo()>consumidor.getConsumo())
+			consumidor=nuevo;
+		for(int i=0;i<Equipo.equipos.size();i++) {
+			Equipo e = Equipo.equipos.get(i);
+			if(nuevo.getConsumo()>e.getConsumo()) {
+				Equipo.equipos.add(i,nuevo);
+				return;
+			}
+		}
+		equipos.add(nuevo);
+	}
+	
+	public abstract String getInfo();
+	
+	public void toTXT() {
+		
+		FileWriter fw;
+		try {
+			fw = new FileWriter(this.getClass().getSimpleName()+"-"+this.getNoSerie()+".txt");
+			fw.write(this.getInfo());
+			fw.close();
+			JOptionPane.showMessageDialog(null, "Los datos de este "+this.getClass().getSimpleName()+" fueron guardados con exito\n"
+					+ "Fichero: "+this.getClass().getSimpleName()+"-"+this.getNoSerie()+".txt");
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Los datos no pudieron ser guardados en un fichero");
+		}
+	}
+	
+	public static void showMasConsumidor() {
+		String s=null;
+		if(consumidor!=null)s=consumidor.getInfo();
+		JOptionPane.showMessageDialog(null, s);
+	}
+	
+	public static void showEquiposTipo() {
+		JOptionPane.showMessageDialog(null, "Bomba-Centrifuga: " + Centrifuga.centrifugas.size()+'\n'+
+											"Bomba-Embolo: "     + Embolo.embolos.size()+'\n'+
+											"Intercambiador: "   + Intercambiador.intercambiadores.size()+'\n');
+	}
+	
+	public static float consumoGeneral() { 
+		float consumo=0;
+		for(Embolo i:Embolo.embolos)
+			consumo+=i.getConsumo();
+		for(Centrifuga i:Centrifuga.centrifugas)
+			consumo+=i.getConsumo();
+		for(Intercambiador i:Intercambiador.intercambiadores)
+			consumo+=i.getConsumo();
+		return consumo;
+	}
+	
+}

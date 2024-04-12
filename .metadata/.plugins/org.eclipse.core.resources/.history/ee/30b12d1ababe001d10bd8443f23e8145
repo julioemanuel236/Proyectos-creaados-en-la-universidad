@@ -1,0 +1,17 @@
+package game;
+
+public class Menu {
+
+	boolean salir=false;
+	
+	public Menu() {
+		
+	}
+	
+	public void inicio() {
+		String ops="1-Jugar\n2-Ver Estado de la Partida\n0-Salir\n";
+		System.out.println(ops);
+		
+	}
+
+}

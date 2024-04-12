@@ -1,0 +1,6 @@
+package medios_uci;
+import java.util.ArrayList;
+
+public class CONTROL {
+	
+}

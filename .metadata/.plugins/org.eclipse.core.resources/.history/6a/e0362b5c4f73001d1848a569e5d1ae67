@@ -1,0 +1,161 @@
+package lietys;
+
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.Date;
+
+import javax.swing.JOptionPane;
+import java.util.ArrayList;
+
+public class Aereopuerto{
+
+	protected ArrayList<Avion> aviones = new ArrayList<Avion>();
+	protected ArrayList<Terminal> terminales = new ArrayList<Terminal>();
+	
+	
+	
+	private boolean fechaEntre(Date e1,Date e2,Date b1,Date b2) {
+		
+		if(b1.getYear()>=e1.getYear()) {
+			if(b1.getMonth()>=e1.getMonth()) {
+				if(b1.getDate()>=e1.getDate()) {
+					
+				}
+			}
+		}
+		
+		return false;
+	}
+	
+	public float ventas_entre_fechas(Date a,Date b) {
+
+		float ganancias = 0f;
+		for(Terminal t:terminales) {
+			for(Vuelo v:((Terminal)t).vuelos) {
+				if(fechaEntre(a,b,v.getSalida(),v.getArribo()))
+					ganancias+=v.getPrecio();
+			}
+		}
+		return ganancias;
+	}
+	
+	public void cargarDatosTerminales() {
+		FileInputStream fis = null;
+		try {
+			fis = new FileInputStream("Terminales.dat");
+			ObjectInputStream oos = new ObjectInputStream(fis);
+			ArrayList<Terminal> readObject = (ArrayList<Terminal>) oos.readObject();
+			terminales = readObject;
+
+			fis.close();
+		}
+		catch(java.io.FileNotFoundException e) {
+			
+		}
+		catch(Exception e) {
+			new JOptionPane().showMessageDialog(null,  "Error al cargar datos");
+			e.printStackTrace();
+		}
+	}
+
+	public void cargarDatosAviones() {
+		FileInputStream fis = null;
+		try {
+			fis = new FileInputStream("Aviones.dat");
+			ObjectInputStream oos = new ObjectInputStream(fis);
+			ArrayList<Avion> readObject = (ArrayList<Avion>) oos.readObject();
+			aviones = readObject;
+
+			fis.close();
+		}
+		catch(java.io.FileNotFoundException e) {
+			
+		}
+		catch(Exception e) {
+			new JOptionPane().showMessageDialog(null,  "Error al cargar datos");
+			e.printStackTrace();
+		}
+	}
+	
+	public float ventas_por_vuelo(Vuelo vuelo) {
+		float c=0;
+		for(Asiento i:vuelo.getAvion().getAsiento()) {
+			System.out.println(i.getPersona());
+			if(i.getPersona()!=null) {
+			    c+=i.getPrecio();
+			}
+		}
+		return c;
+	}
+
+	public void guardarDatosTerminales() {
+		FileOutputStream fos = null;
+		//for(Terminal i:terminales)
+		//System.out.println(i);
+		try {
+			fos = new FileOutputStream("Terminales.dat");
+			ObjectOutputStream oos = new ObjectOutputStream(fos);
+			oos.writeObject(terminales);
+			fos.close();
+		} catch (Exception e) {
+			new JOptionPane().showMessageDialog(null,  "Error al guardar datos");
+		}
+	}
+
+	public void guardarDatosAviones() {
+		FileOutputStream fos = null;
+		
+		try {
+			fos = new FileOutputStream("Aviones.dat");
+			ObjectOutputStream oos = new ObjectOutputStream(fos);
+			oos.writeObject(aviones);
+			fos.close();
+		} catch (Exception e) {
+			new JOptionPane().showMessageDialog(null,  "Error al guardar datos");
+		}
+	}
+
+	public Terminal annadir_nueva_terminal(String nombre,int numero) {
+		Terminal nueva = new Terminal(nombre,numero);
+		terminales.add(nueva);
+		return nueva;
+	}
+	
+	public Avion annadir_nuevo_avion(String nombre,String modelo,String matricula,String pais,int asientos) {
+		Avion avion = new Avion(nombre,modelo,matricula,pais,asientos);
+		aviones.add(avion);
+		return avion;
+	}
+	
+	public void annadir_reservacion(Persona persona,Asiento asiento,Vuelo vuelo) {
+		asiento.setPrecio(vuelo.getPrecio());
+		if(asiento.getCategoria()==1)asiento.setPrecio(asiento.getPrecio()+(asiento.getPrecio()*0.3f));
+		else if(asiento.getCategoria()==2)asiento.setPrecio(asiento.getPrecio()+(asiento.getPrecio()*0.2f));
+		if(asiento.getCategoria()==3)asiento.setPrecio(asiento.getPrecio()+(asiento.getPrecio()*0.1f));
+		asiento.setPersona(persona);
+	}
+	
+	public Vuelo annadir_nuevo_vuelo(String tipo,Date sal,Date lle,Avion avion,Terminal terminal,String pais,String ciudad,int km,float coste,float cviaje,float precio) {
+		Vuelo vuelo = new Vuelo(tipo,sal,lle,avion,terminal,pais,ciudad,km,coste,cviaje,precio);
+		terminal.vuelos.add(vuelo);
+		return vuelo;
+	}
+	
+	public Aereopuerto() {
+		cargarDatosTerminales();
+		cargarDatosAviones();
+	}
+
+	public static void main(String[] args) throws Exception{
+		try{
+			new GUI();
+		}
+		catch(Exception e) {
+			
+		}
+	}
+
+}
+

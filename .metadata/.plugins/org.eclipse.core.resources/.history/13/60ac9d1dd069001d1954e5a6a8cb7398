@@ -1,0 +1,243 @@
+package agencia;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class Ventana extends JFrame{
+
+	JPanel menu;
+	JPanel opcion;
+	Agencia agencia = new Agencia();
+	
+	public void cambioPanel(JPanel p) {
+		opcion.removeAll();
+		opcion.add(p);
+		opcion.repaint();
+	}
+	
+	private void NUEVO() {
+		JPanel NUEVO = new JPanel();
+		NUEVO.setSize(opcion.getSize());
+		NUEVO.setLayout(null);
+		JPanel camion;
+		JPanel trabajador;
+		JPanel viaje;
+		
+		camion = new JPanel();
+		camion.setSize(NUEVO.getWidth()/3,NUEVO.getHeight());
+		camion.setLocation(0,0);
+		camion.setLayout(null);
+		
+		trabajador = new JPanel();
+		trabajador.setSize(NUEVO.getWidth()/3,NUEVO.getHeight());		
+		NUEVO.add(trabajador);	
+		
+		
+		JTextField dat1 = new JTextField("KM/L");
+		JTextField dat2 = new JTextField("Año de fabricación");
+		dat2.setEnabled(false);
+		JTextField chapa = new JTextField("Chapa");
+		JComboBox<String> tipo = new JComboBox<>();
+		JButton aceptarc = new JButton("Aceptar");
+		tipo.setSize(camion.getWidth(),40);
+		chapa.setSize(tipo.getSize());
+		dat1.setSize(tipo.getSize());
+		dat2.setSize(dat1.getSize());
+		aceptarc.setSize(tipo.getWidth()-20,40);		
+		dat1.setLocation(0,40);
+		dat2.setLocation(0,80);
+		chapa.setLocation(0,120);
+		aceptarc.setLocation(10,camion.getHeight()-40);
+		tipo.addItem("Moderno");
+		tipo.addItem("Viejo");
+		tipo.addActionListener((ActionEvent)->{
+			if(tipo.getSelectedIndex()==0) {
+				dat1.setText("KM/L");
+				dat2.setEnabled(false);
+			}
+			else {
+				dat1.setText("Cantidad de reparaciones");
+				dat2.setEnabled(true);
+			}
+		});
+		camion.add(tipo);
+		camion.add(dat1);
+		camion.add(dat2);
+		camion.add(chapa);
+		camion.add(aceptarc);
+		camion.setLocation(camion.getWidth(),0);
+		NUEVO.add(camion);
+		
+		
+		
+		viaje = new JPanel();
+		viaje.setLayout(null);
+		viaje.setSize(NUEVO.getWidth()/3,NUEVO.getHeight());
+		viaje.setLocation(camion.getWidth()+camion.getX(),0);
+		viaje.setOpaque(true);
+	
+		JTextField dia = new JTextField("Dia: ");
+		JTextField carga = new JTextField("Carga: ");
+		JTextField distancia  = new JTextField("Distancia (KM): ");
+		JTextField regreso = new JTextField("Día de regrso: ");
+		JTextField cprov  = new JTextField("Provincias visitadas: ");
+		JComboBox<Camion> camiones = new JComboBox<>();
+		JComboBox<Chofer> chofers = new JComboBox<Chofer>();
+		JCheckBox  inter = new JCheckBox("Interprovincial");
+		JButton	   aceptarv = new JButton("Aceptar");
+		
+		regreso.setEnabled(false);
+		cprov.setEnabled(false);
+		
+		dia.setSize(viaje.getWidth(),40);
+		carga.setSize(dia.getSize());
+		distancia.setSize(dia.getSize());
+		regreso.setSize(dia.getSize());
+		cprov.setSize(dia.getSize());
+		camiones.setSize(dia.getSize());
+		chofers.setSize(dia.getSize());
+		inter.setSize(dia.getWidth(),30);
+		aceptarv.setSize(dia.getWidth()-20,40);
+		
+		dia.setLocation(0,0);
+		carga.setLocation(0,40);
+		distancia.setLocation(0,80);
+		regreso.setLocation(0,120);
+		cprov.setLocation(0,160);
+		camiones.setLocation(0,180);
+		chofers.setLocation(0,220);
+		aceptarv.setLocation(5,viaje.getHeight()-40);
+		inter.setLocation(5,aceptarv.getY()-40);
+		inter.addActionListener((ActionEvent)->{
+			if(inter.isSelected()) {
+				camiones.removeAllItems();
+				chofers.removeAllItems();
+				for(CV i:agencia.getViejos()) 
+					camiones.addItem(i);
+				for(Chofer i:agencia.getChofersA())
+					chofers.addItem(i);
+				regreso.setEnabled(true);
+				cprov.setEnabled(true);
+			}
+			else {
+				camiones.removeAllItems();
+				chofers.removeAllItems();
+				for(Camion i:agencia.getCamiones()) 
+					camiones.addItem(i);
+				for(Chofer i:agencia.getChofers())
+					chofers.addItem(i);
+				regreso.setEnabled(false); 
+				cprov.setEnabled(false);  
+			}
+		});
+		
+		viaje.add(dia);
+		viaje.add(carga);
+		viaje.add(distancia);
+		viaje.add(regreso);
+		viaje.add(cprov);
+		viaje.add(camiones);
+		voaje.add(chofers)
+		viaje.add(inter);
+		viaje.add(aceptarv);
+		
+		NUEVO.add(viaje);
+		
+		
+		cambioPanel(NUEVO);
+	}
+	
+	public void paneles() {
+		NUEVO();
+		
+	}
+	
+	public void menu() {
+		menu = new JPanel();
+		menu.setSize(210,500);
+		menu.setLocation(getWidth()-menu.getWidth()-20,0);
+		opcion = new JPanel();
+		opcion.setSize(getWidth()-menu.getWidth()-25,getHeight()-50);
+		opcion.setLayout(null);
+		botones();
+		paneles();
+		add(opcion);
+		add(menu);
+	}
+	
+	public void botones() {
+		JButton nuevo,cargasemana,distanciapromediocamion,viajeschapa,mayortransportador,
+		modernospordistancia,masprovincias,generarnomina,guardarviajes,cargarviajes;
+		menu.setLayout(null);
+		
+		nuevo = new JButton("Nuevo Elemento");
+		nuevo.setSize(200,35);
+		nuevo.setLocation(5,5);
+		nuevo.addActionListener((ActionListener) new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				NUEVO();
+			}
+		});
+		menu.add(nuevo);
+				
+		cargasemana = new JButton("Carga Semanal");
+		cargasemana.setSize(200,35);
+		cargasemana.setLocation(5,45);
+		menu.add(cargasemana);			
+		
+		distanciapromediocamion = new JButton("Distancia Promedio");
+		distanciapromediocamion.setSize(200,35);
+		distanciapromediocamion.setLocation(5,85);
+		menu.add(distanciapromediocamion);
+						
+		viajeschapa = new JButton("Viajes por Chapa");
+		viajeschapa.setSize(200,35);
+		viajeschapa.setLocation(5,125);
+		menu.add(viajeschapa);
+		
+		mayortransportador = new JButton("Mayor Transportador");
+		mayortransportador.setSize(200,35);
+		mayortransportador.setLocation(5,165);
+		menu.add(mayortransportador);
+				
+		modernospordistancia = new JButton("Lista Modernos");
+		modernospordistancia.setSize(200,35);
+		modernospordistancia.setLocation(5,205);
+		menu.add(modernospordistancia);
+				
+		masprovincias = new JButton("Mas Provincias");
+		masprovincias.setSize(200,40);
+		masprovincias.setLocation(5,245);
+		menu.add(masprovincias);
+		
+		generarnomina = new JButton("Generar Nómina");
+		generarnomina.setSize(200,40);
+		generarnomina.setLocation(5,295);
+		menu.add(generarnomina);
+		
+		guardarviajes = new JButton("Guardar Viajes");
+		guardarviajes.setSize(200,40);
+		guardarviajes.setLocation(5,345);
+		menu.add(guardarviajes);
+		
+		cargarviajes = new JButton("CargarViajes");
+		cargarviajes.setSize(200,40);
+		cargarviajes.setLocation(5,395);
+		menu.add(cargarviajes);
+	}
+	
+	Ventana(){
+		setSize(820,500);
+		setResizable(false);
+		setLayout(null);
+		menu();
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setVisible(true);
+	}
+	
+	public static void main(String args[]) {
+		new Ventana();
+	}
+	
+}

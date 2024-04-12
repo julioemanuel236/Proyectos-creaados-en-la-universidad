@@ -1,0 +1,59 @@
+package gui;
+import java.awt.Image;
+
+import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+import app.App;
+
+public class GUI extends JFrame{
+
+	App 				app;
+	TextField 			nombres;
+	TextField 			apellidos;
+	TextField 			promedio;
+	TextField 			fechaNacimiento;
+	JComboBox<String> 	genero;
+	JComboBox<String> 	escuela;
+	JLabel 				Lnombres;
+	JLabel 				Lapellidos;
+	JLabel				Lpromedio;
+	JLabel 				LfechaNacimiento;
+	
+	JPanel 				entrada;
+	
+	public GUI(App app) {
+		this.app=app;
+		iniciarEtiquetas();
+		iniciarTextFields();
+		iniciarComboBoxs();
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setIconImage(new ImageIcon(getClass().getResource("/imagenes/Database.png")).getImage());
+		setSize(1000,700);
+		setLocationRelativeTo(null);
+		setResizable(false);
+		setVisible(true);
+	}
+	
+	public void iniciarEtiquetas() {
+		Lnombres = new JLabel("Nombres");
+		Lapellidos = new JLabel("Apellidos");
+		Lpromedio = new JLabel("Promedio");
+		LfechaNacimiento = new JLabel("F_Nacimiento");
+	}
+	
+	public void iniciarTextFields() {
+		nombres = new TextField(200, 30, "Nombres del Estudiante");
+		apellidos = new TextField(200, 30, "Apellidos del Estudiante");
+		promedio = new TextField(100, 30, "Promedio");
+		fechaNacimiento = new TextField(100, 30, "Nacimiento");
+	}
+	
+	public void iniciarComboBoxs() {
+		
+	}
+	
+}

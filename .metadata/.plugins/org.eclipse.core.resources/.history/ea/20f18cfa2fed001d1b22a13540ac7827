@@ -1,0 +1,7 @@
+package objectsPackage;
+
+import interfacePackage.ShapesInterface;
+
+public class Pyramid4 implements ShapesInterface{
+
+}

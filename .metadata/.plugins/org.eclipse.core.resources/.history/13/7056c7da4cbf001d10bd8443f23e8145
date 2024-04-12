@@ -1,0 +1,30 @@
+package game;
+
+public class Cancerbero extends Enemigo {
+
+	public Cancerbero(Tablero t) {
+		super(400, 45, 1,false, t,'C');
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public void atacar() {
+		
+		for(int i=0;i<8;i++) {
+			int x=getX()+dx[i];
+			int y=getY()+dy[i];
+			if(x<1||x>tablero.width||y<1||y>tablero.height)continue;
+			if(tablero.map[y][x] instanceof Entity) {
+				this.hit((Entity)tablero.map[y][x]);
+			}
+		}
+		
+	}
+
+	@Override
+	public void die() {
+		// TODO Auto-generated method stub
+
+	}
+
+}

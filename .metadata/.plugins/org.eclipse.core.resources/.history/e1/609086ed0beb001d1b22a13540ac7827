@@ -1,0 +1,11 @@
+package app;
+
+public class App {
+
+	String studentsRute = "/"
+	
+	public void App() {
+		
+	}
+	
+}

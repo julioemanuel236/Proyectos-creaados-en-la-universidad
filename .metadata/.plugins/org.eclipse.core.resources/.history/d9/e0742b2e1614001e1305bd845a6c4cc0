@@ -1,0 +1,107 @@
+// This class implements a priority queue using a heap data structure.
+package todolist;
+
+public class HeapPriQueue implements PriQueueInterface<Task> {
+    private Task[] elements; // The array that stores the elements in the priority queue
+    private int numElements; // The number of elements currently in the priority queue
+    private int maxElements; // The maximum number of elements the priority queue can hold
+    private int sequenceNumber; // A sequence number used to break ties in priority
+
+    // Constructor to create a new priority queue with a given maximum size
+    public HeapPriQueue(int maxSize) {
+        maxElements = maxSize;
+        elements = new Task[maxSize];
+        numElements = 0;
+        sequenceNumber = 0;
+    }
+ // Adds an element to the priority queue
+    @Override
+    public void enqueue(Task element) {
+        if (isFull()) {
+            throw new PriQOverflowException("Enqueue attempted on a full priority queue.");
+        } else {
+            // Assigns a sequence number to the element to break ties in priority
+            element.setSequenceNumber(sequenceNumber);
+            sequenceNumber++;
+            // Adds the element to the end of the array and restores the heap property by moving the element up the heap
+            elements[numElements] = element;
+            numElements++;
+            reHeapUp(numElements - 1);
+        }
+    }
+
+    // Moves an element up the heap to restore the heap property
+    private void reHeapUp(int index) {
+        while (index > 0 && elements[(index - 1) / 2].compareTo(elements[index]) < 0) {
+            // Swaps the element with its parent if the parent has lower priority
+            Task temp = elements[(index - 1) / 2];
+            elements[(index - 1) / 2] = elements[index];
+            elements[index] = temp;
+            index = (index - 1) / 2;
+        }
+    }
+
+    // Removes and returns the element with the highest priority from the priority queue
+    @Override
+    public Task dequeue() {
+        if (isEmpty()) {
+            throw new PriQUnderflowException("Dequeue attempted on an empty priority queue.");
+        } else {
+            // Removes the element with the highest priority from the root of the heap and restores the heap property by moving the last element in the array down the heap
+            Task toReturn = elements[0];
+            elements[0] = elements[numElements - 1];
+            numElements--;
+            reHeapDown(0);
+            return toReturn;
+        }
+    }
+
+    // Moves an element down the heap to restore the heap property
+    private void reHeapDown(int index) {
+        int leftChildIndex = index * 2 + 1;
+        int rightChildIndex = index * 2 + 2;
+        if (leftChildIndex < numElements) {
+            int maxChildIndex;
+            if (rightChildIndex >= numElements || elements[leftChildIndex].compareTo(elements[rightChildIndex]) > 0) {
+                maxChildIndex = leftChildIndex;
+            } else {
+                maxChildIndex = rightChildIndex;
+            }
+            if (elements[index].compareTo(elements[maxChildIndex]) < 0) {
+                // Swaps the element with its larger child if the child has higher priority
+                Task temp = elements[index];
+                elements[index] = elements[maxChildIndex];
+                elements[maxChildIndex] = temp;
+                reHeapDown(maxChildIndex);
+            }
+        }
+    }
+
+    // Prints the elements in the priority queue in the order of insertion
+    public void printList() {
+        HeapPriQueue tempQueue = new HeapPriQueue(numElements);
+        for (int i = 0; i < numElements; i++) {
+            tempQueue.enqueue(elements[i]); // Copies elements to a new priority queue
+        }
+        while (!tempQueue.isEmpty()) {
+            Task element = tempQueue.dequeue(); // Extracts element with the highest priority
+            System.out.println(element + " priority: " + element.getPriority());
+        }
+    }
+
+    // Increases the priority of an element at a given index
+    public void promote(int index) {
+        if (index >= 0 && index < numElements) {
+            elements[index].increasePriority();
+            reHeapUp(index);
+        }
+    }
+
+    // Decreases the priority of an element at a given index
+    public void demote(int index) {
+        if (index >= 0 && index < numElements) {
+            elements[index].decreasePriority();
+            reHeapDown(index);
+        }
+    }
+}

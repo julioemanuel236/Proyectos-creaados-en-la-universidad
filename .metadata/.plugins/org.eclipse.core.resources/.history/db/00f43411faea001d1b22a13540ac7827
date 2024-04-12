@@ -1,0 +1,12 @@
+package app;
+
+public class Student extends Person{
+	private String tudentID;	
+	private String iniversityName; 
+	private int creditsEnrolled;
+	private boolean qualifiesForInstateRate;
+	private boolean LateFeeAssessed;
+	Food Option Choice	//A top plan, B middle plan, C bottom plan, D no plan
+	Health Option Choice	// yes or no
+
+}

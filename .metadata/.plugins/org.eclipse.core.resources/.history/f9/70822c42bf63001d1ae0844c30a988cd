@@ -1,0 +1,112 @@
+package consumo;
+
+import java.util.ArrayList;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+
+@SuppressWarnings("serial")
+public class Intercambiador extends Equipo{
+	protected static ArrayList<Intercambiador> intercambiadores = new ArrayList<Intercambiador>();
+	static Intercambiador nuevo;
+	private float ptc;
+	private float area;
+	private float diametro;
+	
+	static JButton aceptar;
+	static JDialog panel;
+	static JTextField serie,coste,areat,ptct,diametrot;
+	
+	public Intercambiador(String noSerie,float costo,float ptc,float area,float diametro) {
+		super(noSerie,costo);
+		this.ptc=ptc;
+		this.area=area;
+		this.diametro=diametro;
+		//Equipo.add(this);
+		intercambiadores.add(this);
+		this.toTXT();
+	}
+	
+	public float getConsumo() {
+		return (0.25f*ptc) + ((diametro/2f)*(float)Math.PI);
+	}
+	
+	
+	public float getDiametro() {
+		return this.diametro;
+	}
+	
+	public static void newIntercambiador() {
+		if(panel!=null)panel.setVisible(false);
+		panel = new JDialog();
+		panel.setLayout(null);
+		panel.setSize(220,250);
+		panel.setTitle("Nuevo Intercambiador");
+		panel.setResizable(false);
+		
+		serie = new JTextField("Numero de Serie");
+		serie.setSize(200,35);
+		serie.setLocation(0,0);
+		panel.add(serie);
+		
+		coste = new JTextField("Coste del equipo");
+		coste.setSize(200,35);
+		coste.setLocation(0,35);
+		panel.add(coste);
+		
+		areat = new JTextField("Area");
+		areat.setSize(200,35);
+		areat.setLocation(0,70);
+		panel.add(areat);
+		
+		ptct = new JTextField("Presión Tubo Central");
+		ptct.setSize(200,35);
+		ptct.setLocation(0,105);
+		panel.add(ptct);
+		
+		diametrot = new JTextField("Diametro");
+		diametrot.setSize(200,35);
+		diametrot.setLocation(0,140);
+		panel.add(diametrot);
+		
+		panel.setLocationRelativeTo(null);
+		panel.setVisible(true);
+		
+		aceptar = new JButton("Aceptar");
+		aceptar.setSize(200,35);
+		aceptar.setLocation(0,175);
+		panel.add(aceptar);
+		aceptar.addActionListener((ActionEvent)->{
+			try {
+			nuevo = new Intercambiador(serie.getText(),
+					 Float.parseFloat(coste.getText()),
+					 Float.parseFloat(areat.getText()),
+					 Float.parseFloat(ptct.getText()),
+					 Float.parseFloat(diametrot.getText())
+					 );
+			
+			JOptionPane.showMessageDialog(null, "Intecambiador Añadido con exito");
+			System.out.println(nuevo.getInfo());
+			panel.setVisible(false);
+			panel=null;
+			
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+				JOptionPane.showMessageDialog(null, "Datos Invalidos");
+			}
+		});
+	}
+	
+	public String getInfo() {
+		return "No. Serie: "+getNoSerie()+"\n"+
+			   "Costo: "+getCosto()+"\n"+
+			   "Area: "+area+"\n"+
+			   "Presion Tubo Central: "+ptc+"\n"+			   
+			   "Diametro: "+diametro+"\n"+
+			   "Consumo: "+getConsumo()+"\n";
+	}
+
+	
+}

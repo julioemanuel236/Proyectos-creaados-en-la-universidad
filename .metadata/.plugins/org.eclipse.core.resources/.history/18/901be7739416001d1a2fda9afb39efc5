@@ -1,0 +1,287 @@
+package com.nobody.adMEnestrator;
+
+import javax.naming.spi.DirectoryManager;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
+import Ventana.*;
+import Ventana.TextField;
+
+public class App extends JFrame{
+	String username;
+	JPanel Main;
+	JLabel closebt;
+	Data data;
+	
+	private class Login extends JFrame{ 
+		JLabel closebt;
+		JPanel back;
+		JLabel logintxt;
+		TextField user;
+		public JButton SignUp;
+		int width=300;
+		int height=175;
+		int movinsu=0;
+		int su1=120;
+		int su2=height+1;
+			
+		public Login(){
+			this.setAlwaysOnTop(true);
+			this.setFocusable(true);
+			this.setUndecorated(true);
+			this.setLocationRelativeTo(null);
+			Listeners.addWindowsMove(this);
+			this.setSize(width,height);
+			this.setBackground(Color.WHITE);
+			this.setLayout(null);
+			//mostrar();
+			back();
+			closebt();
+			logintxt();		
+			user();
+			signup();
+			back.add(user);
+			this.setVisible(true);
+		}
+
+		private void back() {
+			back = new JPanel();
+			back.setSize(this.getSize());
+			back.setLayout(null);
+			back.setBackground(Color.DARK_GRAY);
+			this.add(back);
+		}
+		
+		private void closebt() {
+			closebt = new JLabel();
+			closebt.setSize(40,25);
+			closebt.setHorizontalAlignment(SwingConstants.CENTER);
+			closebt.setVerticalAlignment(SwingConstants.CENTER);
+			closebt.setLocation(0,0);
+			closebt.setFont(new Font("Roboto",Font.BOLD,15));
+			closebt.setForeground(Color.white);
+			closebt.setText("X");
+			Listeners.addRedBG(closebt);
+			back.add(closebt);
+		}
+				
+		private void logintxt() {
+			logintxt = new JLabel();
+			logintxt.setSize(100,50);
+			logintxt.setFont(new Font("Roboto",Font.ITALIC,30));
+			logintxt.setText("Login");
+			logintxt.setHorizontalAlignment(SwingConstants.CENTER);
+			logintxt.setVerticalAlignment(SwingConstants.CENTER);
+			logintxt.setForeground(Color.white);
+			//logintxt.setOpaque(true);
+			logintxt.setLocation((int)((back.getWidth()/2)-(logintxt.getWidth()/2)),0);
+			back.add(logintxt)
+;		}
+	
+		private void user() {
+			user=new TextField(250,50,"User","/user.png");
+			user.setLocation(user.centrarx(back),user.centrary(back));
+			user.requestFocus();
+			user.text.setForeground(Color.WHITE);
+			user.hint.setForeground(Color.lightGray);
+		}
+		
+		private void signup() {
+			SignUp = new JButton();
+			SignUp.setSize(75,30);
+			SignUp.setText("SignUp");
+			SignUp.setBackground(new Color(20,144,222));
+			SignUp.setOpaque(true);
+			SignUp.setLocation((back.getWidth()/2)-(SignUp.getWidth()/2),su2);
+			SignUp.setBorderPainted(false);
+			SignUp.setForeground(Color.white);
+			SignUp.setEnabled(false);
+			SignUp.setActionCommand("\n");
+			ActionListener Next = new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {		
+					App.this.username=user.text.getText();
+					System.out.println(App.this.username);
+					App.Login.this.setVisible(false);
+					App.this.setVisible(true);
+					App.this.data = new Data("/"+App.this.username);
+				}
+				
+			};
+			SignUp.addActionListener(Next);
+			user.KeyButton(SignUp, '\n');
+			ComponentListener habilitar = new ComponentListener() {
+
+				@Override
+				public void componentResized(ComponentEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void componentMoved(ComponentEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void componentShown(ComponentEvent e) {
+					SignUp.setEnabled(false);
+					movinsu=-1;
+					(new Thread() {
+						public void run() {
+							while(movinsu==-1&&SignUp.getY()<su2) {
+								SignUp.setLocation(SignUp.getX(),SignUp.getY()+3);
+								SignUp.repaint();
+								try {
+									sleep(1);
+								}
+								catch(Exception e) {
+									
+								}
+							}
+						}
+					}).start();
+				}
+
+				@Override
+				public void componentHidden(ComponentEvent e) {
+					SignUp.setEnabled(true);
+					movinsu=1;
+					(new Thread() {
+						public void run() {
+							while(movinsu==1&&SignUp.getY()>su1) {
+								SignUp.setLocation(SignUp.getX(),SignUp.getY()-3);
+								SignUp.repaint();
+								try {
+									sleep(1);
+								}
+								catch(Exception e) {
+									
+								}
+							}
+							
+						}
+					}).start();
+				}
+				
+			};
+			user.hint.addComponentListener(habilitar);
+			back.add(SignUp);
+		}
+		
+		private void mostrar() {
+			(new Thread() {
+				public void run() {
+					int divisor=100;
+					int x=Login.this.getWidth()/divisor;
+					int y=Login.this.getHeight()/divisor;
+					Login.this.setSize(0,0);
+					Login.this.setLocationRelativeTo(null);
+					Login.this.setVisible(true);
+					for(int i=0;i<divisor;i++) {
+						Login.this.setSize(Login.this.getWidth()+x,Login.this.getHeight()+y);
+						Login.this.repaint();
+						Login.this.setLocationRelativeTo(null);
+						try {
+							sleep(5);
+						}
+						
+						catch(Exception e) {
+							
+						}
+					}
+					
+				
+				}
+			}).start();
+		}
+		
+
+	
+	}
+	
+	private class Data{
+		public static File f;
+		public static FileWriter fw;
+		public static boolean newuser;
+		
+		public Data(String s) {
+				newuser=false;
+			try {
+				f = new File(s);
+				Cargar_Datos();
+			}
+			catch(Exception e) {
+				newuser=true;
+				try {
+					fw= new FileWriter(s,true);
+					fw.close();
+				} 
+				catch (IOException e1) {
+				}
+			}
+		}
+		
+		public void Cargar_Datos() {
+			
+		}
+		
+		public void Guardar_Datos() throws IOException {
+			if(fw.equals(null))fw.close();
+			fw = new FileWriter(App.this.username);
+		}
+	}
+	
+	public App() {
+		
+		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		this.setSize(1280,720);
+		this.setUndecorated(true);
+		this.setLayout(null);
+		this.setBackground(Color.DARK_GRAY);
+		this.setLocationRelativeTo(null);
+		Listeners.addWindowsMove(this);
+		new Login().user.text.requestFocus();
+		Main();
+		closebt();
+		
+	}
+	
+	private void closebt() {
+		closebt = new JLabel();
+		closebt.setSize(40,25);
+		closebt.setHorizontalAlignment(SwingConstants.CENTER);
+		closebt.setVerticalAlignment(SwingConstants.CENTER);
+		closebt.setLocation(0,0);
+		closebt.setFont(new Font("Roboto",Font.BOLD,15));
+		closebt.setForeground(Color.white);
+		closebt.setText("X");
+		Listeners.addRedBG(closebt);
+		Main.add(closebt);
+	}
+	
+	private void Main() {
+		Main = new JPanel();
+		Main.setLayout(null);
+		Main.setBackground(Color.DARK_GRAY);
+		Main.setOpaque(true);
+		Main.setLocation(0,0);
+		Main.setSize(this.getSize());
+		//Listeners.addWindowsMove(Main);
+		this.add(Main);
+	}
+	
+	public static void main(String[] args) {
+		new App();
+	}
+	
+}

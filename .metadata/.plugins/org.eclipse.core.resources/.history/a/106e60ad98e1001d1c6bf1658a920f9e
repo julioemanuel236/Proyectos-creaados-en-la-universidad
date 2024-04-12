@@ -1,0 +1,19 @@
+package App;
+
+import java.util.HashMap;
+
+public class Historial {
+	HashMap<String,Tablero> tableros = new HashMap<>();
+	
+	public Historial() {
+		
+	}
+	
+	public void add(Tablero t) {
+		tableros.put(t.getCodigo(), t);
+	}
+	
+	public void update(Tablero t) {
+		tableros.put(t.getCodigo(), t);
+	}
+}

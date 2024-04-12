@@ -1,0 +1,11 @@
+package App;
+
+import java.util.HashMap;
+
+public class Historial {
+	HashMap<Integer,Tablero> tableros = new HashMap<>();
+	
+	public Historial() {
+		
+	}
+}

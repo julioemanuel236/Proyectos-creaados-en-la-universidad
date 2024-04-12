@@ -1,0 +1,13 @@
+package gui;
+
+import java.awt.Container;
+import javax.swing.*;
+
+public class SlidePanel extends JPanel{
+
+	public SlidePanel(Container c) {
+		setSize(Math.min(150,c.getWidth()),c.getHeight());
+		
+		c.add(this);
+	}
+}

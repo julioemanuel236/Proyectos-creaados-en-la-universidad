@@ -1,0 +1,22 @@
+package objectsPackage;
+
+import interfacePackage.ShapesInterface;
+
+public class Pyramid4 implements ShapesInterface{
+
+	private final double BASE;
+	private final double HEIGHT;
+	private final double BASE_AREA;
+	private final double SURFACE_AREA;
+	private final double VOLUME;
+	
+	public Pyramid4() {
+		BASE=Math.random()*10;
+		HEIGHT=Math.random()*10;
+		BASE_AREA=BASE*BASE;
+		VOLUME=(BASE_AREA*HEIGHT)*3.0;
+	}
+	public Pyramid4(double base,double height) {
+		
+	}
+}

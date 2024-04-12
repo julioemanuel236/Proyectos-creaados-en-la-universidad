@@ -1,0 +1,58 @@
+package game;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class Tienda {
+	Scanner cin = new Scanner(System.in);
+	
+	Item items[] = new Item[3];
+	Player player;
+	
+	public Tienda() {
+	
+	}
+	
+	public void open() {
+		String ops="1-Comprar Heroes\n2-Comprar Objetos\n0-Salir";
+		int n;
+		while(true) {
+			System.out.println("Tienes "+player.oro+" de oro");
+			System.out.println(ops);
+			n=cin.nextInt();
+			if(n==1) {
+				comprarHeroe();
+			}
+			else if(n==2) {
+				
+			}
+			else if(n==0) {
+				return;
+			}
+			
+		}
+		
+	}
+
+	
+	public void comprarHeroe() {
+		int n;
+		for(int i=0;i<player.hComprar.size();i++) {
+			System.out.println((i+1)+" "+player.hComprar.get(i));
+		}
+		System.out.println("0-Salir");
+		while(true) {
+			n=cin.nextInt();
+			if(n==0)return;
+			else if(n>player.hComprar.size())System.out.println("Opcion no Valida");
+			else if(player.oro<200)System.out.println("No tienes oro suficiente");
+			else {
+				player.heroes.add(player.hComprar.get(n));
+				player.hComprar.remove(n);
+				player.oro-=200;
+				System.out.println("Compra realizada con exito");
+				return;
+			}
+		}
+	}
+}

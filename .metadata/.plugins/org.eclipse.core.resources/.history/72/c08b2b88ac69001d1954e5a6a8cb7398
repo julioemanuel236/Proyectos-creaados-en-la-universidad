@@ -1,0 +1,87 @@
+package agencia;
+import javax.swing.*;
+import java.awt.*;
+
+public class Ventana extends JFrame{
+
+	JPanel menu;
+	
+	public void menu() {
+		menu = new JPanel();
+		menu.setSize(200,500);
+		menu.setLocation(getWidth()-menu.getWidth(),0);
+		botones();
+		
+		add(menu);
+	}
+	
+	public void botones() {
+		JButton nuevo,cargasemana,distanciapromediocamion,viajeschapa,mayortransportador,
+		modernospordistancia,masprovincias,generarnomina,guardarviajes,cargarviajes;
+		menu.setLayout(null);
+		
+		nuevo = new JButton("Nuevo Elemento");
+		nuevo.setSize(200,40);
+		nuevo.setLocation(5,5);
+		menu.add(nuevo);
+				
+		cargasemana = new JButton("Carga Semanal");
+		cargasemana.setSize(200,40);
+		cargasemana.setLocation(5,55);
+		menu.add(cargasemana);			
+		
+		distanciapromediocamion = new JButton("Distancia Promedio");
+		nuevo.setSize(200,40);
+		nuevo.setLocation(5,105);
+		menu.add(distanciapromediocamion);
+						
+		viajeschapa = new JButton("Viajes por Chapa");
+		nuevo.setSize(200,40);
+		nuevo.setLocation(5,155);
+		menu.add(viajeschapa);
+		
+		mayortransportador = new JButton("Mayor Transportador");
+		nuevo.setSize(200,40);
+		nuevo.setLocation(5,205);
+		menu.add(mayortransportador);
+				
+		modernospordistancia= new JButton("Lista Modernos");
+		nuevo.setSize(200,40);
+		nuevo.setLocation(5,255);
+		menu.add(modernospordistancia);
+				
+		masprovincias = new JButton("Mas Provincias");
+		nuevo.setSize(200,40);
+		nuevo.setLocation(5,305);
+		menu.add(masprovincias);
+		
+		generarnomina = new JButton("Generar Nómina");
+		nuevo.setSize(200,40);
+		nuevo.setLocation(5,355);
+		menu.add(generarnomina);
+		
+		guardarviajes = new JButton("Guardar Viajes");
+		nuevo.setSize(200,40);
+		nuevo.setLocation(5,405);
+		menu.add(guardarviajes);
+		
+		cargarviajes= new JButton("CargarViajes");
+		nuevo.setSize(200,40);
+		nuevo.setLocation(5,455);
+		menu.add(cargarviajes);
+	}
+	
+	Ventana(){
+		setSize(800,500);
+		setResizable(false);
+		setLayout(null);
+		menu();
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setVisible(true);
+	}
+	
+	public static void main(String args[]) {
+		new Ventana();
+	}
+	
+}

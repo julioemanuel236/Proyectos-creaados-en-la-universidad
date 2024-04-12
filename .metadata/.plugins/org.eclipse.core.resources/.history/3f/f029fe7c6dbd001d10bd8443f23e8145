@@ -1,0 +1,40 @@
+package pruebas;
+
+import javax.swing.JOptionPane;
+
+public class prueba {
+	public static String telefono()
+	{	
+	do
+	{	
+	try
+	{				
+		
+	telefono = JOptionPane.showInputDialog(null, "Ingresar su telefono","Generador de curp",3);
+	if(telefono.length()==10 && telefono.matches("[0-9]*")){
+	
+	a=true;
+	}
+	else {
+		JOptionPane.showMessageDialog(null,"Dato ingresado erroneo",null,0);
+		a=false;
+	}
+	}
+	catch(NumberFormatException c)
+	{
+		JOptionPane.showMessageDialog(null,"Ingrese Solamente Numeros",null,0);
+		a=false;
+	}
+	}while(a!=true);	
+	for(int i=0; i<telefono.length(); i++)
+	{
+		if((i%2==0) && (i !=0))
+		{
+			telefono_guiones += "-" + telefono.charAt(i); 
+			continue;
+		}
+		telefono_guiones += telefono.charAt(i);			
+	}	
+	return telefono_guiones;
+	}
+}

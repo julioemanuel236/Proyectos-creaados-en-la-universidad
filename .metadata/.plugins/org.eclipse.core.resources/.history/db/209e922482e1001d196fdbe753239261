@@ -1,0 +1,200 @@
+package App;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
+
+import javax.swing.*;
+import java.util.Random;
+public class Ventana extends JFrame{
+
+	JButton entradaButton,salidaButton,buscarButton;
+	JPanel mainPanel,entradaPanel,salidaPanel; 
+	JPanel actualView;
+	Tablero tableroEntrada;
+	Random rand = new Random();
+	int code = 0;
+	
+	public void switchView(JPanel panel) {
+		if(actualView!=null) 
+			actualView.setVisible(false);
+		actualView=panel;
+		actualView.setVisible(true);		
+		if(actualView==entradaPanel) {
+			setTitle("BOOM-Entrada Almacen");							
+		}
+		else if(actualView==mainPanel)setTitle("BOOM");
+		else if(actualView==salidaPanel)setTitle("BOOM-Salida Tab");
+		add(actualView);
+		repaint();
+	}
+	
+	private String nextCode() {
+		String cero="0000";
+		int size = (int)Math.log10(code);
+		return cero.substring(size-1)+code++;
+	}
+	
+	private Tablero newTablero() {
+		
+	}
+	public Ventana() {
+		//setUndecorated(true);		
+		setTitle("BOOM");
+		setResizable(false);
+		setSize(350,500);
+		setLocationRelativeTo(null);
+		setLayout(null);
+		iniPanels();
+		switchView(mainPanel);
+		setVisible(true);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+	}
+	
+	private void iniEntradaPanel() {
+		entradaPanel = new JPanel();
+		entradaPanel.setSize(getSize());
+		entradaPanel.setVisible(false);
+		entradaPanel.setLayout(null);
+		entradaPanel.setBackground(Color.white);
+		
+		JLabel nombre = new JLabel("Entrada a Almacen");
+		nombre.setSize(getWidth()-30,getHeight()*1/11);
+		nombre.setFont(new Font("Arial",Font.PLAIN,25));
+		nombre.setForeground(Color.blue);
+		nombre.setLocation(30,0);
+		
+		JLabel escanear = new JLabel("Escanear Tablero");
+		escanear.setSize(getWidth()-15,getHeight()*1/11);
+		escanear.setFont(new Font("Arial",Font.PLAIN,25));
+		escanear.setForeground(Color.red);
+		escanear.setLocation(15,nombre.getHeight()+5);
+		
+		
+		JButton guardar = new JButton("Guardar");
+		guardar.setSize(getWidth()/3,getHeight()*1/12);
+		guardar.setLocation((getWidth()/4)-(guardar.getWidth()/2),getHeight()-guardar.getHeight()-50);
+		
+		JButton cancelar = new JButton("Cancelar");
+		cancelar.setSize(getWidth()/3,getHeight()*1/12);
+		cancelar.setLocation((3*getWidth()/4)-(guardar.getWidth()/2),getHeight()-guardar.getHeight()-50);
+		
+		guardar.setBackground(Color.lightGray);
+		cancelar.setBackground(Color.lightGray);
+		
+		cancelar.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				switchView(mainPanel);
+			}
+			
+		});
+		
+		guardar.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				switchView(mainPanel);
+			}
+			
+		});
+		
+		entradaPanel.add(nombre);		
+		entradaPanel.add(escanear);
+		entradaPanel.add(guardar);
+		entradaPanel.add(cancelar);
+		
+		entradaPanel.addComponentListener(new ComponentListener() {
+
+			@Override
+			public void componentResized(ComponentEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void componentMoved(ComponentEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void componentShown(ComponentEvent e) {
+				if(tableroEntrada==null)tableroEntrada = newTablero();
+				JOptionPane.showMessageDialog(tableroEntrada.toString());
+			}
+
+			@Override
+			public void componentHidden(ComponentEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+	}
+	
+	private void iniMainPanel() {	
+		mainPanel = new JPanel();
+		mainPanel.setSize(getSize());
+		mainPanel.setVisible(false);
+		mainPanel.setLayout(null);
+		mainPanel.setBackground(Color.white);
+		
+		Font font = new Font("Arial",Font.PLAIN,20);
+		entradaButton = new JButton("Entrada");
+		salidaButton = new JButton("Salida");
+		buscarButton = new JButton("Buscar");
+		
+		entradaButton.setFocusable(false);
+		salidaButton.setFocusable(false);
+		buscarButton.setFocusable(false);
+		
+		entradaButton.setBackground(Color.lightGray);
+		salidaButton.setBackground(Color.lightGray);
+		buscarButton.setBackground(Color.lightGray);
+		
+		entradaButton.setFont(font);
+		salidaButton.setFont(font);
+		buscarButton.setFont(font);
+		
+		entradaButton.setSize(getWidth()*9/10,getHeight()*1/10);
+		salidaButton.setSize(getWidth()*9/10,getHeight()*1/10);
+		buscarButton.setSize(getWidth()*9/10,getHeight()*1/10);
+		
+		entradaButton.setLocation(5,5);
+		salidaButton.setLocation(entradaButton.getX(),entradaButton.getY()+entradaButton.getHeight()+5);
+		buscarButton.setLocation(entradaButton.getX(),salidaButton.getY()+salidaButton.getHeight()+5);
+		
+		entradaButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				switchView(entradaPanel);
+			}
+		});
+		
+		
+		salidaButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				switchView(salidaPanel);
+			}
+		});			
+		
+		mainPanel.add(entradaButton);
+		mainPanel.add(salidaButton);
+		mainPanel.add(buscarButton);
+		
+	}
+	
+	private void iniPanels() {
+		iniMainPanel();
+		iniEntradaPanel();
+	}
+	
+	
+	public static void main(String []args) {
+		new Ventana();
+	}
+}

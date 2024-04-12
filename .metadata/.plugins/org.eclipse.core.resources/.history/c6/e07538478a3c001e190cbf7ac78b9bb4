@@ -1,0 +1,54 @@
+package elementos.serpiente;
+
+import elementos.Matriz;
+
+public class Serpiente {
+
+	private Cuerpo cabeza;
+	private Cuerpo cola;
+	private Matriz tablero;
+	private int dir;
+	
+	private final int ARRIBA = 8;
+	private final int ABAJO = 2;
+	private final int IZQUIERDA = 4;
+	private final int DERECHA = 6;
+		
+	public Serpiente(int x,int y,int id,int size,int pasos,Matriz tablero) {
+		this.tablero = tablero;
+		this.cabeza = new Cuerpo(x,y,id,tablero);
+		this.cola = this.cabeza;
+		this.dir = this.ARRIBA;
+		for(int i = 1 ; i < size ; i++)
+			agregarCuerpo();
+	}
+	
+	public int getX() {
+		return cabeza.getX();
+	}
+	
+	public int getY() {
+		return cabeza.getY();
+	}
+	
+	public int getId() {
+		return cabeza.getId();
+	}
+	
+	public void move() {
+		
+	}
+	
+	private void agregarCuerpo() {
+		
+		int x = cola.getX();
+		int y = cola.getY();
+		int id = cola.getId();
+		
+		Cuerpo nuevo = new Cuerpo(x,y+1,id,tablero,cola);
+		cola.setSiguiente(nuevo);
+		cola = nuevo;
+		
+	}
+	
+}

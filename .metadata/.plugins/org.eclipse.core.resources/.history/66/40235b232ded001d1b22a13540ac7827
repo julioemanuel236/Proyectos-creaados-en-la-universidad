@@ -1,0 +1,19 @@
+package objectsPackage;
+
+public class Cube {
+	private final double SIZE;
+	private final double VOLUME;
+	private final double BASEAREA;
+	private final double TOTALAREA;
+	
+	public Cube(double size) {
+		SIZE=size;
+		BASEAREA=calcBaseArea();
+		
+	}
+	
+	private double calcBaseArea() {
+		return SIZE*SIZE;
+	}
+	
+}

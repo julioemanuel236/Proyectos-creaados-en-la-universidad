@@ -1,0 +1,19 @@
+package App;
+
+import javax.swing.*;
+
+public class Ventana extends JFrame{
+
+	Ventana(){
+		setResizable(false);
+		setSize(500,900);
+		
+		setLocationRelativeTo(null);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setVisible(true);
+	}
+	
+	public static void main(String args[]) {
+		new Ventana();
+	}
+}

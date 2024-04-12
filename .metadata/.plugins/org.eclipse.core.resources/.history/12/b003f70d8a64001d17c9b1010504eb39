@@ -1,0 +1,14 @@
+package tienda;
+
+public class Gato extends Mascota{
+	private String  colorOjos;
+	private boolean pedigri;
+	private char     sexo;
+	
+	public Gato(String pais,String color,int meses,String colorOjos,boolean pedigri,char sexo) {
+		super(pais,color,meses);
+		this.colorOjos=colorOjos;
+		this.pedigri=pedigri;
+		this.sexo=sexo;
+	}
+}

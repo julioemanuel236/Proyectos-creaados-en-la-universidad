@@ -1,0 +1,187 @@
+package app;
+import javax.swing.JFrame;
+
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Point;
+import java.util.LinkedList;
+import java.util.Random;
+
+public class Muestra extends JFrame{
+	
+	private int di[] = {-1,0,1,0};
+	private int dj[] = {0,1,0,-1};
+	private int variacion = 0 ;
+	private int variacion2 = 0;
+	int size = 511;
+	private int color=0;
+	private int limiteSuperior = 1000;
+	private int limiteInferior = 100;
+	private int avance = 10;
+	
+	public Muestra() throws Exception{
+		
+		setSize(size,size);
+		
+		setLocationRelativeTo(null);
+		setUndecorated(true);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setVisible(true);
+		iniciarAnimacion();
+	
+	}
+	
+	
+	public void iniciarAnimacion() throws Exception{
+		
+		while(true) {			
+			repaint();
+			//Thread.sleep(10);
+		}
+		
+	}
+	
+	private void nextSize() throws Exception{
+		
+		if(size >= limiteSuperior)avance = -10;
+		if(size <= limiteInferior)avance = 10;
+		size += avance;
+		setSize(size,size);
+		System.out.println(size);
+		setLocationRelativeTo(null);		
+		repaint();
+	}
+	@Override
+	public void paint(Graphics g) {
+		mostrarExpansionBFS(g);
+		//System.out.println("PINTADO");
+		//pintado
+	}
+	
+	public void mostrarExpansionBFS(Graphics gr){
+		
+		int i = getWidth()/2;
+		int j = getHeight()/2;
+		Random rand = new Random();
+		LinkedList<Point> q = new LinkedList<>();
+		
+		q.push(new Point(j,i));
+		int[][] matrix = new int[size][size];
+		matrix[i][j] = 1;
+		
+		int last =  1;
+		int edge = 1;
+		int mascaras[] = {0xFF,0xFF00,0xFF0000};
+		int desplazamiento[] = {0,8,16};
+		int pos = rand.nextInt(mascaras.length);
+		
+		while(!q.isEmpty()) {
+			Point p = q.poll();
+			
+			
+			pos = 2;
+			int r = (color&mascaras[pos])>>desplazamiento[pos];//matrix[p.x][p.y]   % 256;
+			pos = (pos+1)%3;
+			int g = (color&mascaras[pos])>>desplazamiento[pos];//matrix[p.x][p.y]   % 256;
+			pos = (pos+1)%3;
+			int b = (color&mascaras[pos])>>desplazamiento[pos];//matrix[p.x][p.y]   % 256;
+			
+			//System.out.println(r + " " + g + " " + b);
+			gr.setColor(new Color(r,g,b));
+			gr.fillRect(p.x, p.y, 1, 1);
+			color++;
+			for(int k = 0; k < di.length ; k++) {
+				int newI = p.y+di[k];
+				int newJ = p.x+dj[k];
+				
+				if(newI < 0 || newI == matrix.length|| newJ < 0 || newJ == matrix[newI].length || matrix[newI][newJ] !=0 )continue;
+				
+				
+				q.add(new Point(newI,newJ));
+				
+				matrix[newI][newJ] = matrix[p.y][p.x]+1;
+															
+			}			
+			/*if(matrix[p.y][p.x]-last >= edge) {
+				
+				color++;
+				
+				last = matrix[p.y][p.x];
+				try {
+					Thread.sleep(1);
+				}
+				catch(Exception e) {
+					
+				}
+			}*/
+			
+		}
+		
+	}
+	
+	public void mostrarExpansionDFS(){
+		Graphics gr = this.getGraphics();		
+		int i = getWidth()/2;
+		int j = getHeight()/2;
+		Random rand = new Random();
+		LinkedList<Point> q = new LinkedList<>();
+		
+		q.push(new Point(j,i));
+		int[][] matrix = new int[getWidth()][getHeight()];
+		matrix[i][j] = 1;
+		
+		int last =  1;
+		int edge = 1;
+		
+		int mascaras[] = {0xFF,0xFF00,0xFF0000};
+		int desplazamiento[] = {0,8,16};
+		
+		
+		
+		while(!q.isEmpty()) {
+			Point p = q.poll();
+			
+			int pos = rand.nextInt(mascaras.length);				
+			int r = (color&mascaras[pos])>>desplazamiento[pos];
+			pos = (pos+1)%3;
+			int g = (color&mascaras[pos])>>desplazamiento[pos];
+			pos = (pos+1)%3;
+			int b = (color&mascaras[pos])>>desplazamiento[pos];
+			
+			//System.out.println(r + " " + g + " " + b);
+			gr.setColor(new Color(r,r,r));
+			gr.fillRect(p.x, p.y, 1, 1);
+			
+			color++;
+			for(int k = 0; k < di.length ; k++) {
+				int newI = p.y+di[k];
+				int newJ = p.x+dj[k];
+				
+				if(newI < 0 || newI == getHeight() || newJ < 0 || newJ == getWidth() || matrix[newI][newJ] !=0 )continue;
+				
+				
+				q.addFirst(new Point(newJ,newI));
+				
+				matrix[newI][newJ] = matrix[p.y][p.x]+1;
+															
+			}			
+			
+			/*if(matrix[p.y][p.x]-last >= edge) {
+										
+				last = matrix[p.y][p.x];
+				try {
+					Thread.sleep(1);
+				}
+				catch(Exception e) {
+					
+				}
+			}*/
+			
+		}
+		
+	}
+	
+		public static void main(String[] args)throws Exception{
+		new Muestra();
+	}
+}

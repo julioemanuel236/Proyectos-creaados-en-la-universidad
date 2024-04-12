@@ -1,0 +1,50 @@
+package tareas;
+
+import java.util.Scanner;
+public class Primos {
+
+	public static void main(String[] args) {
+		int cantidad=0;
+		int numeroDelImpar=1;
+		int impar=1;
+		for(int i=2;cantidad<5;i++) {
+			boolean primo=true;
+			for(int j=2;j<=i/2;j++) {
+				if(i%j==0)primo=false;
+			}
+			if(primo) {
+				
+				int cubo = 0;
+				int cantidadDeNumeros=i+numeroDelImpar;				
+				int numero=impar+1;
+				do {
+					if(numero%2==1) {
+						impar=numero;
+						int sumar = impar;
+						while(sumar>0) {
+							cubo++;
+							sumar--;
+						}
+						
+						numeroDelImpar++;
+					}
+					numero++;
+				}while(numeroDelImpar<cantidadDeNumeros);
+				cantidad++;
+			}
+			else {
+				int cantidadDeNumeros=i+numeroDelImpar;				
+				int numero=impar+1;
+				do {
+					if(numero%2==1) {
+						
+						impar=numero;						
+						numeroDelImpar++;
+					}
+					numero++;
+				}while(numeroDelImpar<cantidadDeNumeros);
+			}
+			}
+		}		
+	
+}

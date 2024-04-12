@@ -1,0 +1,22 @@
+package empresa_turistica;
+
+public class Guagua extends Carro{
+	int pisos;
+	
+	Guagua(String chapa,Persona chofer,int asientos,String tipo,int pisos){
+		super(chapa,chofer,asientos,tipo);
+		this.pisos=pisos;
+	}
+	
+	Guagua(Guagua g){
+		this.chapa=g.chapa;
+		this.chofer=g.chofer;
+		this.cantidadAsientos=g.cantidadAsientos;
+		this.tipo=g.tipo;
+		this.pisos=g.pisos;
+	}
+	
+	public String Reporte() {
+		return "VEHICULO: \n\t"+"Chapa: "+chapa+"\n\tTipo: "+tipo+"\n\tCantidad de Asientos: "+cantidadAsientos+"\n\tPisos: "+pisos+"\n"+chofer.Reporte();
+	}
+}

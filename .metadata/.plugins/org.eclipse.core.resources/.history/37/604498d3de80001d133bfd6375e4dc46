@@ -1,0 +1,5 @@
+package lietys;
+
+public class adoiajdois<T> {
+	private T arr = (T) new Object[10];
+}

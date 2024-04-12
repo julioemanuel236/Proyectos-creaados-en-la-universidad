@@ -1,0 +1,109 @@
+package game;
+
+import java.util.Scanner;
+
+public abstract class Mob extends Entity{
+	final int dx[]= {1,1,0,-1,-1,-1,0,1};
+	final int dy[]= {0,1,1,1,0,-1,-1,-1};
+	
+	int movimientos;
+	int maxMov;
+	int damage;
+	boolean volar;
+	boolean overLava=false;
+	
+	public Mob(int vida,int damage,int mM,boolean volar,char c) {
+		super(vida,c);
+		this.damage = damage;
+		this.maxMov = movimientos = mM;
+		this.volar=volar;
+	}
+
+	public int getVida() {
+		return vida;
+	}
+
+	public int getMovimientos() {
+		return movimientos;
+	}
+
+	public int getDamage() {
+		return damage;
+	}
+
+	public int getX() {
+		return x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	public void restarMove() {
+		this.movimientos=maxMov;
+	}
+	
+	public abstract void atacar();
+	
+	public abstract boolean noHit();
+	
+	public void hit(Entity m) {
+		if(noHit())return;
+		m.vida-=this.damage;
+		App.infoTurno+=m.info()+" ha recibido "+this.damage+" de daño "+m.vida+"/"+m.vidaMaxima+"\n";
+		if(m.vida<=0)m.die();
+	}
+	
+	public void die() {
+		if(overLava)App.tablero.map[y][x] = new Lava(x,y);
+		else App.tablero.map[y][x] = new Planicie(x,y);
+	}
+	
+	public boolean mover() {
+		Tablero tablero=App.tablero;
+		int dir=0;
+		Scanner cin = new Scanner(System.in);
+		if(movimientos<1) {
+			System.out.println("No te quedan movimientos en este turno\n");
+			return false;
+		}
+		
+		while(movimientos>0) {	
+			System.out.println("En que direccion deseas moverte\nU-arriba\nR-derecha\nD-abajo\nL-izquierda");
+			char c=cin.next().charAt(0);
+			
+			switch(c) {
+			 case 'U':dir=6;break;
+			 case 'R':dir=0; break;
+			 case 'D':dir=2; break;
+			 case 'L':dir=4; break;
+			 default : return true;
+			}
+			
+			int x=getX()+dx[dir];
+			int y=getY()+dy[dir];
+			
+			if(x<1||x>tablero.width||y<1||y>tablero.height)return false;
+			if(!volar&&!(tablero.map[x][y] instanceof Planicie))return false;
+			moveTo(x,y);		
+		}
+		
+		return true;
+	}
+	
+	public void moveTo(int x,int y) {
+		App.infoTurno+=this.info()+" se ha movida a la posicion ["+x+","+y+"]\n";
+		Tablero tablero = App.tablero;
+		if(tablero.map[this.y][this.x] instanceof Lava)overLava=true;
+		tablero.map[y][x]=this;
+		tablero.map[this.y][this.x]=new Planicie(x,y);
+		this.x=x;
+		this.y=y;
+		this.movimientos--;
+	}
+	
+	@Override
+	public String info() {
+		return vida+"/"+vidaMaxima+"["+x+","+y+"]\n";
+	}
+}

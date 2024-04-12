@@ -1,0 +1,20 @@
+package empresa_turistica;
+
+public class Guia extends Persona{
+
+	public Guia(Persona p) {
+		super(p);
+		// TODO Auto-generated constructor stub
+	}
+
+	public Guia(String nombre, char sexo, String pasaporte) {
+		super(nombre, sexo, pasaporte);
+		// TODO Auto-generated constructor stub
+	}
+
+	public Guia(String nombre, char sexo) {
+		super(nombre, sexo);
+		// TODO Auto-generated constructor stub
+	}
+		
+}

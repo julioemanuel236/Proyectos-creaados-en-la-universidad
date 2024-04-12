@@ -1,0 +1,26 @@
+package app;
+
+import java.io.FileReader;
+
+public class App {
+
+	String studentsRute = "/StudentFile.txt";
+	String universitysRute = "Universities9.txt";
+	University universities[];
+	Student students[];
+	
+	public void App() {
+		try {
+			loadStudents();
+		}
+		catch(Exception e) {
+			
+		}
+	}
+	
+	private void loadStudents() throws Exception{
+		
+		FileReader fr = new FileReader(studentsRute);
+	}
+	
+}

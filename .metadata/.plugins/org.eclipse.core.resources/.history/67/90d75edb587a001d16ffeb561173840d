@@ -1,0 +1,24 @@
+package clases;
+
+public class Profesor extends Becado{
+	public static String MEDIOS[] = {"sabana","sabana","sabana","sabana","sobrecama","toalla","toalla","colcha","percha","perchas","perchas","perchas","perchas","perchas"};
+	private String departamento;
+	private String facultad;
+	private String asignatura;
+	private String categoriaD;
+	private String categoriaC;
+	
+	
+	public Profesor(String solapin,String carnet,String nombre,String apellidos,char sexo,String provincia,Apartamento apartamento,String correo,String ingreso,String departamento,String facultad,String asignatura,String categoriaD,String categoriaC) {
+		super(solapin,carnet,nombre,apellidos,sexo,provincia,apartamento,correo,ingreso);
+		this.departamento=departamento;
+		this.facultad=facultad;
+		this.asignatura=asignatura;
+		this.categoriaC=categoriaC;
+		this.categoriaD=categoriaD;
+	}
+
+	public String datos() {
+		return "";
+	}
+}

@@ -1,0 +1,13 @@
+package game;
+
+public abstract class Heroe extends Mob {
+
+	public Heroe(int vida, int movimientos, int damage) {
+		super(vida, movimientos, damage);
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public void atacar();
+
+}

@@ -1,0 +1,36 @@
+package game;
+
+import java.util.Scanner;
+
+public class FlorCarnivora extends Enemigo {
+
+	public FlorCarnivora() {
+		super(250, 30, 0, false,'F');
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public void atacar() {
+		Tablero tablero = App.tablero;
+		
+		for(int j=0;j<4;j++) {
+			int dir=j;
+			for(int i=1;i<4;i++) {
+				int ax=getX()+(dx[dir]*i);
+				int ay=getY()+(dy[dir]*i);
+				if(ax<0||ay<0||ax>tablero.width||ay>tablero.height)continue;
+				if(tablero.map[ay][ax] instanceof Entity) {
+					if(i==1)((Entity)tablero.map[ay][ax]).die();
+					else this.hit((Entity)tablero.map[ay][ax]);
+				}
+			}
+		}
+	}
+
+	@Override
+	public void die() {
+		// TODO Auto-generated method stub
+
+	}
+
+}

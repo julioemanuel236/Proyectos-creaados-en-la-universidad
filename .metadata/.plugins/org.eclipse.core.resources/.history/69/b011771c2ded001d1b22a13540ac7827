@@ -1,0 +1,5 @@
+package objectsPackage;
+
+public class Cube {
+	private final double 
+}

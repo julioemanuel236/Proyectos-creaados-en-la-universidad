@@ -1,0 +1,28 @@
+package decanato;
+import java.util.ArrayList;
+
+public class Decanato {
+	ArrayList<Alumno> alumnos = new ArrayList<Alumno>();
+	ArrayList<Ayudante> ayudantes = new ArrayList<Ayudante>();
+	ArrayList<Licencia> licencias = new ArrayList<Licencia>();
+	
+	public void nuevoAlumno(Alumno a) {
+		alumnos.add(a);
+	}
+	public void nuevoAyudante(Ayudante a) {
+		alumnos.add(a);
+		ayudantes.add(a);
+	}
+	public void nuevoLicencia(Licencia a) {
+		alumnos.add(a);
+		licencias.add(a);
+	}
+	
+	public Alumno buscarGrupo(String ID) {
+		for(Alumno i:alumnos) {
+			if(i.getID()==ID)
+				return i;
+		}
+		return null;
+	}
+}

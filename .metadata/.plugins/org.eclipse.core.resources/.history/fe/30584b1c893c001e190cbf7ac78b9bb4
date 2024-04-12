@@ -1,0 +1,12 @@
+package elementos;
+
+import elementos.serpiente.Cuerpo;
+
+public class Matriz {
+	
+	private Cuerpo[][] matriz;
+	
+	public Matriz(int n,int m) {
+		matriz = new Cuerpo[n][m];
+	}
+}

@@ -1,0 +1,23 @@
+package app;
+
+public class App {
+
+	String studentsRute = "/StudentFile.txt";
+	String universitysRute = "Universities9.txt";
+	University universities[];
+	Student students[];
+	
+	public void App() {
+		try {
+			loadStudents();
+		}
+		catch(Exception e) {
+			
+		}
+	}
+	
+	private void loadStudents() {
+		
+	}
+	
+}

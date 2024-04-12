@@ -1,0 +1,37 @@
+package fixer;
+
+import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class Fixer {
+
+	String fileRute = "50Names.txt";
+	ArrayList<Person> persons;
+	
+	public Fixer() {
+		try {
+			loadPersons();
+		}
+		catch(Exception e) {
+			
+		}
+		
+	}
+	
+	public void loadPersons()throws Exception {
+		FileReader fr = new FileReader(fileRute);
+		Scanner entry = new Scanner(fr);
+		persons = new ArrayList<>();
+		String data[] = new String[4];
+		int pos=0;
+		while(entry.hasNext()) {
+			data
+		}
+	}
+	
+	
+	public static void main(String[] args) {
+		new Fixer();
+	}
+}

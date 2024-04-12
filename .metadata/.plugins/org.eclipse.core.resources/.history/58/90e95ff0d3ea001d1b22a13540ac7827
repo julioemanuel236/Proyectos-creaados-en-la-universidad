@@ -1,0 +1,181 @@
+package gui;
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import bikes.*;
+import javax.swing.*;
+
+
+public class MainWindow extends JFrame{
+	int MAX_INVENTORY_SIZE_PER_TYPE = 100;
+	int bb=0,mb=0,rb=0,eb=0,reb=0;
+	
+	BasicBike[] basicBikeArray = new BasicBike[MAX_INVENTORY_SIZE_PER_TYPE]; // Creating  // Declaring the array 
+		
+	MountainBike[] mountainBikeArray = new MountainBike[MAX_INVENTORY_SIZE_PER_TYPE]; // Declare 	
+	
+	RoadBike[] roadBikeArray = new RoadBike[MAX_INVENTORY_SIZE_PER_TYPE]; // Creating // Declare 	
+	
+	EBike[] eBikeArray = new EBike[MAX_INVENTORY_SIZE_PER_TYPE]; // Declare 	
+	
+	RoadEBike[] roadEBikeArray = new RoadEBike[MAX_INVENTORY_SIZE_PER_TYPE]; // Declare 	
+	
+	SelectTypePanel stp;
+	Reporte reporte;
+	JPanel table;
+	JPanel newz;
+	JPanel editz;
+	JTextArea info;
+	
+	public MainWindow(){
+		int w=500,h=700;
+		setResizable(false);
+		setSize(w,h);
+		setLayout(null);
+		setLocationRelativeTo(null);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		stp = new SelectTypePanel(w,h);
+		setVisible(true);
+	//	iniTableZone();
+	//	iniNewZone();	
+	//	iniEditZone();
+		iniButtons();
+		iniInfoZone();
+	}
+	
+	private void iniInfoZone() {
+		info = new JTextArea();
+		info.setSize(getWidth(),getHeight()/2);
+		info.setEditable(false);
+		JScrollPane jsp = new JScrollPane(info);		
+		jsp.setSize(info.getSize());
+		jsp.setLocation(0,getHeight()/2 - 50);
+		add(jsp); 
+	}
+	
+	private void iniButtons() {
+		String texts[] = {"List Selected Inventary","Display All Inventory","New Bike","Remove a Bike","Edit a existence Bike"};
+		JButton buttons[] = new JButton[texts.length];
+		int x=getWidth()/4,y=5;
+		for(int i=0;i<texts.length;i++) {
+			JButton jb = new JButton(texts[i]);
+			jb.setSize(getWidth()/2,40);
+			jb.setLocation(x,y);
+			y+=45;
+			add(jb);
+			buttons[i]=jb;
+		}
+		
+	buttons[0].addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			
+			String ops[] = {"Basic Bike","Mountain Bike","Road Bike","EBike","Road EBike"};
+			String op = (String)JOptionPane.showInputDialog(null, "Type of Bike","Select Type", JOptionPane.QUESTION_MESSAGE, null, ops, null);
+			System.out.println(op);
+			info.setText("");
+			BasicBike arr[];
+			if(op.equals(ops[0])) {
+				arr = basicBikeArray;
+			}
+			else if(op.equals(ops[1])) {
+				arr = mountainBikeArray;			
+			}
+			else if(op.equals(ops[2])) {
+				arr = basicBikeArray;
+			}
+			else if(op.equals(ops[3])) {
+				arr = basicBikeArray;
+			}
+			else {
+				arr = basicBikeArray;
+			}
+			
+			for(int i = 0;i<arr.length;i++) {
+				if(arr[i]!=null)info.setText(info.getText()+arr[i].getInfo()+"\n");
+			}
+
+		}
+	});
+	
+	buttons[1].addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {					
+			info.setText("");			
+			BasicBike[] arr = basicBikeArray;
+			info.setText(info.getText()+"\n-----------------------------------------------------------------------\n"
+					+ 					  "|                             BASIC BIKES                              \n"
+					+ 					  "-----------------------------------------------------------------------\n");
+			for(int i = 0;i<arr.length;i++) {
+				
+				if(arr[i]!=null)info.setText(info.getText()+arr[i].getInfo()+"\n");
+			}
+			info.setText(info.getText()+"\n-----------------------------------------------------------------------\n"
+					+ 					  "|                                  Mountain Bike                       \n"
+					+ 					  "-----------------------------------------------------------------------\n");
+			arr = mountainBikeArray;
+			for(int i = 0;i<arr.length;i++) {
+				if(arr[i]!=null)info.setText(info.getText()+arr[i].getInfo()+"\n");
+			}
+			
+			info.setText(info.getText()+"\n-----------------------------------------------------------------------\n"
+					+ 					  "|                                      Road Bike                       \n"
+					+ 					  "-----------------------------------------------------------------------\n");
+			arr = roadBikeArray;
+			for(int i = 0;i<arr.length;i++) {
+				if(arr[i]!=null)info.setText(info.getText()+arr[i].getInfo()+"\n");
+			}
+			
+			info.setText(info.getText()+"\n-----------------------------------------------------------------------\n"
+					+ 					  "|                                  Electric Bike                    \n"
+					+ 					  "-----------------------------------------------------------------------\n");
+			arr = eBikeArray;
+			for(int i = 0;i<arr.length;i++) {
+				if(arr[i]!=null)info.setText(info.getText()+arr[i].getInfo()+"\n");
+			}
+			
+			info.setText(info.getText()+"\n-----------------------------------------------------------------------\n"
+					+ 					  "|                                Road Electric Bike                \n"
+					+ 					  "-----------------------------------------------------------------------\n");
+			arr = roadEBikeArray;
+			for(int i = 0;i<arr.length;i++) {
+				if(arr[i]!=null)info.setText(info.getText()+arr[i].getInfo()+"\n");
+			}
+		}
+	});	
+	}
+	
+	private void iniEditZone() {
+		editz = new JPanel();
+		editz.setSize(getWidth()/2,table.getY());
+		editz.setLocation(editz.getWidth(),0);
+		editz.setBackground(Color.yellow);
+		add(editz);
+		editz.repaint();
+	}
+	
+	private void iniNewZone() {
+		newz = new JPanel();
+		newz.setSize(getWidth()/2,table.getY());
+		newz.setLocation(0,0);
+		newz.setBackground(Color.green);
+		add(newz);
+		newz.repaint();
+	}
+	
+	private void iniTableZone() {
+		table = new JPanel();
+		table.setLayout(null);
+		table.setBackground(Color.red);
+		table.setSize(getWidth(),460);
+		table.setLocation(0,getHeight()-table.getHeight());
+		add(table);
+		reporte = new Reporte(table.getWidth(),table.getHeight(),0);
+		table.add(reporte);
+		table.repaint();
+	}
+	
+	
+	public static void main(String args[]) {
+		new MainWindow();
+	}
+	
+}

@@ -1,0 +1,99 @@
+package medios_uci;
+import javax.swing.*;
+import javax.swing.plaf.basic.BasicTabbedPaneUI.TabbedPaneLayout;
+
+import java.awt.*;
+
+public class Ventana extends JFrame{
+
+	private void panelNuevo() {
+		JPanel panel = new JPanel();
+		panel.setLayout(null);
+		panel.setSize(300,420);
+		panel.setBackground(Color.lightGray);
+		add(panel);
+		JTextField serie,costeu,estado,proveedor,garantia,explotacion;
+		final JComboBox<String> tipo,producto = new JComboBox<String>(),
+				                marca = new JComboBox<String>() ,local = new JComboBox<String>();
+		serie = new JTextField("No. Serie");
+		serie.setSize(200,30);
+		serie.setLocation(50,5);
+		panel.add(serie);
+		
+		costeu = new JTextField("Coste Unitario");
+		costeu.setSize(200,30);
+		costeu.setLocation(50,40);
+		panel.add(costeu);
+		
+		estado = new JTextField("Estado");
+		estado.setSize(200,30);
+		estado.setLocation(50,75);
+		panel.add(estado);
+		
+		proveedor = new JTextField("Proveedor");
+		proveedor.setSize(200,30);
+		proveedor.setLocation(50,110);
+		panel.add(proveedor);
+		
+		tipo = new JComboBox<String>();
+		tipo.addItem(Equipo.TIPO);
+		tipo.addItem(Mueble.TIPO);
+		tipo.setSize(200,30);
+		tipo.setLocation(50,145);
+		tipo.addActionListener((ActionEvent)->{
+			producto.removeAllItems();
+			if(tipo.getSelectedIndex()==0) {
+				for(String i:Equipo.CLASIFICACIONES)
+					producto.addItem(i);
+			}
+			else {
+				for(String i:Mueble.CLASIFICACIONES)
+					producto.addItem(i);
+			}
+		});
+		panel.add(tipo);
+		
+		producto.setSize(200,30);
+		producto.setLocation(50,180);
+		panel.add(producto);
+		
+		marca.setSize(200,30);
+		marca.setLocation(50,215);
+		for(String i:Equipo.MARCA)
+			marca.addItem(i);
+		panel.add(marca);
+		
+		local.setSize(200,30);
+		local.setLocation(50,215);
+		for(String i:Mueble.LOCAL)
+			local.addItem(i);
+		panel.add(local);
+		local.setVisible(false);
+		
+		garantia = new JTextField("Garantia");
+		garantia.setSize(200,30);
+		garantia .setLocation(50,250);
+		panel.add(garantia);
+		
+		explotacion = new JTextField("Garantia");
+		explotacion.setSize(200,30);
+		explotacion.setLocation(50,250);
+		panel.add(explotacion);
+		
+		panel.add(tipo);
+		panel.repaint();
+	}
+	
+	Ventana(){
+		setLayout(null);
+		setSize(700,450);
+		panelNuevo();
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setLocationRelativeTo(null);
+		setVisible(true);
+	}
+	
+	public static void main(String args[]) {
+		new Ventana();
+	}
+}

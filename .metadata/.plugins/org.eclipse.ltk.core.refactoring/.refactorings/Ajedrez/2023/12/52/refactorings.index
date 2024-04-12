@@ -1,0 +1,21 @@
+1703530670454	Encapsulate field 'tablero'
+1703532608922	Rename package 'Visual'
+1703532802041	Rename type 'Movimiento'
+1703616234509	Rename local variable 'label'
+1703688567173	Rename method 'getTorremage'
+1703693403100	Rename type 'Cabllao'
+1703695725860	Rename field 'comer'
+1703695739712	Rename field 'capturar'
+1703720995082	Rename method 'comer'
+1703776085780	Rename method 'agregarMovimiento'
+1703786327930	Delete element
+1703788592741	Delete element
+1703822228110	Rename field 'di'
+1703822241734	Rename field 'dj'
+1703822584463	Rename field 'dj'
+1703822605943	Rename field 'di'
+1703822610113	Rename field 'dj'
+1703822626831	Rename field 'di'
+1703822631701	Rename field 'dj'
+1703898496291	Rename method 'getEjecutarse'
+1703906059305	Delete element

@@ -1,0 +1,15 @@
+package agencia;
+
+public class CM extends Camion{
+
+	private	float kml;
+	
+	public CM(String chapa,float kml) {
+		super(chapa);
+		this.kml=kml;
+	}
+	
+	public float getKilometroLitro() {
+		return this.kml;
+	}
+}

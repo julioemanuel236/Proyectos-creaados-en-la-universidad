@@ -1,0 +1,45 @@
+package game;
+
+import java.util.Scanner;
+
+public class Mago extends Heroe {
+
+	public Mago(Tablero t) {
+		super(100, 60, 2,true, t);
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public void atacar() {
+		int dir=0;
+		
+		Scanner cin = new Scanner(System.in);
+		System.out.println("En que direccion deseas atacar\nU-arriba\nR-derecha\nD-abajo\nL-izquierda");
+		char c=cin.next().charAt(0);
+		
+		switch(c) {
+		 case 'U':dir=6;break;
+		 case 'R':dir=0; break;
+		 case 'D':dir=2; break;
+		 case 'L':dir=4; break;
+		}
+		
+		for(int i=1;i<4;i++) {
+			int ax=getX()+dx[dir];
+			int ay=getY()+dy[dir];
+			
+			if(tablero.map[ax][ay] instanceof Entity) {
+				this.hit((Entity)tablero.map[ax][ay]);
+				break;
+			}
+		}
+		
+	}
+
+	@Override
+	public void die() {
+		// TODO Auto-generated method stub
+
+	}
+
+}

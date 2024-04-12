@@ -1,0 +1,22 @@
+package pieza;
+import java.awt.Point;
+
+
+public abstract class Pieza{
+	
+	//atributos
+
+	private int i;
+	private int j;
+	
+	public Pieza(int i,int j,boolean color) {
+		this.i = i;
+		this.j = j;
+		this.color = color;		
+	}
+	
+	private boolean color;
+	
+	public abstract Point[] getMovimientosValidas();
+	
+}

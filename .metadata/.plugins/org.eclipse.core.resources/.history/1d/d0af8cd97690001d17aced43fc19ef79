@@ -1,0 +1,17 @@
+package empresa_turistica;
+
+
+public class Bus extends Carro{
+	private int pisos;
+
+	public Bus(int pisos) {
+		super();
+		this.pisos = pisos;
+	}
+
+	public int getPisos() {
+		return pisos;
+	}
+	
+	
+}

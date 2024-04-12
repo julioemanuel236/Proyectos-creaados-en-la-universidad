@@ -1,0 +1,13 @@
+package algoritmos;
+
+import java.util.Collection;
+
+public abstract class AlgoritmoPlanificacion {
+
+	Collection procesos;
+	
+	public abstract void add(Proceso pr);
+	
+	public abstract Proceso procces();
+	
+}

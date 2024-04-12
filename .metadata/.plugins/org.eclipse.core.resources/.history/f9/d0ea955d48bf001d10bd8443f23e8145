@@ -1,0 +1,60 @@
+package game;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class App {
+	Scanner cin = new Scanner(System.in);
+	String nombre;
+	ArrayList<Heroe> heroes = new ArrayList<>();
+	ArrayList<Heroe> hComprar = new ArrayList<>();
+	ArrayList<Item> items = new ArrayList<>();
+	Tablero tablero;
+	Tienda tienda;
+	int oro;
+	Heroe ingame[] = new Heroe[2];
+	int mainHero=0;
+	
+	public App() {
+		mainMenu();
+	}
+	
+	public void mainMenu() {
+		print("1-Jugar\n");
+		print("2-Estadisticas\n");
+		print("0-Salir\n");
+		int op=entero();
+		switch(op) {
+			case 1:iniciarPartida();break;
+			case 2: break;
+			case 0: return;
+		}
+	}
+	
+	public void iniciarPartida() {
+		if(heroes.isEmpty()) {
+			//primera vez que se juega
+		}
+	}
+	
+	public int entero() {
+		while(true) {
+			try {
+				int n=cin.nextInt();
+				return n;
+			}
+			catch(Exception e) {
+				print("Opcion no valida\n");
+			}
+		}
+	}
+	
+ 	public void print(String txt) {
+		System.out.print(txt);
+	}
+	
+	public static void main(String args[]) {
+		new App();
+	}
+
+}

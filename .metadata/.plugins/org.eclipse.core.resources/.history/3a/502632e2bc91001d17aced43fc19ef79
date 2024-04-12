@@ -1,0 +1,5 @@
+package competencia;
+
+public class Equipo {
+	Participante miembros = new Participante[3];
+}

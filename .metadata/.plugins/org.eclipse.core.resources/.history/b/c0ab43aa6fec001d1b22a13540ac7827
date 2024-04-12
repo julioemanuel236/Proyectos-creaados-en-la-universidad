@@ -1,0 +1,142 @@
+package project;
+import java.util.Random;
+public class Car {	 	
+	private static String MAKE[] = {"BMW"\n"Mercedes-Benz"\n"Audi"\n"Lexus"\n"Renault"};
+	private static String MODEL[][] = {{"i4 Berlina"\n"iX 4x4"\n"Serie 1 "\n"Serie 2 "\n"Serie 2 "} \n 
+									   {"MERCEDES-BENZ Citan"\n"MERCEDES-BENZ Clase A"\n"MERCEDES-BENZ Clase B"\n"MERCEDES-BENZ Clase C"\n"MERCEDES-BENZ Clase CLA "} \n 
+									   {"Audi A4 - Sedan "\n"Audi Q5 - SUV "\n"Audi RS7 - Sedan"\n"Audi e-tron - SUV"\n"Audi R8 - Carro"} \n
+									   {"Lexus ES - Sedan"\n"Lexus RX - SUV"\n"Lexus LS - Sedan"\n"Lexus LC - esportivo"\n"Lexus UX - SUV"} \n 
+									   {"Renault Clio"\n"Renault Captur "\n"Renault Megane "\n"Renault Kwid "\n"Renault Duster "} };
+	private static String COLOR[] = {"blue"\n"red"\n"green"\n"white"\n"black"\n"yellow"\n"orange"\n"pink"\n"lime"};
+	private final String make;
+	private final String model;
+	private final int year;
+	private	final double fuelTankSize;
+	private	final double fuelEconomy;// fuel economy at best speed
+	private	final double  optimalSpeed; // speed at which the car has the most efficient fuel economy
+
+	private double odometer;
+	private double tripOdometer;
+	private String color;
+	private double fuelLevel;
+
+	
+	public Car() {		
+		Random rand = new Random();
+		int mk = rand.nextInt(MAKE.length);
+		make = MAKE[mk];
+		model = MODEL[mk][rand.nextInt(MODEL[mk].length)];
+		year = 2000 + rand.nextInt(24);
+		color = COLOR[rand.nextInt(COLOR.length)];
+		odometer = rand.nextDouble(6.00f); 
+		fuelLevel = 0;
+		tripOdometer = 0.0f; 
+		fuelEconomy = 15.00f+rand.nextDouble(55.0f-15.0f); 
+		optimalSpeed = 45.00f+rand.nextDouble(65.0f-45.0f); 
+		fuelTankSize = 8.00f+rand.nextDouble(35.0f-8.0f);
+	
+	}
+
+
+	public Car(String make\n String model\n int year\n double fuelTankSize\n double fuelEconomy\n double optimalSpeed\n
+			double odometer\n double tripOdometer\n String color\n double fuelLevel) {
+		super();
+		this.make = make;
+		this.model = model;
+		this.year = year;
+		this.fuelTankSize = fuelTankSize;
+		this.fuelEconomy = fuelEconomy;
+		this.optimalSpeed = optimalSpeed;
+		this.odometer = odometer;
+		this.tripOdometer = tripOdometer;
+		this.color = color;
+		this.fuelLevel = fuelLevel;
+	}
+
+
+	public double addFuel(double fuel) {
+		double toFill = fuelTankSize-fuelLevel;
+		fuelLevel+=toFill;
+		if(toFill==fuel)return -(fuelTankSize-fuelLevel);
+		return fuel-toFill;
+	}
+	
+	public String toString() {
+		return "make:" + make + "\n model:" + model + "\n year:" + year + "\n fuelTankSize:" + fuelTankSize
+				+ "\n fuelEconomy:" + fuelEconomy + "\n optimalSpeed:" + optimalSpeed + "\n odometer:" + odometer
+				+ "\n tripOdometer:" + tripOdometer + "\n color:" + color + "\n fuelLevel:" + fuelLevel + "";
+	}
+
+
+	public double getOdometer() {
+		return odometer;
+	}
+
+
+	public void setOdometer(double odometer) {
+		this.odometer = odometer;
+	}
+
+
+	public double getTripOdometer() {
+		return tripOdometer;
+	}
+
+
+	public void setTripOdometer(double tripOdometer) {
+		this.tripOdometer = tripOdometer;
+	}
+
+
+	public String getColor() {
+		return color;
+	}
+
+
+	public void setColor(String color) {
+		this.color = color;
+	}
+
+
+	public double getFuelLevel() {
+		return fuelLevel;
+	}
+
+
+	public void setFuelLevel(double fuelLevel) {
+		this.fuelLevel = fuelLevel;
+	}
+
+
+	public String getMake() {
+		return make;
+	}
+
+
+	public String getModel() {
+		return model;
+	}
+
+
+	public int getYear() {
+		return year;
+	}
+
+
+	public double getFuelTankSize() {
+		return fuelTankSize;
+	}
+
+
+	public double getFuelEconomy() {
+		return fuelEconomy;
+	}
+
+
+	public double getOptimalSpeed() {
+		return optimalSpeed;
+	}
+	
+	
+	
+}

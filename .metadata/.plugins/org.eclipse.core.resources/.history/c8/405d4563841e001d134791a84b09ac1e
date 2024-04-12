@@ -1,0 +1,27 @@
+package com.nobody.adMEnestrator;
+
+import java.util.Date;
+import java.time.Instant;
+import java.util.Calendar;
+import javax.swing.JLabel;
+
+
+public class Entry extends JLabel{
+	public String  Nombre;
+	public String  Tipo;
+	public float   Precio;
+	public int     ID;
+	public Date    Fecha = new Date();
+	public Date    Fpago;
+	public boolean auto;
+	
+	public Entry() {
+		System.out.println(Fecha.toString());
+		
+	}
+	
+	public static void main(String[] args) {
+		new Entry();
+	}
+	
+}

@@ -1,0 +1,7 @@
+package competencia;
+
+public class EquipoJunior extends Equipo{
+	private int problemas[] = new int[3];
+	
+	
+}

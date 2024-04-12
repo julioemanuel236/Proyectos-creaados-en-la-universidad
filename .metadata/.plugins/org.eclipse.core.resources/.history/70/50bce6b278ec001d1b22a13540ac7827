@@ -1,0 +1,50 @@
+package project;
+import java.util.Scanner;
+public class InputRead {
+	private static Scanner entry = new Scanner(System.in);
+
+	static public int nextInt() {		
+		while(true) {
+			try {
+				return Integer.parseInt(entry.next());				 
+			}
+			catch(Exception e) {
+				System.out.println("Invalid Input");
+			}
+		}				
+	}
+	
+	static public double nextDouble() {
+		while(true) {
+			try {
+				return Double.parseDouble(entry.next());
+				
+			}
+			catch(Exception e) {
+				System.out.println("Invalid Input");
+			}
+		}
+	}
+
+	static public fuelTankSize() {
+		while(true) {
+			double fts = nextDouble();
+			if(fts<8.0 || fts>34.99)
+				System.out.println("Not valide");
+			else return fts;
+			
+		}
+	}
+	
+	
+	
+	20
+	Input the car's optimal driving speed for best mileage.
+	Please enter a value between 45.0 and 64.99.
+	64
+	Input the car's fuel economy.
+	Please enter a value between 15.0 and 54.99.
+	30.2
+
+	
+}

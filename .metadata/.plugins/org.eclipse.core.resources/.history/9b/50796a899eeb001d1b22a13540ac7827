@@ -1,0 +1,248 @@
+package app;
+
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+public class App {
+
+	String studentsRute = "StudentFile.txt";
+	String universitysRute = "Universities9.txt";
+	String reportRute = "Report.txt";
+	ArrayList<University> universities;
+	ArrayList<Student> students;
+	
+	public App() {		
+		try {
+			
+			loadStudents();
+			loadUniversities();
+			makeReport();
+			
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private String numberFormat(String s) {
+		String f = "(";
+		f+=s.substring(0, 3);
+		f+=")";
+		f+=s.substring(3,6);
+		f+="-";
+		f+=s.substring(6, 10);
+		return f;
+	}
+	
+	private String fillTo(String s,int n) {
+		for(int i=0;s.length()<n;i++)s+=" ";		
+		return s;
+	}
+	
+	private int getCategory(int credits) {
+		if(credits<12)return 0;
+		else if(credits<18)return 1;
+		else return 2;
+		
+	}
+	
+	private void makeReport() throws Exception {
+		FileWriter fw = new FileWriter(reportRute);
+
+		Comparator<University> univer = new Comparator() {
+
+			@Override
+			public int compare(Object o1, Object o2) {
+				University u1 = (University)o1;
+				University u2 = (University)o2;
+				return u1.getUniversityName().compareToIgnoreCase(u2.getUniversityName());				
+			}
+
+		};
+
+		Comparator<Student> student = new Comparator() {
+
+			@Override
+			public int compare(Object o1, Object o2) {
+				Student u1 = (Student)o1;
+				Student u2 = (Student)o2;
+				return u1.compareTo(u2);				
+			}
+
+		};
+		
+		Collections.sort(universities,univer);
+		Collections.sort(students,student);
+		
+		for(int i=0;i<universities.size();i++) {
+			University uni = universities.get(i);
+			
+			int studentsTotal=0;
+			int studentsIn=0;
+			int mealP[] = new int[uni.getOnCampusMealPlan().length];
+			float totalTuition=0;
+			float inTuition[] = uni.getInStateTuitionpercredit();
+			float outTuition[] = uni.getInStateTuitionpercredit();
+			float healthCare[] = uni.getOptionalHealthCare();
+			String report="";
+			String line;
+			report+="\t\t\t"+uni.getUniversityName()+"\n";
+			report+="\t\t\t"+uni.getStreetAddress()+"\n";
+			report+="\t\t\t"+uni.getCity()+","+uni.getState()+" "+uni.getZip()+"\n";
+			report+="\t\t\t"+numberFormat(uni.getPhoneNumber())+"\n\n";
+			
+			for(int j=0; j<students.size();j++) {
+				Student stu = students.get(j);				
+				if(stu.getUniversityName().equals(uni.getUniversityName())) {
+					studentsTotal++;
+					float tuition;
+					float totalEstudent=0;
+					int credits = stu.getCreditsEnrolled();
+					
+					if(stu.isQualifiesForInstateRate()) {
+						studentsIn++;
+						tuition = inTuition[getCategory(credits)];
+					}
+					else tuition = outTuition[getCategory(credits)];
+					
+					totalTuition+=tuition;
+					totalEstudent+=tuition;
+					line= "";
+					//Student info					
+					line+="NAME";line=fillTo(line,11);
+					line+=stu.getName();line=fillTo(line,40);
+					
+					line+="CREDITS";line=fillTo(line,50);
+					line+=stu.getCreditsEnrolled();
+					report+=line+"\n";
+					
+					line="ADRESS";line=fillTo(line,11);
+					line+=stu.getStreetAddress()+", "+stu.getCity()+", "+stu.getState()+" "+stu.getZip();
+					report+=line+"\n";
+					
+					line="PHONE";line=fillTo(line,11);
+					line+=numberFormat(stu.getPhoneNumber());
+					report+=line+"\n";					
+					
+					line="TUITION";line=fillTo(line,11);
+					line+="$ "+tuition;
+					report+=line+"\n";
+					
+					float lateFeed = (stu.isLateFeeAssessed()?tuition*uni.getLateFees():0.00f);
+					totalEstudent+=lateFeed;
+					line="LATE FEE";line=fillTo(line,11);line+="$ "+lateFeed;
+					totalEstudent+=tuition;
+					report+=line+"\n";
+					
+					totalEstudent+=uni.getIncidentalFeeMax();
+					line="INCIDENTAL";line=fillTo(line,11);line+="$ "+uni.getIncidentalFeeMax();
+					report+=line+"\n";
+					float healthcare = (stu.isHealthOptionChoice()?healthCare[getCategory(credits)]:0.00f);
+					totalEstudent+=healthcare;
+					line="HEALTH CARE";line=fillTo(line,11);line+="$ "+healthcare;
+					report+=line+"\n";
+					
+					float mealplan = uni.getOnCampusMealPlan()[stu.getFoodOptionChoice()-'A'];
+					totalEstudent+=mealplan;
+					line="MEAL PLAN";line=fillTo(line,11);line+="$ "+mealplan;
+					line=fillTo(line,40);
+					line+="TOTAL";line=fillTo(line,60);
+					line+="$ "+totalEstudent;
+					
+					report+=line+"\n";
+					
+					
+					
+					report+="\n";
+					
+				}
+
+				
+			}
+
+			//Unverisity total info
+			report+="\t\t\t"+uni.getUniversityName()+"\n";
+			line="NUMBER OF STUDENT";line=fillTo(line,20);line+=studentsTotal+"\n";
+			report+=line;
+			line="INSTATE";line=fillTo(line,20);line+=studentsIn+"\n";
+			report+=line;
+			line="OUTSTATE";line=fillTo(line,20);line+=(studentsTotal-studentsIn)+"\n";
+			report+=line;
+			
+			report += "\n\n";
+			System.out.println(report);
+			
+		}
+		
+		
+	}
+	
+	private boolean YN(String s) {
+		return s.equalsIgnoreCase("Y");
+	}
+	
+	private void loadUniversities()throws Exception {
+		FileReader fr = new FileReader(universitysRute);
+		Scanner entry = new Scanner(fr);		
+		int count = Integer.parseInt(entry.nextLine());
+		universities = new ArrayList<>();
+		System.out.println(count);
+		
+		for(int i=0;i<count;i++) {
+			String[] dataLine = entry.nextLine().split(",");
+			float inStateTPC[] = new float[3];
+			float outStateTPC[] = new float[3];
+			float optionalHC[] = new float[3];
+			float campusMP[] = {0,0,0,0};
+			for(int j=0;j<3;j++) {
+				inStateTPC[j] = Float.parseFloat(dataLine[6+j]);
+				outStateTPC[j] = Float.parseFloat(dataLine[9+j]);
+				campusMP[j] = Float.parseFloat(dataLine[12+j]);
+				optionalHC[j] = Float.parseFloat(dataLine[15+j]);
+			}
+			
+			University uni = new University(
+					dataLine[0],dataLine[1],dataLine[2],dataLine[3],dataLine[4],dataLine[5],
+					inStateTPC,outStateTPC,
+					Float.parseFloat(dataLine[18]),Float.parseFloat(dataLine[19]),Float.parseFloat(dataLine[20]),
+					optionalHC,campusMP
+					);
+			universities.add(uni);
+			//System.out.println(uni.toString());
+		}
+		entry.close();		
+	}
+	
+	private void loadStudents() throws Exception{	
+		FileReader fr = new FileReader(studentsRute);
+		Scanner entry = new Scanner(fr);		
+		int count = Integer.parseInt(entry.nextLine());
+		
+		System.out.println(count);
+		
+		students = new ArrayList<>();
+		for(int i=0;i<count;i++) {
+			String[] dataLine = entry.nextLine().split(",");
+			Student est = new Student(
+					new Name(dataLine[0],dataLine[1],dataLine[2]),
+					Integer.parseInt(dataLine[3]),dataLine[4],
+					dataLine[5],dataLine[6],dataLine[7],dataLine[8],
+					dataLine[9],
+					dataLine[10],dataLine[11],Integer.parseInt(dataLine[12]),
+					YN(dataLine[13]),YN(dataLine[14]),dataLine[15].charAt(0),YN(dataLine[16]));
+			students.add(est);
+			//System.out.println(est.toString());
+		}
+		entry.close();
+	}
+	
+	public static void main(String[] args) {
+		new App();
+	}
+	
+}

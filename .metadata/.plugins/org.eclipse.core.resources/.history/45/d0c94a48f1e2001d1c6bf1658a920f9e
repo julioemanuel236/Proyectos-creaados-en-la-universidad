@@ -1,0 +1,45 @@
+package algoritmos;
+
+import java.util.LinkedList;
+
+public class RoundRobin extends AlgoritmoPlanificacion{
+	LinkedList<Proceso> procesos;
+	
+	private int Q;
+	private int currentTime;
+	private Proceso actual;
+	
+	public RoundRobin(int Q) {
+		this.Q=Q;
+		procesos = new LinkedList<Proceso>();		
+		currentTime=0;
+	}
+	
+	public void add(Proceso pr) {
+		System.out.println("A MI LLEGO"+pr);
+		procesos.add(pr);
+		System.out.println("MI LISTA TIENE "+procesos.size());
+	}
+	
+	public Proceso procces() {
+		if(procesos.isEmpty()) {
+			System.out.println("ESTOY VACIO");
+			return null;
+		}
+		Proceso pr = procesos.peek();
+		pr.procces();
+		currentTime++;
+		if(pr.isTerminated()) {
+			procesos.poll();
+			currentTime=0;
+		}
+		if(currentTime==Q) {
+			procesos.poll();
+			procesos.add(pr);
+			currentTime=0;
+		}
+				
+		return pr;
+	}	
+	
+}

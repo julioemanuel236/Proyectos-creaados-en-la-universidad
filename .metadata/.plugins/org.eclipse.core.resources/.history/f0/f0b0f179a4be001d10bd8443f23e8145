@@ -1,0 +1,27 @@
+package game;
+
+public class Arquero extends Heroe {
+
+	public Arquero(Tablero t) {
+		super(150, 1, 100,1,t);
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public void atacar() {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void die() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public boolean mover() {
+		
+		return false;
+	}
+
+}

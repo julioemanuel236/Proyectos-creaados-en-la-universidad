@@ -1,0 +1,41 @@
+package game;
+
+import java.util.Scanner;
+	
+public class Menu {
+	Scanner cin = new Scanner(System.in);
+	
+	boolean salir=false;
+	
+	public Menu() {
+		
+	}
+	
+	public void selectTablero() {
+		String ops="Selecciona un tablero\n"
+				+ "1-Tablero Defautl\n2-Tablero Default2\n3-Tablero Personalizado\n0-Salir";
+		int op=-1;
+		while(op!=0) {
+			System.out.println(ops);
+			op=cin.nextInt();
+		}
+	}
+	
+	public int inicio() {
+		String ops="1-Jugar\n2-Ver Estado de la Partida\n0-Salir\n";
+		
+		
+		while(!salir) {
+			System.out.println(ops);
+			int op = cin.nextInt();
+			switch(op) {
+				case 1:return 1;
+				case 2:return 2;
+				case 3:salir=true;return 0;
+				default:System.out.println("Opcion no valida\n");
+			}
+		}
+		return 0;
+	}
+
+}

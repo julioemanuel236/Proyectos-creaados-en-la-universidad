@@ -1,0 +1,23 @@
+package game;
+
+public abstract class Entity extends Object{
+	int vida;
+	int vidaMaxima;
+	int x;
+	int y;
+	char c;
+	public Entity(int vida,char c) {
+		this.vida = vidaMaxima = vida;
+		this.c=c;
+	}
+
+	public abstract void die();
+	
+	public String info() {
+		return "";
+	}
+	
+	public String toString() {
+		return ""+c;
+	}
+}

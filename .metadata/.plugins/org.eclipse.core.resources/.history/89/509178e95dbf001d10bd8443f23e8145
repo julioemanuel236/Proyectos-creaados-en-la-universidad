@@ -1,0 +1,34 @@
+package game;
+
+public abstract class Entity extends java.lang.Object{
+	int vida;
+	int vidaMaxima;
+	int x;
+	int y;
+	char c;
+	String color;
+	public Entity(int vida,char c,String color) {
+		this.vida = vidaMaxima = vida;
+		this.c=c;
+		color=color;
+	}
+
+	public void die() {
+		if(!this.isDead())return;
+		App.infoTurno+=this.getClass().getSimpleName()+" en ["+x+","+y+"] ha desaparecido\n";
+		App.tablero.map[y][x]=null;
+		App.tablero.map[y][x] = new Planicie(x,y);
+	}
+	
+	public String info() {
+		return getClass().getSimpleName()+" ["+x+","+y+"] ";
+	}
+
+	public boolean isDead() {
+		return this.vida<=0;
+	}
+	
+	public String toString() {
+		return color+c;
+	}
+}

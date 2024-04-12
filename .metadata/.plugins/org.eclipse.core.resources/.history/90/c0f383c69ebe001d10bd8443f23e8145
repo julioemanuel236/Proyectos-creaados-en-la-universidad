@@ -1,0 +1,8 @@
+package game;
+
+public class Mob {
+	int vida;
+	int movimientos;
+	int damage;
+	
+}

@@ -1,0 +1,5 @@
+package aplicacion;
+import java.io.*;
+public class Persona implements Serializable{
+
+}

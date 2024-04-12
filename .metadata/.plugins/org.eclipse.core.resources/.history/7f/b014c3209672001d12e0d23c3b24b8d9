@@ -1,0 +1,30 @@
+package lietys;
+
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.Date;
+import java.util.ArrayList;
+
+public class Aereopuerto extends JFrame {
+	String rutaterminales="Terminales.dat";
+	String rutaaviones="Aviones.dat";
+
+
+	public Aereopuerto() {
+		cargar_datos_terminales();
+		cargar_datos_aviones();
+	}
+
+	public static void main(String[] args) throws Exception{
+		try{
+			new Aereopuerto();
+		}
+		catch(Exception e) {
+			
+		}
+	}
+
+}
+

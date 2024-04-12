@@ -1,0 +1,42 @@
+package game;
+import java.util.ArrayList;
+public class Player {
+	
+	
+	String nombre;
+	ArrayList<Heroe> heroes = new ArrayList<>();
+	ArrayList<Item> items = new ArrayList<>();
+	Tablero tablero;
+	
+	int oro;
+	
+	public Player(String nombre) {
+		this.nombre=nombre;
+		this.oro=500;
+	}
+	
+	public void usarItem() {
+		
+	}
+	
+	public void moverHeroe() {
+		
+	}
+	
+	public void atacar() {
+		
+	}
+	
+	public void abrirTienda() {
+		
+	}
+	
+	public void comprarHeroe() {
+		
+	}
+	
+	public void comprarItem() {
+		
+	}
+
+}

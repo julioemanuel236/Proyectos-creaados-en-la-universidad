@@ -1,0 +1,19 @@
+package game;
+
+public class Game {
+
+	Player p;
+	
+	public Game() {
+	}
+
+	public void win() {
+		p.oro+=200;
+	}
+	
+	public static void main(String args[]) {
+		Player p = new Player();
+		p.oro+=500;
+		Menu().inicio();
+	}
+}

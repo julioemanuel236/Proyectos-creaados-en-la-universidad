@@ -1,0 +1,150 @@
+package cadena;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+
+public class Cadena {
+	private ArrayList<Hotel> hoteles = new ArrayList<>();
+	
+ 	public void nuevoHotel() {
+		String nombreHotel = Utiles.leer("Nombre del Hotel");
+		int capacidad = Integer.parseInt(Utiles.leer("Capacidad del Hotel"));
+		int cantidadPisos = Integer.parseInt(Utiles.leer("Ccantidad de Pisos"));
+		
+		ArrayList<Piso> pisos = new ArrayList<>();
+		
+		int numerohab=1;
+		
+		for(int i=1;i<=cantidadPisos;i++){
+			int cantidadHabitaciones = Integer.parseInt(Utiles.leer("Cantidad de Habitaciones en el piso "+i));
+			ArrayList<Habitacion> habitaciones = new ArrayList<>();
+			Piso p = new Piso(i,habitaciones);
+			pisos.add(p);
+			for(int j=0;j<cantidadHabitaciones;j++) {
+					float precio = Float.parseFloat(Utiles.leer("Precio de la habitaion "+numerohab));
+					habitaciones.add(new Habitacion(p,numerohab++,precio));
+				}	
+			}
+		
+		int cantidadEmpleados = Integer.parseInt(Utiles.leer("Cantidad de Empleados"));
+		ArrayList<Empleado> empleados = new ArrayList<>();
+		for(int i=0;i<cantidadEmpleados;i++) {
+			Empleado e;
+			String nombre = Utiles.leer("Nombre empleado "+i);
+			String id = Utiles.leer("ID empleado "+i);;
+			String sexo = Utiles.leer("Sexo empleado "+i);;
+			int años = Integer.parseInt(Utiles.leer("Años Trabajados empleado "+i));
+			boolean esJefe = Utiles.sino("Es Jefe");
+			
+			if(esJefe) {
+				e = new Jefe(nombre,id,sexo,años,Integer.parseInt("Anos de Jefe empleado "+i));
+			}
+			else e = new Empleado(nombre,id,sexo,años);
+			
+			empleados.add(e);
+		}
+		Hotel h = new Hotel(nombreHotel, capacidad, pisos, empleados);
+		hoteles.add(h);
+	}
+
+	public void nuevaReservacion() {
+		Hotel h =(Hotel)Utiles.seleccion("Seleccion un Hotel", hoteles.toArray());
+		if(h!=null)h.nuevaReservacion();
+	}
+ 	
+	public void nuevoSocio() {
+		String pais = Utiles.leer("Pais");
+		float porcentaje = Float.parseFloat(Utiles.leer("Porcentaje de Ganancias"));
+		
+		Hotel h = (Hotel) Utiles.seleccion("Hotel",hoteles.toArray());
+		h.getSocios().add(new Socio(pais,porcentaje));
+	}
+	
+	public float ganancias() {
+		float f=0;
+		for(Hotel h:hoteles) {
+			f+=h.ganancias();
+		}
+		return f;
+	}
+
+	public String paisMasPorcentaje() {
+		ArrayList<String> pais = new ArrayList<>();
+		ArrayList<Float> porcentaje = new ArrayList<>();
+		
+		for(Hotel h:hoteles) {
+			for(Socio s:h.getSocios()) {
+				for(int i=0;i<pais.size();i++) {
+					boolean b=false;
+					if(pais.get(i).equals(s.getPais())) {
+						porcentaje.set(i,porcentaje.get(i)+s.getPorcentajeGanancias());
+						b=true;
+					}
+					if(!b) {
+						pais.add(s.getPais());
+						porcentaje.add(s.getPorcentajeGanancias());
+					}
+				}
+			}
+		}
+		String pam="";
+		float pm=0;
+		for(int i=0;i<pais.size();i++) {
+			if(porcentaje.get(i)>pm) {
+				pm = porcentaje.get(i);
+				pam = pais.get(i);
+			}
+		}
+		
+		return pam;
+	}
+
+	public String datosClientesVip() {
+		String s="";
+		
+		Hotel h = (Hotel)Utiles.seleccion("Hotel", hoteles.toArray());
+		
+		return h.datosVips();
+	}
+
+	public String paisMasTuristas() {
+		String pais[] = new String[hoteles.size()];
+		int    cant[] = new int[hoteles.size()];
+		for(int i=0;i<hoteles.size();i++) {
+			pais[i]=hoteles.get(i).paisMayorProcedencia();
+			cant[i]=hoteles.get(i).cantidadMayorProcedencia();
+		}
+		
+		String pm="";
+		int cm=0;
+		
+		for(int i=0;i<hoteles.size();i++) {
+			if(cant[i]>cm) {
+				cm=cant[i];
+				pm=pais[i];
+			}
+		}
+		
+		return pm;
+	}
+	
+	public String porcentajeOcupacionFecha(String f) {
+		
+		Hotel h = (Hotel) Utiles.seleccion("Hotel", hoteles.toArray());
+		if(h!=null)
+			return h.porcentajeOcupacionFecha(f);
+		return "No se ha seleccionado un Hotel";
+	}
+
+	public String cantidadDineroPagoEmpleados() {
+		float f=0;
+		
+		for(Hotel h:hoteles) {
+			f+=h.pagoEmpleados();
+		}
+	}
+	
+	public static void main(String args[]) {
+		new Cadena().nuevaReservacion();
+	}
+	
+}

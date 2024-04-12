@@ -1,0 +1,512 @@
+package gui;
+
+import javax.swing.JOptionPane;
+
+import bikes.*;
+
+public class Control {
+
+	public static void show(String txt) {
+		JOptionPane.showMessageDialog(null, txt);
+	}
+
+	
+	static void addToInventory(int maxSize, boolean verbose, BasicBike [] arr1, MountainBike [] arr2, RoadBike [] arr3, EBike [] arr4, RoadEBike [] arr5)
+	{
+		KeyboardReader myKBR = new KeyboardReader();
+		
+		// Display user options
+				
+		// Wait for user choice
+		String ops[] = {"Basic Bike","Mountain Bike","Road Bike","EBike","Road EBike"};
+		String choice = (String)JOptionPane.showInputDialog(null, "Type of Bike","Select Type", JOptionPane.QUESTION_MESSAGE, null, ops, null);
+			
+		
+		switch (choice)
+		{
+			
+			case ("Basic Bike"): 	addBasicBike(maxSize, verbose, arr1);
+						break;
+					
+			case ("Mountain Bike"):	addMountainBike(maxSize, verbose, arr2);
+						break;
+			
+			case ("Road Bike"):	addRoadBike(maxSize, verbose, arr3);
+						break;
+			
+			case ("EBike"): 	addEBike(maxSize, verbose, arr4);
+						break;
+			
+			case ("Road EBike"):	addRoadEBike(maxSize, verbose, arr5);
+						break;
+		
+			default: 	System.out.println("Unknown bike type - return to main menu\n");
+						break; 
+		
+		}
+	}
+
+
+	static void addBasicBike(int maxSize, boolean verbose, BasicBike [] arr)
+	{
+		KeyboardReader myKBR = new KeyboardReader();
+		int MS = 0;
+		int NG = 0;
+		String PC = "";
+		String SF = "";
+		boolean found = false;
+		
+		for(int i = 0; i < maxSize; i++)
+		{
+			if( !found & arr[i] == null)
+			{				
+				MS = myKBR.getKeyboardInt("Enter Max Speed rating");
+				
+				NG = myKBR.getKeyboardInt("Enter No of Gears");
+				
+				PC = myKBR.getKeyboardInput("Enter Paint Color");
+				
+				SF = myKBR.getKeyboardInput("Enter Safety Features");				
+			
+				found = true;			
+			}
+			
+						
+			if (found)
+			{	arr[i] = new BasicBike();
+				arr[i].maxSpeed = MS;
+				arr[i].noOfGears = NG;
+				arr[i].paintColor = PC;
+				arr[i].safetyFeatures = SF;
+				break;		
+			}
+		}
+		show("Added Basic Bike");
+	}
+		
+	static void addMountainBike(int maxSize, boolean verbose, MountainBike [] arr)
+	{
+		
+		KeyboardReader myKBR = new KeyboardReader();
+		int SH = 0;
+		boolean FS = false;
+		boolean FPT = false;
+		int MS = 0;
+		int NG = 0;
+		String PC = "";
+		String SF = "";
+		boolean found = false;
+		
+		for(int i = 0; i < maxSize; i++)
+		{
+			if( !found && arr[i]==null)
+			{
+				
+				SH = myKBR.getKeyboardInt("Enter Seat height");
+				
+				FS = (myKBR.getKeyboardInput("Enter if Full suspension (T/F)").equals("T"));
+				
+				FPT = (myKBR.getKeyboardInput("Enter if Flat proof tyres (T/F)").equals("T"));
+				
+				MS = myKBR.getKeyboardInt("Enter Max Speed rating");
+				
+				NG = myKBR.getKeyboardInt("Enter No of Gears");
+				
+				PC = myKBR.getKeyboardInput("Enter Paint Color");
+				
+				SF = myKBR.getKeyboardInput("Enter Safety Features");				
+			
+				found = true;			
+			}
+				
+			if (found)
+			{	
+				arr[i] = new MountainBike(0, false, false, 0, 0," "," ");
+				arr[i].seatHeight = SH;
+				arr[i].flatProofTyres = FPT;
+				arr[i].fullSuspension = FS;
+				arr[i].maxSpeed = MS;
+				arr[i].noOfGears = NG;
+				arr[i].paintColor = PC;
+				arr[i].safetyFeatures = SF;
+				break;		
+			}
+		}
+
+		show("Added Mountain Bike");
+	}
+	
+	static void addRoadBike(int maxSize, boolean verbose, RoadBike [] arr)
+	{
+		KeyboardReader myKBR = new KeyboardReader();
+		boolean FHB = false;
+		int MS = 0;
+		int NG = 0;
+		String PC = "";
+		String SF = "";
+		boolean found = false;
+
+		for(int i = 0; i < maxSize; i++)
+		{
+			if( !found && arr[i] == null)
+			{
+				
+				FHB = (myKBR.getKeyboardInput("Enter if Flat handlebar (T/F)").equals("T"));
+				
+				MS = myKBR.getKeyboardInt("Enter Max Speed rating");
+				
+				NG = myKBR.getKeyboardInt("Enter No of Gears");
+				
+				PC = myKBR.getKeyboardInput("Enter Paint Color");
+				
+				SF = myKBR.getKeyboardInput("Enter Safety Features");				
+			
+				found = true;			
+			}
+				
+			if (found)
+			{	
+				arr[i] = new RoadBike(false,0,0," "," ");
+				arr[i].maxSpeed = MS;
+				arr[i].noOfGears = NG;
+				arr[i].paintColor = PC;
+				arr[i].safetyFeatures = SF;
+				arr[i].setFlatHandleBar(FHB);
+								
+				break;		
+			}
+		}
+
+		System.out.println("Added Road Bike\n\n");		
+	}
+
+	static void addEBike(int maxSize, boolean verbose, EBike [] arr)
+	{
+		KeyboardReader myKBR = new KeyboardReader();
+		int RM = 0;
+		String BT = "";
+		int BS = 0;
+		int BV = 0;
+		double MP = 0.0;
+		int SH = 0;
+		boolean FS = false;
+		boolean FPT = false;
+		int MS = 0;
+		int NG = 0;
+		String PC = "";
+		String SF = "";
+		boolean found = false;
+		
+		for(int i = 0; i < maxSize; i++)
+		{
+			if( !found & (arr[i].maxSpeed == 0) & (arr[i].noOfGears == 0) & (arr[i].paintColor.equals("")))
+			{
+				
+				RM = myKBR.getKeyboardInt("Enter range in miles");
+				
+				BT = myKBR.getKeyboardInput("Enter battery type");
+				
+				BS = myKBR.getKeyboardInt("Enter battery size A-h");
+				
+				BV = myKBR.getKeyboardInt("Enter battery volt V");
+				
+				MP = myKBR.getKeyboardDouble("Enter motor power kW");
+								
+				SH = myKBR.getKeyboardInt("Enter Seat height");
+				
+				FS = (myKBR.getKeyboardInput("Enter if Full suspension (T/F)").equals("T"));
+				
+				FPT = (myKBR.getKeyboardInput("Enter if Flat proof tyres (T/F)").equals("T"));
+				
+				MS = myKBR.getKeyboardInt("Enter Max Speed rating");
+				
+				NG = myKBR.getKeyboardInt("Enter No of Gears");
+				
+				PC = myKBR.getKeyboardInput("Enter Paint Color");
+				
+				SF = myKBR.getKeyboardInput("Enter Safety Features");				
+			
+				found = true;			
+			}
+				
+			if (found)
+			{	
+				arr[i] = new EBike(i, SF, i, i, MP, i, found, found, i, i, SF, SF);
+				arr[i].rangeMiles = RM;
+				arr[i].batteryType = BT;
+				arr[i].batterySize = BS;
+				arr[i].batteryVolt = BV;
+				arr[i].motorPower = MP;
+				arr[i].seatHeight = SH;
+				arr[i].flatProofTyres = FPT;
+				arr[i].fullSuspension = FS;
+				arr[i].maxSpeed = MS;
+				arr[i].noOfGears = NG;
+				arr[i].paintColor = PC;
+				arr[i].safetyFeatures = SF;
+				break;		
+			}
+		}
+		
+		show("Added E Bike");
+	}
+
+	static void addRoadEBike(int maxSize, boolean verbose, RoadEBike [] arr)
+	{
+		KeyboardReader myKBR = new KeyboardReader();
+		boolean FHB = false;
+		int MS = 0;
+		int NG = 0;
+		String PC = "";
+		String SF = "";
+		boolean found = false;
+
+		for(int i = 0; i < maxSize; i++)
+		{
+			if( !found && arr[i] == null)
+			{
+				
+				FHB = (myKBR.getKeyboardInput("Enter if Flat handlebar (T/F)").equals("T"));
+				
+				MS = myKBR.getKeyboardInt("Enter Max Speed rating");
+				
+				NG = myKBR.getKeyboardInt("Enter No of Gears");
+				
+				PC = myKBR.getKeyboardInput("Enter Paint Color");
+				
+				SF = myKBR.getKeyboardInput("Enter Safety Features");				
+			
+				found = true;			
+			}
+				
+			if (found)
+			{	
+				arr[i] = new RoadEBike(found, i, i, SF, SF);
+				arr[i].maxSpeed = MS;
+				arr[i].noOfGears = NG;
+				arr[i].paintColor = PC;
+				arr[i].safetyFeatures = SF;
+				arr[i].setFlatHandleBar(FHB);
+								
+				break;		
+			}
+		}
+	
+		show("Added Road E Bike");
+	}
+	
+	static void removeFromInventory(int maxSize, boolean verbose, BasicBike [] arr1, MountainBike [] arr2, RoadBike [] arr3, EBike [] arr4, RoadEBike [] arr5)
+	{
+		KeyboardReader myKBR = new KeyboardReader();
+		
+		// Display user options
+
+		String ops[] = {"Basic Bike","Mountain Bike","Road Bike","EBike","Road EBike"};
+		String choice = (String)JOptionPane.showInputDialog(null, "Type of Bike","Select Type", JOptionPane.QUESTION_MESSAGE, null, ops, null);
+		
+		// Wait for user choice		
+		
+		int stockNo = myKBR.getKeyboardInt("Enter the bike type to remove");
+				
+		switch (choice)
+		{
+			
+			case ("Basic Bike"): 	
+						stockNo = myKBR.getKeyboardInt("Enter the basic bike stock number to remove");
+						arr1[stockNo - 1] = null;
+						show("Removed 1 basic bike !!");
+						break;
+					
+			case ("Mountain Bike"):	
+						stockNo = myKBR.getKeyboardInt("Enter the mountain bike stock number to remove");			
+						arr2[stockNo - 1] = null;
+						show("Removed 1 mountain bike !!");
+						break;
+			
+			case ("Road Bike"):	
+						stockNo = myKBR.getKeyboardInt("Enter the road bike stock number to remove");
+						arr3[stockNo - 1] = null;
+						show("Removed 1 road bike !!");
+						break;
+			
+			
+			case ("EBike"): 	
+						stockNo = myKBR.getKeyboardInt("Enter the E bike stock number to remove");
+						arr4[stockNo - 1] = null;
+						show("Removed 1 E bike !!");
+						break;
+			
+						
+			case ("Road EBike"):	
+						stockNo = myKBR.getKeyboardInt("Enter the road E bike stock number to remove");
+						arr5[stockNo - 1] = new RoadEBike(false, 0, 0, "", "");
+						show("Removed 1 road E bike !!");
+						break;
+		
+			default:	System.out.println("Unknown bike type - return to main menu\n");
+						break; 
+		
+		}
+
+		
+	}
+	
+	static void modifyCurrentInventory(int maxSize, boolean verbose, BasicBike [] arr1, MountainBike [] arr2, RoadBike [] arr3, EBike [] arr4, RoadEBike [] arr5)
+	{
+		KeyboardReader myKBR = new KeyboardReader();
+		
+		String ops[] = {"Basic Bike","Mountain Bike","Road Bike","EBike","Road EBike"};
+		String choice = (String)JOptionPane.showInputDialog(null, "Type of Bike","Select Type", JOptionPane.QUESTION_MESSAGE, null, ops, null);
+		
+		// Wait for user choice		
+		int stockNo;
+				
+		switch (choice)
+		{
+			
+			case ("Basic Bike"): 	
+						stockNo = myKBR.getKeyboardInt("Enter the basic bike stock number to modify");
+						arr1[stockNo - 1] = modifyBasicBike(arr1[stockNo - 1]);
+						show("Modified 1 basic bike !!");					
+						break;
+					
+			case ("Mountain Bike"):	
+						stockNo = myKBR.getKeyboardInt("Enter the mountain bike stock number to modify");
+						arr2[stockNo - 1] = modifyMountainBike(arr2[stockNo - 1]);
+						show("Modified 1 mountain bike !!");					
+						break;			
+			case ("Road Bike"):	
+						stockNo = myKBR.getKeyboardInt("Enter the road bike stock number to modify");
+						arr3[stockNo - 1] = modifyRoadBike(arr3[stockNo - 1]);
+						show("Modified 1 road bike !!");					
+						break;			
+			
+			case ("EBike"): 	
+						stockNo = myKBR.getKeyboardInt("Enter the electric bike stock number to modify");
+						arr4[stockNo - 1] = modifyEBike(arr4[stockNo - 1]);
+						show("Modified 1 road bike !!");
+						break;
+									
+			case ("Road EBike"):	
+						
+						stockNo = myKBR.getKeyboardInt("Enter the road electric bike stock number to modify");
+						arr5[stockNo - 1] = modifyRoadEBike(arr5[stockNo - 1]);
+						show("Modified 1 road electric bike !!");
+						break;
+						
+			default:	System.out.println("Unknown bike type - return to main menu\n");
+						break; 
+		
+		}
+		
+		
+	}
+	
+	
+	static BasicBike modifyBasicBike(BasicBike bike)
+	{
+		KeyboardReader myKBR = new KeyboardReader();
+		String userEdits;
+				
+		show();
+		"\nThe current data on this bike is as follow:\n" + bike.getInfo()+
+		"\nEnter the data you want to modify separated by a semicolon, as shown below."+
+		"Max speed; No of gears; Paint color; Safety features";
+		
+		userEdits = myKBR.getKeyboardInput();
+		
+		String [] values = userEdits.split(";");
+		
+		bike.maxSpeed = Integer.valueOf(values[0]);
+		bike.noOfGears = Integer.valueOf(values[1]);
+		bike.paintColor = values[2];
+		bike.safetyFeatures = values[3];	
+		
+		return bike;
+	}
+
+	static MountainBike modifyMountainBike(MountainBike bike)
+	{
+		KeyboardReader myKBR = new KeyboardReader();
+		String userEdits;
+				
+		System.out.println("\nThe current data on this bike is as follow:\n" + bike.getInfo());
+		System.out.println("\nEnter the data you want to modify separated by a semicolon, as shown below.");
+		System.out.println("Max speed; No of gears; Paint color; Safety features");
+		
+		userEdits = myKBR.getKeyboardInput();
+		
+		String [] values = userEdits.split(";");
+		
+		bike.maxSpeed = Integer.valueOf(values[0]);
+		bike.noOfGears = Integer.valueOf(values[1]);
+		bike.paintColor = values[2];
+		bike.safetyFeatures = values[3];	
+		
+		return bike;
+	}
+	
+	static RoadBike modifyRoadBike(RoadBike bike)
+	{
+		KeyboardReader myKBR = new KeyboardReader();
+		String userEdits;
+				
+		System.out.println("\nThe current data on this bike is as follow:\n" + bike.getInfo());
+		System.out.println("\nEnter the data you want to modify separated by a semicolon, as shown below.");
+		System.out.println("Max speed; No of gears; Paint color; Safety features");
+		
+		userEdits = myKBR.getKeyboardInput();
+		
+		String [] values = userEdits.split(";");
+		
+		bike.maxSpeed = Integer.valueOf(values[0]);
+		bike.noOfGears = Integer.valueOf(values[1]);
+		bike.paintColor = values[2];
+		bike.safetyFeatures = values[3];	
+		
+		return bike;
+	}
+	
+	static EBike modifyEBike(EBike bike)
+	{
+		KeyboardReader myKBR = new KeyboardReader();
+		String userEdits;
+				
+		System.out.println("\nThe current data on this bike is as follow:\n" + bike.getInfo());
+		System.out.println("\nEnter the data you want to modify separated by a semicolon, as shown below.");
+		System.out.println("Max speed; No of gears; Paint color; Safety features");
+		
+		userEdits = myKBR.getKeyboardInput();
+		
+		String [] values = userEdits.split(";");
+		
+		bike.maxSpeed = Integer.valueOf(values[0]);
+		bike.noOfGears = Integer.valueOf(values[1]);
+		bike.paintColor = values[2];
+		bike.safetyFeatures = values[3];	
+		
+		return bike;
+	}
+		
+	static RoadEBike modifyRoadEBike(RoadEBike bike)
+	{
+		KeyboardReader myKBR = new KeyboardReader();
+		String userEdits;
+				
+		System.out.println("\nThe current data on this bike is as follow:\n" + bike.getInfo());
+		System.out.println("\nEnter the data you want to modify separated by a semicolon, as shown below.");
+		System.out.println("Max speed; No of gears; Paint color; Safety features");
+		
+		userEdits = myKBR.getKeyboardInput();
+		
+		String [] values = userEdits.split(";");
+		
+		bike.maxSpeed = Integer.valueOf(values[0]);
+		bike.noOfGears = Integer.valueOf(values[1]);
+		bike.paintColor = values[2];
+		bike.safetyFeatures = values[3];	
+		
+		return bike;
+	}	
+	
+}

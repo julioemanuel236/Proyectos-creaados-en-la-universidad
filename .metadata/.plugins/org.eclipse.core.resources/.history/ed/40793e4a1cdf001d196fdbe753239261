@@ -1,0 +1,50 @@
+package tareas;
+
+public class Primos {
+
+	public static void main(String[] args) {
+		int cantidad=0;// para saber cuantos numeros primos llevamos
+		int numeroDelImpar=1;//el numero del impar, por ejemplo el impar 2 es 3
+		int impar=1;//el ultimo numero impar que llevamos hasta ese momento
+		for(int i=2;cantidad<5;i++) {//mientras que no llevemos 5 numeros primos
+			boolean primo=true;//para saber si es primo o no
+			for(int j=2;j<=i/2;j++) {//miramos todos los numeros desde 2 hasta la mitad de i
+				if(i%j==0)primo=false;//si alguno lo divide no es primo
+			}
+			if(primo) {//en caso de ser primo				
+				int cubo = 0;//el resultado del primo al cubo
+				int cantidadDeNumeros=i+numeroDelImpar;//cantida de numeros que tenemos que sumar		
+				int numero=impar+1;//le aumentamos uno para busscar el proximo impar
+				do {
+					if(numero%2==1) {//si el numero es impar
+						impar=numero;//actualizamos el ultimo impar
+						int sumar = impar;//lo guardamos para aumentar el cubo
+						while(sumar>0) {
+							cubo++;
+							sumar--;
+						}
+						
+						numeroDelImpar++;//aumentamos la cantidad de impar que tenemos
+					}
+					numero++;//aumentamos el numero
+				}while(numeroDelImpar<cantidadDeNumeros);//mientras que la cantidad de impares sea menor que la cantidad que deberiamos tener
+				System.out.println(i+" al cubo es:"+cubo);//mostrar resultado
+				cantidad++;
+			}
+			else {//en caso de que el numero no sea primo igual debemos aumentar los impares, para que no haya errores
+				int cantidadDeNumeros=i+numeroDelImpar;				
+				int numero=impar+1;
+				do {
+					if(numero%2==1) {
+						
+						impar=numero;						
+						numeroDelImpar++;
+					}
+					numero++;
+				}while(numeroDelImpar<cantidadDeNumeros);
+			}
+			}
+	
+	}		
+	
+}

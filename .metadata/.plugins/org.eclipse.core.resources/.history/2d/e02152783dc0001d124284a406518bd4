@@ -1,0 +1,58 @@
+package game;
+
+import java.util.Scanner;
+	
+public class Menu {
+	Scanner cin = new Scanner(System.in);
+	
+	boolean salir=false;
+	
+	public Menu() {
+		
+	}
+	
+	public Tablero tableroPersonalizado() {
+		System.out.println("Systema de personalizacion de tableros \nsi desea salir introduzca un numero negativo en cualquiera de las opciones");
+		String ops[]= {"Alto","Ancho","Porcentaje Planicies","Porcentaje Arboles","Porcentaje Agua","Porcentaje Lava"};
+		int n[]= new int[ops.length];
+		for(int i=0;i<ops.length;i++) {
+			System.out.println(ops[i]);
+			n[i]=cin.nextInt();
+			if(n[i]<0)return null;
+		}
+		
+		return new Tablero(n[0],n[1],n[2],n[3],n[4],n[5]);	
+	}
+	
+	public Tablero selectTablero() {
+		String ops="Selecciona un tablero\n"
+				+ "1-Tablero Defautl\n2-Tablero Default2\n3-Tablero Personalizado\n0-Salir";
+		int op=-1;
+		while(op!=0) {
+			System.out.println(ops);
+			op=cin.nextInt();
+			if(op==1)return new Tablero(1);
+			else if(op==2)return new Tablero(2);
+			else return tableroPersonalizado();			
+		}
+		return null;
+	}
+	
+	public int inicio() {
+		String ops="1-Jugar\n2-Ver Estado de la Partida\n0-Salir\n";
+		
+		
+		while(!salir) {
+			System.out.println(ops);
+			int op = cin.nextInt();
+			switch(op) {
+				case 1:return 1;
+				case 2:return 2;
+				case 0:salir=true;return 0;
+				default:System.out.println("Opcion no valida\n");
+			}
+		}
+		return 0;
+	}
+
+}

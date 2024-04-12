@@ -1,0 +1,75 @@
+package cadena;
+import java.util.ArrayList;
+
+public class Hotel extends Object{
+	
+	private String nombre;
+	private ArrayList<Piso> pisos;
+	private ArrayList<Empleado> empleados;
+	private ArrayList<Cliente> clientes = new ArrayList<>();
+	private ArrayList<Reservacion> reservaciones = new ArrayList<>();
+	private ArrayList<Socio> socios = new ArrayList<>();
+	
+	public Hotel(String nombre, ArrayList<Piso> pisos, ArrayList<Empleado> empleados) {
+		this.nombre = nombre;
+		this.pisos = pisos;
+		this.empleados = empleados;
+	}
+	
+	
+	public void nuevaReservacion() {
+		Cliente c;
+		String tipoHabitacion = (String) Utiles.seleccion("Tipo Habitacion",new String[]{"Simple","Doble","Triple"});
+		String nombre = Utiles.leer("Nombre Cliente");
+		String id = Utiles.leer("ID Cliente");
+		String sexo = Utiles.leer("Sexo Cliente");
+		String entrada = Utiles.leer("Fecha Entrada Cliente");
+		String salida = Utiles.leer("Fecha Salida Cliente");
+		
+		boolean vip = Utiles.sino("Es Cliente VIP");
+		
+		if(vip) {
+			String cargo = Utiles.leer("Cargo Cliente");
+			c = new Vip(nombre,id,sexo,entrada,salida,cargo);
+		}
+		
+		else c = new Cliente(nombre,id,sexo,entrada,salida);
+		
+		clientes.add(c);
+		ArrayList<Habitacion> hb = new ArrayList<>();
+		for(Piso p:pisos) {
+			hb.addAll(p.getHabitaciones());
+		}
+		Habitacion h = (Habitacion) Utiles.seleccion("Seleccione una Habitacion",hb.toArray());
+		if(h!=null)
+			reservaciones.add(new Reservacion(c,h.getPrecio()));
+	}
+
+	float ganancias() {
+		float f=0;
+		
+		for(Reservacion r:reservaciones) {
+			f+=r.getPrecio();
+		}
+		
+		return f;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public ArrayList<Piso> getPisos() {
+		return pisos;
+	}
+
+	public ArrayList<Empleado> getEmpleados() {
+		return empleados;
+	}
+
+	public ArrayList<Cliente> getClientes() {
+		return clientes;
+	}
+	
+
+}

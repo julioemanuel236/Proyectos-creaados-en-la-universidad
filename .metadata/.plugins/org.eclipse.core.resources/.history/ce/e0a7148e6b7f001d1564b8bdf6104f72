@@ -1,0 +1,17 @@
+package banco;
+import javax.swing.*;
+
+public class GUI extends JFrame{
+	Sucursal sucursal;
+	
+	public GUI(){
+		sucursal = new Sucursal();
+		
+		setUndecorated(true);
+		setAlwaysOnTop(true);
+		setSize(700,50);
+		setResizable(false);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setVisible(true);
+	}
+}

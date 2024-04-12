@@ -1,0 +1,117 @@
+package project;
+import java.util.Random;
+public class Car {
+
+	private final String make;
+	private final String model;
+	private final int year;
+	private	final float fuelTankSize;
+	private	final float fuelEconomy;// fuel economy at best speed
+	private	final float  optimalSpeed; // speed at which the car has the most efficient fuel economy
+
+	private float odometer;
+	private float tripOdometer;
+	private String color;
+	private float fuelLevel;
+
+	
+	public Car() {
+		
+		Random rand = new Random();
+		odometer = rand.nextFloat(6.00f); 
+		tripOdometer = 0.0f; 
+		fuelEconomy = 15.00f+rand.nextFloat(55.0f-15.0f); 
+		optimalSpeed = 45.00f+rand.nextFloat(65.0f-45.0f); 
+		fuelTankSize = 8.00f+rand.nextFloat(35.0f-8.0f);
+	
+	}
+
+
+	public Car(String make, String model, int year, float fuelTankSize, float fuelEconomy, float optimalSpeed,
+			float odometer, float tripOdometer, String color, float fuelLevel) {
+		super();
+		this.make = make;
+		this.model = model;
+		this.year = year;
+		this.fuelTankSize = fuelTankSize;
+		this.fuelEconomy = fuelEconomy;
+		this.optimalSpeed = optimalSpeed;
+		this.odometer = odometer;
+		this.tripOdometer = tripOdometer;
+		this.color = color;
+		this.fuelLevel = fuelLevel;
+	}
+
+
+	public float getOdometer() {
+		return odometer;
+	}
+
+
+	public void setOdometer(float odometer) {
+		this.odometer = odometer;
+	}
+
+
+	public float getTripOdometer() {
+		return tripOdometer;
+	}
+
+
+	public void setTripOdometer(float tripOdometer) {
+		this.tripOdometer = tripOdometer;
+	}
+
+
+	public String getColor() {
+		return color;
+	}
+
+
+	public void setColor(String color) {
+		this.color = color;
+	}
+
+
+	public float getFuelLevel() {
+		return fuelLevel;
+	}
+
+
+	public void setFuelLevel(float fuelLevel) {
+		this.fuelLevel = fuelLevel;
+	}
+
+
+	public String getMake() {
+		return make;
+	}
+
+
+	public String getModel() {
+		return model;
+	}
+
+
+	public int getYear() {
+		return year;
+	}
+
+
+	public float getFuelTankSize() {
+		return fuelTankSize;
+	}
+
+
+	public float getFuelEconomy() {
+		return fuelEconomy;
+	}
+
+
+	public float getOptimalSpeed() {
+		return optimalSpeed;
+	}
+	
+	
+	
+}

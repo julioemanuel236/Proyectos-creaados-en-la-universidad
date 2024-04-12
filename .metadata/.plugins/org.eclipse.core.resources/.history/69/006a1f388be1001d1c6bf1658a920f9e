@@ -1,0 +1,35 @@
+package App;
+
+import java.util.Random;
+
+public class Almacen {
+	
+	Tablero tableros[] = new Tablero[50];
+	Random rand = new Random();
+	int nuevo=0;
+	
+	public Almacen() {
+		
+	}
+	
+	public void add(Tablero t) {
+		tableros[nuevo]=t;
+		t.setLocation(getLocation(nuevo));
+		nuevo++;
+	}
+	
+	public String getLocation(int n) {
+		int p = (n%50)+1;
+		String r = (p<10?"-0"+p:"-10");
+		return "A0"+((50/n)+1)+r;
+	}
+	
+	public String disponibles() {
+		int a,b,c;
+		
+		
+		return getLocation(a)+"\n"+
+			   getLocation(b)+"\n"+
+			   getLocation(c);
+	}
+}

@@ -1,0 +1,30 @@
+package game;
+
+import java.util.Scanner;
+
+public class Partida {
+
+	Player p;
+	Tienda t;
+	Scanner cin = new Scanner(System.in);
+	boolean over=false;
+	public Partida(Player p,Tienda t) {
+		this.p=p;
+		this.t=t;
+	}
+	
+	public void start() {
+		String ops[]= {""};
+		
+		while(!over) {
+			p.tablero.ver();
+			System.out.println(ops);
+			int op = cin.nextInt();
+			
+		}
+		System.out.println("Partida Terminada");
+	}
+	
+	
+
+}

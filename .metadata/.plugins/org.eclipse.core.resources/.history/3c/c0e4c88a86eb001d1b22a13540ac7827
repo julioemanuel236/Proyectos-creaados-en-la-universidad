@@ -1,0 +1,86 @@
+package app;
+
+import java.io.FileReader;
+import java.util.Scanner;
+import java.util.ArrayList;
+public class App {
+
+	String studentsRute = "StudentFile.txt";
+	String universitysRute = "Universities9.txt";
+	ArrayList<University> universities;
+	ArrayList<Student> students;
+	
+	public App() {		
+		try {
+			
+			loadStudents();
+			loadUniversities();
+			
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private boolean YN(String s) {
+		return s.equalsIgnoreCase("Y");
+	}
+	
+	private void loadUniversities()throws Exception {
+		FileReader fr = new FileReader(universitysRute);
+		Scanner entry = new Scanner(fr);		
+		int count = Integer.parseInt(entry.nextLine());
+		universities = new ArrayList<>();
+		System.out.println(count);
+		
+		for(int i=0;i<count;i++) {
+			String[] dataLine = entry.nextLine().split(",");
+			float inStateTPC[] = new float[3];
+			float outStateTPC[] = new float[3];
+			float optionalHC[] = new float[3];
+			float campusMP[] = new float[dataLine.length-17];
+			for(int j=0;j<3;j++) {
+				inStateTPC[j] = Float.parseFloat(dataLine[6+j]);
+				outStateTPC[j] = Float.parseFloat(dataLine[9+j]);
+				optionalHC[j] = Float.parseFloat(dataLine[15+j]);
+			}
+			for(int j=0;j<campusMP.length;j++) {
+				campusMP[j] = Float.parseFloat(dataLine[17+j]);
+			}
+			University uni = new University(
+					dataLine[0],dataLine[1],dataLine[2],dataLine[3],dataLine[4],dataLine[5],
+					inStateTPC,outStateTPC,Float.parseFloat(dataLine[13]),
+					Float.parseFloat(dataLine[14]),optionalHC,campusMP
+					);
+			universities.add(uni);
+			System.out.println(uni.toString());
+		}
+		entry.close();		
+	}
+	
+	private void loadStudents() throws Exception{	
+		FileReader fr = new FileReader(studentsRute);
+		Scanner entry = new Scanner(fr);		
+		int count = Integer.parseInt(entry.nextLine());
+		
+		System.out.println(count);
+		
+		students = new ArrayList<>();
+		for(int i=0;i<count;i++) {
+			String[] dataLine = entry.nextLine().split(",");
+			Student est = new Student(new Name(dataLine[0],dataLine[1],dataLine[2]),
+					Integer.parseInt(dataLine[3]),dataLine[4],dataLine[5],
+					dataLine[6],dataLine[7],dataLine[8],dataLine[9],dataLine[10],
+					dataLine[11],Integer.parseInt(dataLine[12]),
+					YN(dataLine[13]),YN(dataLine[14]),dataLine[15].charAt(0),YN(dataLine[16]));
+			students.add(est);
+			System.out.println(est.toString());
+		}
+		entry.close();
+	}
+	
+	public static void main(String[] args) {
+		new App();
+	}
+	
+}

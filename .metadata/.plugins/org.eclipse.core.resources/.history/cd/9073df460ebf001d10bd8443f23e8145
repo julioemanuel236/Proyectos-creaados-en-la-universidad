@@ -1,0 +1,25 @@
+package game;
+import java.util.Random;
+import java.util.random.*;
+public abstract class Heroe extends Mob {
+
+	public Heroe(int vida, int damage,int mM,boolean volar,Tablero t,char c) {
+		super(vida, damage,mM,volar,t,c);
+		// TODO Auto-generated constructor stub
+	}	
+	
+	public String info() {
+		return "Heroe "+super.info();
+	}
+
+	@Override
+	public boolean noHit() {
+		Random rand = new Random();
+		int n=1+ rand.nextInt()%100;
+		return n>75;
+	}
+	
+	public String shopping() {
+		return "Vida: "+vidaMaxima+"\tdamage: "+damage+"\tmovimientos: "+maxMov+"\tVuela: "+volar;
+	}
+}

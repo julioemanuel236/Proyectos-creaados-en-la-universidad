@@ -1,0 +1,57 @@
+package cadena;
+import java.util.ArrayList;
+
+public class Hotel {
+	
+	private String nombre;
+	private ArrayList<Piso> pisos;
+	private ArrayList<Empleado> empleados;
+	private ArrayList<Cliente> clientes = new ArrayList<>();
+
+	public Hotel(String nombre, ArrayList<Piso> pisos, ArrayList<Empleado> empleados) {
+		this.nombre = nombre;
+		this.pisos = pisos;
+		this.empleados = empleados;
+	}
+
+	public void nuevaReservacion() {
+		Cliente c;
+		String tipoHabitacion = (String) Util.seleccion("Tipo Habitacion",new String[]{"Simple","Doble","Triple"});
+		String nombre = Util.leer("Nombre Cliente");
+		String id = Util.leer("ID Cliente");
+		String sexo = Util.leer("Sexo Cliente");
+		String entrada = Util.leer("Fecha Entrada Cliente");
+		String salida = Util.leer("Fecha Salida Cliente");
+		
+		boolean vip = sino("Es Cliente VIP");
+		
+		if(vip) {
+			String cargo = leer("Cargo Cliente");
+			c = new Vip(nombre,id,sexo,entrada,salida,cargo);
+		}
+		
+		else c = new Cliente(nombre,id,sexo,entrada,salida);
+		
+		clientes.add(c);
+	}
+
+	
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public ArrayList<Piso> getPisos() {
+		return pisos;
+	}
+
+	public ArrayList<Empleado> getEmpleados() {
+		return empleados;
+	}
+
+	public ArrayList<Cliente> getClientes() {
+		return clientes;
+	}
+	
+
+}

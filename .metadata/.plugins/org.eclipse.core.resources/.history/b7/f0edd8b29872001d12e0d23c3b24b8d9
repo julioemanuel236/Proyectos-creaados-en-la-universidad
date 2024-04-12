@@ -1,0 +1,115 @@
+package lietys;
+
+import java.awt.Component;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.Date;
+
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+
+import java.util.ArrayList;
+
+public class Aereopuerto{
+	private String rutaterminales="Terminales.dat";
+	privete eString rutaaviones="Aviones.dat";
+
+	protected ArrayList<Avion> aviones = new ArrayList<Avion>();
+	protected ArrayList<Terminal> terminales = new ArrayList<Terminal>();
+
+	
+	
+	public void cargar_datos_terminales() {
+		FileInputStream fis = null;
+		try {
+			fis = new FileInputStream(rutaterminales);
+			ObjectInputStream oos = new ObjectInputStream(fis);
+			ArrayList<Terminal> readObject = (ArrayList<Terminal>) oos.readObject();
+			terminales = readObject;
+
+			fis.close();
+		}
+		catch(java.io.FileNotFoundException e) {
+			
+		}
+		catch(Exception e) {
+			new JOptionPane().showMessageDialog(null,  "Error al cargar datos");
+			e.printStackTrace();
+		}
+	}
+
+	public void cargar_datos_aviones() {
+		FileInputStream fis = null;
+		try {
+			fis = new FileInputStream(rutaaviones);
+			ObjectInputStream oos = new ObjectInputStream(fis);
+			ArrayList<Avion> readObject = (ArrayList<Avion>) oos.readObject();
+			aviones = readObject;
+
+			fis.close();
+		}
+		catch(java.io.FileNotFoundException e) {
+			
+		}
+		catch(Exception e) {
+			new JOptionPane().showMessageDialog(null,  "Error al cargar datos");
+			e.printStackTrace();
+		}
+	}
+	
+	public void nuevoVuelo() {
+		try {
+			Date sal=new Date();
+			sal.setDate(Integer.parseInt(salida[0].getText()));
+			sal.setMonth(Integer.parseInt(salida[1].getText()));
+			sal.setYear(Integer.parseInt(salida[2].getText()));
+			Date lle=new Date();
+			lle.setDate(Integer.parseInt(llegada[0].getText()));
+			lle.setMonth(Integer.parseInt(llegada[1].getText()));
+			lle.setYear(Integer.parseInt(llegada[2].getText()));
+			int ds=Integer.parseInt(salida[0].getText());
+			int ms=Integer.parseInt(salida[1].getText());
+			int as=Integer.parseInt(salida[2].getText());
+			
+			int dl=Integer.parseInt(llegada[0].getText());
+			int ml=Integer.parseInt(llegada[1].getText());
+			int al=Integer.parseInt(llegada[2].getText());
+			
+			if(!revisar_fechas(sal,lle)|
+			   !fecha_valida(ds,ms,as)|
+			   !fecha_valida(dl,ml,al)) {
+				new JOptionPane().showMessageDialog(null,  "Fechas incorrectas");
+				return;
+			}
+			
+			Terminal termin = (Terminal)select_terminal.getSelectedItem();
+			float precio=Float.parseFloat(costevuelo.getText());
+			if(select_tipo.getSelectedItem().equals("Internacional"))
+				precio+=Float.parseFloat(costeviaje.getText())*0.1f;
+			else precio+=Float.parseFloat(costeviaje.getText())*0.2f;
+			Vuelo nuevo = new Vuelo(select_tipo.getSelectedItem().toString(),sal,lle,
+					                ((Avion)select_avion.getSelectedItem()).clone(),termin,
+					                paisDestino.getText(),ciudadDestino.getText(),Integer.parseInt(KM.getText()),
+					                Float.parseFloat(costevuelo.getText()),Float.parseFloat(costeviaje.getText()),precio);
+			termin.vuelos.add(nuevo);
+	}
+	
+	public Aereopuerto() {
+		cargar_datos_terminales();
+		cargar_datos_aviones();
+	}
+
+	public static void main(String[] args) throws Exception{
+		try{
+			new Aereopuerto();
+		}
+		catch(Exception e) {
+			
+		}
+	}
+
+}
+

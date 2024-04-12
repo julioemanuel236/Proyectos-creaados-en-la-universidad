@@ -1,0 +1,11 @@
+package game;
+import java.util.ArrayList;
+public class Player {
+	
+	ArrayList<Heroe> heroes = new ArrayList<>();
+	ArrayList<Item> itmes = new ArrayList<>();
+	public Player() {
+		
+	}
+
+}

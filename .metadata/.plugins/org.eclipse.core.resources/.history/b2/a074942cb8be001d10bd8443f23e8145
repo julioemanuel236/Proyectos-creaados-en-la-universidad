@@ -1,0 +1,19 @@
+package game;
+
+import java.util.Random;
+
+public abstract class Enemigo extends Mob {
+
+	public Enemigo(int vida, int damage,int mM,boolean volar, Tablero t) {
+		super(vida,damage,mM,volar,t);
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public boolean noHit() {
+		Random rand = new Random();
+		int n=1+ rand.nextInt()%100;
+		return n>60;
+	}
+
+}

@@ -1,0 +1,216 @@
+package empresa;
+
+import javax.swing.*;
+import java.io.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class Ventana extends JFrame{
+	private Dimension tam = new Dimension(200,40);
+	private Point     pos = new Point(25,70);
+	private JPanel menu;
+
+	static protected Programador programadores[] = new Programador[1000];
+	static protected int			  cProgramadores=0;
+	
+	static protected Lider lideres[] = new Lider[1000];
+	static protected int			  cLideres=0;
+	
+	static protected Equipo equipos[] = new Equipo[1000];
+	static protected int			  cEquipos=0;
+	
+	static protected Proyecto proyectos[] = new Proyecto[1000];
+	static protected int			  cProyectos=0;
+	
+	public void crear_botones_menu() {
+		JButton nuevoTrabajador;
+		JButton nuevoEquipo;
+		JButton cambiarProgramador;
+		JButton cantidadProyectos;
+		JButton siguienteProyecto;
+		JButton pagosMensual;
+		JButton mejorPagados;
+		JButton buscarTrabajador;
+		JButton equipoProyecto;
+		JButton exportarProyecto ;
+		JButton cargarProyecto;
+		JButton nuevoProyecto;
+
+		nuevoTrabajador = new JButton("Nuevo Trajabador");
+		nuevoTrabajador.addActionListener((ActionEvent)->{
+			Entradas.nuevoTrabajador();
+		});		
+		nuevoTrabajador.setSize(tam);
+		nuevoTrabajador.setLocation(pos);
+		nuevoTrabajador.setOpaque(true);
+		nuevoTrabajador.setBackground(Color.white);
+		menu.add(nuevoTrabajador);
+		pos.x+=tam.width+50;
+		
+		nuevoEquipo = new JButton("Nuevo Equipo");
+		nuevoEquipo.addActionListener((ActionEvent)->{
+			Entradas.nuevoEquipo();
+		});
+		nuevoEquipo.setSize(tam);
+		nuevoEquipo.setLocation(pos);
+		nuevoEquipo.setOpaque(true);
+		nuevoEquipo.setBackground(Color.white);
+		menu.add(nuevoEquipo);
+		pos.x=25;
+		pos.y+=tam.height+20;
+		
+		cambiarProgramador = new JButton("Mover Programador");
+		cambiarProgramador.setSize(tam);
+		cambiarProgramador.setLocation(pos);
+		cambiarProgramador.setOpaque(true);
+		cambiarProgramador.setBackground(Color.white);
+		menu.add(cambiarProgramador);
+		pos.x+=tam.width+50;
+		
+		cantidadProyectos = new JButton("Cantidad de Proyectos");
+		cantidadProyectos.setSize(tam);
+		cantidadProyectos.setLocation(pos);
+		cantidadProyectos.setOpaque(true);
+		cantidadProyectos.setBackground(Color.white);
+		cantidadProyectos.addActionListener((ActionEvent)->{
+			cantidadProyectos();
+		});
+		menu.add(cantidadProyectos);
+		pos.x=25;
+		pos.y+=tam.height+20;
+		
+		siguienteProyecto = new JButton("Siguiente Proyecto Listo");
+		siguienteProyecto.setSize(tam);
+		siguienteProyecto.setLocation(pos);
+		siguienteProyecto.setOpaque(true);
+		siguienteProyecto.setBackground(Color.white);
+		menu.add(siguienteProyecto);
+		pos.x+=tam.width+50;
+		
+		pagosMensual = new JButton("Pagos Mensuales");
+		pagosMensual.setSize(tam);
+		pagosMensual.setLocation(pos);
+		pagosMensual.setOpaque(true);
+		pagosMensual.setBackground(Color.white);
+		menu.add(pagosMensual);
+		pos.x=25;
+		pos.y+=tam.height+20;
+		
+		mejorPagados = new JButton("Trabajadores Mejor Pagados");
+		mejorPagados.setSize(tam);
+		mejorPagados.setLocation(pos);
+		menu.add(mejorPagados);
+		pos.x+=tam.width+50;
+		
+		buscarTrabajador = new JButton("Buscar Trabajdor");
+		buscarTrabajador.setSize(tam);
+		buscarTrabajador.setLocation(pos);
+		menu.add(buscarTrabajador);
+		pos.x=25;
+		pos.y+=tam.height+20;		
+		
+		equipoProyecto = new JButton("Equipo por Proyecto");
+		equipoProyecto.setSize(tam);
+		equipoProyecto.setLocation(pos);
+		menu.add(equipoProyecto);
+		pos.x+=tam.width+50;
+
+		exportarProyecto = new JButton("Exportar Información");
+		exportarProyecto.setSize(tam);
+		exportarProyecto.setLocation(pos);
+		menu.add(exportarProyecto);
+		pos.x+=tam.width+50;
+		pos.y+=tam.height+20;
+	
+		cargarProyecto = new JButton("Cargar Información");
+		cargarProyecto.setSize(tam);
+		cargarProyecto.setLocation(pos);
+		menu.add(cargarProyecto);
+		pos.x=50+(int)(tam.getWidth()/2);
+		
+		nuevoProyecto = new JButton("Nuevo Proyecto");
+		nuevoProyecto.setSize(tam);
+		nuevoProyecto.setLocation(pos);
+		nuevoProyecto.setOpaque(true);
+		nuevoProyecto.setBackground(Color.white);
+		nuevoProyecto.addActionListener((ActionEvent)->{
+			Entradas.nuevoProyecto();
+		});
+		menu.add(nuevoProyecto);
+		pos.x+=tam.width+50;
+	}
+	
+	static public void cantidadProyectos() {
+		int arr[] = new int[4];
+		for(Proyecto i:proyectos) {
+			if(i==null)break;
+			else if(i.getTipo()=="Flash")arr[0]++;
+			else if(i.getTipo()=="Director")arr[1]++;
+			else if(i.getTipo()=="Tres Capas")arr[2]++;
+			else if(i.getTipo()=="Cliente-Servidor")arr[3]++;
+		}
+		String s ="Proyectos Multimedia Flash: "+arr[0]+"\n"+
+				  "Proyectos Multimedia Director: "+arr[1]+"\n"+
+				  "Proyectos Gestion Tres Capas: "+arr[2]+"\n"+
+				  "Proyectos Cliente-Servidor: "+arr[3]+"\n";
+		JOptionPane.showMessageDialog(null, s);
+	}
+	
+	static public void nuevoProgramador(Programador programador) {
+		programadores[cProgramadores++]=programador;
+		System.out.println(programador.getInfo());
+	}
+	
+	static public void nuevoLider(Lider lider) {
+		lideres[cLideres++]=lider;
+		System.out.println(lider.getInfo());
+	}
+
+	static public void nuevoProyecto(Proyecto proyecto, Equipo equipo) {
+		proyectos[cProyectos++]=proyecto;
+		proyecto.setEquipo(equipo);
+		System.out.println(proyecto.getInfo());
+	}
+	
+	static public void nuevoEquipo(Equipo equipo) {
+		equipos[cEquipos++]=equipo;
+		for(Programador i:equipo.getProgramadores()) {
+			if(i==null)break;
+			i.setEquipo(equipo);
+		}
+		System.out.println(equipo.getInfo());
+	}
+	
+	public void crear_menu() {
+		menu = new JPanel();
+		menu.setSize(this.getSize());
+		menu.setLayout(null);
+		menu.setBackground(Color.DARK_GRAY);
+		
+		JLabel label = new JLabel("Empresa de software");
+		label.setSize(tam);
+		label.setLocation(30+(menu.getWidth()/2)-(label.getWidth()/2),10);
+		label.setForeground(Color.white);
+		menu.add(label);
+		crear_botones_menu();
+		this.add(menu);
+	}
+	
+	public void crear_interfaz() {
+		crear_menu();
+	}
+	
+	public Ventana() {
+		this.setSize(500,500);
+		this.setResizable(false);
+		this.setLayout(null);
+		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		crear_interfaz();
+		this.setVisible(true);
+		
+	}
+	
+	public static void main(String args[] ) {
+		new Ventana();
+	}
+}

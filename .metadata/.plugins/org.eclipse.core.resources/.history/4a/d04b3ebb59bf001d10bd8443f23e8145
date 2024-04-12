@@ -1,0 +1,109 @@
+package game;
+
+import java.util.Random;
+import java.util.Scanner;
+
+public class Tablero {
+	final int dx[]= {1,1,0,-1,-1,-1,0,1};
+	final int dy[]= {0,1,1,1,0,-1,-1,-1};
+	
+	
+	int width=8;
+	int height=8;
+	Object map[][];
+	
+	int porPlanicie=60;
+	int porArbol=25;
+	int porAgua=10;
+	int porLava=5;
+	String vista="";
+	public Tablero(int t) {
+		if(t==2) {
+			width=height=16;
+			porPlanicie=0;
+			porArbol=0;
+			porAgua=0;
+			porLava=30;
+		}
+		generar();
+	}
+
+	public Tablero(int width, int height, int porPlanicie, int porArbol, int porAgua, int porLava) {
+		this.width = width;
+		this.height = height;
+		this.porPlanicie = porPlanicie;
+		this.porArbol = porArbol;
+		this.porAgua = porAgua;
+		this.porLava = porLava;
+		generar();
+	}
+	
+	
+	public void generar() {
+		map = new Object[height][width];
+		App.tablero=this;
+		Random rand = new Random();
+		for(int i=0;i<height;i++) {
+			for(int j=0;j<width;j++) {
+				int n=rand.nextInt(101);
+				if(n<porArbol)map[i][j]=new Arbol();
+				else if(n>=porArbol&&n<porArbol+porAgua) {
+					if(i==0||i==height-1||j==0||j==width-1) {
+						map[i][j]=new Agua(j,i);
+						continue;
+					}
+					boolean si=false;
+					int arr[]= {0,2,4,6};
+					for(int k=0;k<4;k++) {
+						int di=i+dy[k];
+						int dj=j+dx[k];
+						if(map[di][dj] instanceof Agua) {
+							map[i][j] = new Agua(j,i);
+							si = true;
+						}
+					if(!si)map[i][j] = new Planicie(j,i);
+					}
+				}
+				else if(n>=porArbol+porAgua&&n<porArbol+porAgua+porLava)map[i][j]=new Lava(j,i);
+				else map[i][j]=new Planicie(j,i);
+				if(map[i][j] instanceof Entity) {				
+					((Entity)map[i][j]).x=j;
+					((Entity)map[i][j]).y=i;
+				}
+			}
+		}
+							
+		System.out.println("Seleccione una dificultad\n1-facil\n2-norma\n3-dificil");
+		Scanner cin = new Scanner(System.in);
+		int n=cin.nextInt();
+		
+		generarMounstros();
+	}
+	
+	public void generarVista() {
+		for(int i=0;i<width;i++)
+			vista+="----";
+		vista+="-\n";
+		for(int i=0;i<height;i++) {						
+			vista+="|";
+			vista+=map[i][0];
+			for(int j=0;j<width-1;j++)
+				vista+=" "+map[i][j+1]+" |";
+			vista+=" "+map[i][width-1]+" |\n";
+			for(int j=0;j<width;j++)
+				vista+="----";
+			vista+="-\n";
+		}
+	}
+	
+	public void generarMounstros() {
+		
+	}
+	
+	public void ver() {
+		vista="";
+		generarVista();
+		System.out.println(vista);
+	}
+
+}

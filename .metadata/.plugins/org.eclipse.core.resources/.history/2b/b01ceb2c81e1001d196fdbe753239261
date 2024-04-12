@@ -1,0 +1,23 @@
+package App;
+
+public class Tablero {
+	private String codigo;
+	private  String tipo;
+	
+	public Tablero(String codigo, String tipo) {
+		super();
+		this.codigo = codigo;
+		this.tipo = tipo;
+	}
+
+	public String getCodigo() {
+		return codigo;
+	}
+
+	public String getTipo() {
+		return tipo;
+	}
+	
+	
+	
+}

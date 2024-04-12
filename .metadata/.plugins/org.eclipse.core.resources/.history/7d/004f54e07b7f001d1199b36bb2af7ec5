@@ -1,0 +1,28 @@
+package aplicacion;
+
+public class Turismo extends Omnibus{
+	private int horaLlegada;
+	private int asientosDisponibles;
+	private float KM;
+	
+	public Turismo(String chapa, Persona chofer, String destino, int horaLlegada, int asientosDisponibles, float kM) {
+		super(chapa, chofer, destino);
+		this.horaLlegada = horaLlegada;
+		this.asientosDisponibles = asientosDisponibles;
+		KM = kM;
+	}
+	
+	public int getHoraLlegada() {
+		return horaLlegada;
+	}
+	
+	public int getAsientosDisponibles() {
+		return asientosDisponibles;
+	}
+	
+	public float getKM() {
+		return KM;
+	}
+	
+	
+}

@@ -1,0 +1,43 @@
+package App;
+
+import javax.swing.*;
+
+import algoritmos.*;
+
+import java.util.PriorityQueue;
+import java.awt.Color;
+import java.util.LinkedList;
+public class Ventana extends JFrame{
+
+	PriorityQueue<Proceso> pqp = new PriorityQueue<>();
+	LinkedList<Proceso> lsp = new LinkedList<>();
+	JLabel zone;
+	
+	Ventana(){
+		setLayout(null);
+		setResizable(false);
+		setSize(900,500);
+		iniTable();
+		iniZone();
+		setLocationRelativeTo(null);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setVisible(true);
+	}
+	
+	private void iniTable() {
+		zone = new JLabel();
+		zone.setSize(getWidth()-300,getHeight()-200);
+		zone.setLocation(300,200);
+		zone.setOpaque(true);
+		zone.setBackground(Color.gray);
+		add(zone);
+	}
+	
+	private void iniZone() {
+		
+	}
+	
+	public static void main(String args[]) {
+		new Ventana();
+	}
+}

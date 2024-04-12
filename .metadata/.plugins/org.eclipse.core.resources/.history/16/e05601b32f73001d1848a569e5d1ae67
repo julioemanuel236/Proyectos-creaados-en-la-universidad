@@ -1,0 +1,174 @@
+package lietys;
+
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.Date;
+
+import javax.swing.JOptionPane;
+import java.util.ArrayList;
+
+public class Aereopuerto{
+	private String rutaterminales="Terminales.dat";
+	private String rutaaviones="Aviones.dat";
+
+	protected ArrayList<Avion> aviones = new ArrayList<Avion>();
+	protected ArrayList<Terminal> terminales = new ArrayList<Terminal>();
+
+	
+	public boolean fecha_valida(int dia,int mes,int anio) {
+		System.out.println(dia+" "+mes+" "+anio);
+		int meses[] = new int[]{31,28,31,30,31,30,31,31,30,31,30,31};
+		
+		if(anio%4==0||(anio%100==0&&anio%400==0))meses[1]=29;
+		if(mes<0||mes>11)return false;
+		if(dia>meses[mes-1]||dia<0)return false;
+		return true;
+	}
+	
+	public float ventas_entre_fechas(int f1d,int f1m,int f1a,int f2a,int f2m,int f2d) {
+		if(!fecha_valida(f1d, f1m, f1a)|!fecha_valida(f2d, f2m, f2a)) {
+			JOptionPane.showMessageDialog(null, "Fechas no validas");
+			return 0;
+		}
+		
+		Date a = new Date();
+		Date b = new Date();
+		
+		a.setDate(f1d);
+		a.setMonth(f1m);
+		a.setYear(f1a);
+		
+		b.setDate(f2d);
+		b.setMonth(f2m);
+		b.setYear(f2a);
+
+		float ganancias = 0f;
+		for(Terminal t:terminales) {
+			for(Vuelo v:((Terminal)t).vuelos) {
+				if(v.salida.after(a)&v.arribo.before(b))
+					ganancias+=v.precio;
+			}
+		}
+		return ganancias;
+	}
+	
+	public void cargar_datos_terminales() {
+		FileInputStream fis = null;
+		try {
+			fis = new FileInputStream(rutaterminales);
+			ObjectInputStream oos = new ObjectInputStream(fis);
+			ArrayList<Terminal> readObject = (ArrayList<Terminal>) oos.readObject();
+			terminales = readObject;
+
+			fis.close();
+		}
+		catch(java.io.FileNotFoundException e) {
+			
+		}
+		catch(Exception e) {
+			new JOptionPane().showMessageDialog(null,  "Error al cargar datos");
+			e.printStackTrace();
+		}
+	}
+
+	public void cargar_datos_aviones() {
+		FileInputStream fis = null;
+		try {
+			fis = new FileInputStream(rutaaviones);
+			ObjectInputStream oos = new ObjectInputStream(fis);
+			ArrayList<Avion> readObject = (ArrayList<Avion>) oos.readObject();
+			aviones = readObject;
+
+			fis.close();
+		}
+		catch(java.io.FileNotFoundException e) {
+			
+		}
+		catch(Exception e) {
+			new JOptionPane().showMessageDialog(null,  "Error al cargar datos");
+			e.printStackTrace();
+		}
+	}
+	
+	public float ventas_por_vuelo(Vuelo vuelo) {
+		float c=0;
+		for(Asiento i:vuelo.avion.asiento) {
+			System.out.println(i.persona);
+			if(i.persona!=null) {
+			    c+=i.precio;
+			}
+		}
+		return c;
+	}
+
+	public void guardar_datos_terminales() {
+		FileOutputStream fos = null;
+		//for(Terminal i:terminales)
+		//System.out.println(i);
+		try {
+			fos = new FileOutputStream(rutaterminales);
+			ObjectOutputStream oos = new ObjectOutputStream(fos);
+			oos.writeObject(terminales);
+			fos.close();
+		} catch (Exception e) {
+			new JOptionPane().showMessageDialog(null,  "Error al guardar datos");
+		}
+	}
+
+	public void guardar_datos_aviones() {
+		FileOutputStream fos = null;
+		
+		try {
+			fos = new FileOutputStream(rutaaviones);
+			ObjectOutputStream oos = new ObjectOutputStream(fos);
+			oos.writeObject(aviones);
+			fos.close();
+		} catch (Exception e) {
+			new JOptionPane().showMessageDialog(null,  "Error al guardar datos");
+		}
+	}
+
+	public Terminal annadir_nueva_terminal(String nombre,int numero) {
+		Terminal nueva = new Terminal(nombre,numero);
+		terminales.add(nueva);
+		return nueva;
+	}
+	
+	public Avion annadir_nuevo_avion(String nombre,String modelo,String matricula,String pais,int asientos) {
+		Avion avion = new Avion(nombre,modelo,matricula,pais,asientos);
+		aviones.add(avion);
+		return avion;
+	}
+	
+	public void annadir_reservacion(Persona persona,Asiento asiento,Vuelo vuelo) {
+		asiento.setPrecio(vuelo.getPrecio());
+		if(asiento.getCategoria()==1)asiento.setPrecio(asiento.getPrecio()+(asiento.getPrecio()*0.3f));
+		else if(asiento.getCategoria()==2)asiento.precio+=asiento.precio*0.2;
+		if(asiento.getCategoria()==3)asiento.precio+=asiento.precio*0.1;
+		asiento.persona=persona;
+	}
+	
+	public Vuelo annadir_nuevo_vuelo(String tipo,Date sal,Date lle,Avion avion,Terminal terminal,String pais,String ciudad,int km,float coste,float cviaje,float precio) {
+		Vuelo vuelo = new Vuelo(tipo,sal,lle,avion,terminal,pais,ciudad,km,coste,cviaje,precio);
+		terminal.vuelos.add(vuelo);
+		return vuelo;
+	}
+	
+	public Aereopuerto() {
+		cargar_datos_terminales();
+		cargar_datos_aviones();
+	}
+
+	public static void main(String[] args) throws Exception{
+		try{
+			new GUI();
+		}
+		catch(Exception e) {
+			
+		}
+	}
+
+}
+

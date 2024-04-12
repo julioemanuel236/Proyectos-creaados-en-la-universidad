@@ -1,0 +1,12 @@
+package game;
+
+public abstract class Item extends Object {
+	int precio;
+	
+	public Item(int precio) {
+		this.precio=precio;
+	}
+	
+	public abstract void usar(Heroe);
+
+}

@@ -1,0 +1,150 @@
+package Ventana;
+
+import javax.swing.*;
+import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Font;
+import java.awt.event.*;
+import java.awt.Point;
+import java.awt.MouseInfo;
+import java.awt.Font;
+import javax.swing.SwingConstants;
+
+
+public class Ventana extends JFrame{
+	
+	JPanel background;
+	JPanel left;
+	JLabel closebt;
+	MouseListener MOVE,REDBG;
+	ActionListener close;
+	int X,Y;
+	
+	public Ventana() {
+		listeners();
+		ini_left();
+		ini_background();
+		this.setLayout(null);
+		this.setUndecorated(true);
+		this.add(background);
+		this.setSize(700,500);
+		this.setLocationRelativeTo(null);
+		this.setVisible(true);
+	}
+	
+	private void ini_background() {
+		this.background = new JPanel();
+		this.background.setLayout(null);
+		this.background.setSize(700,500);
+		this.background.setBackground(Color.DARK_GRAY);
+		this.background.addMouseListener(this.MOVE);
+		this.background.add(left);
+	}
+	
+	private void listeners() {
+			Ventana.this.MOVE=new MouseListener() {
+				boolean pressed=true;
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					
+					
+				}
+
+				@Override
+				public void mousePressed(MouseEvent e) {
+					this.pressed=true;
+					(new Thread() {
+						public void run() {
+							int vx=Ventana.this.getX();
+							int vy=Ventana.this.getY();
+							int mx=e.getX();
+							int my=e.getY();
+							while(pressed) {
+								int px=(int) MouseInfo.getPointerInfo().getLocation().getX();
+								int py=(int) MouseInfo.getPointerInfo().getLocation().getY();
+								Ventana.this.setLocation((int)(px-mx) ,(int) (py-my));
+							}
+						}
+					}).start();
+					
+					
+				}
+
+				@Override
+				public void mouseReleased(MouseEvent e) {
+					this.pressed=false;
+					
+				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+			
+			};
+			
+			Ventana.this.REDBG=new MouseListener() {
+
+				@Override
+				public void mouseClicked(MouseEvent ev) {
+					
+				}
+
+				@Override
+				public void mousePressed(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void mouseReleased(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					Ventana.this.closebt.setOpaque(true);
+					Ventana.this.closebt.updateUI();
+					System.out.println("se supone se ponga rojo");
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					Ventana.this.closebt.setOpaque(false);
+					Ventana.this.closebt.updateUI();
+					System.out.println("se supone se ponga transparente");
+				}
+				
+			};
+				}
+
+	private void ini_left() {
+		this.left = new JPanel();
+		this.left.setBackground(Color.WHITE);
+		this.left.setSize(300,500);
+		this.left.setLayout(null);
+		closebt = new JLabel();
+		closebt.setHorizontalTextPosition(SwingConstants.CENTER);
+		closebt.setVerticalTextPosition(SwingConstants.CENTER);
+		closebt.setText("X");
+		closebt.setFont(new Font("Roboto",1,20));
+		closebt.setSize(100,100);
+		closebt.setBackground(Color.RED);
+		closebt.setLocation(0,0);
+		closebt.addMouseListener(REDBG);
+		this.left.add(closebt);
+	}
+	
+	public static void main(String[] args) {
+		new Ventana();
+	}
+	
+}

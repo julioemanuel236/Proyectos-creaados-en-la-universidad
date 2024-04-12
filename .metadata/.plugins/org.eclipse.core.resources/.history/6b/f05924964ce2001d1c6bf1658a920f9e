@@ -1,0 +1,39 @@
+package Algoritmos;
+
+public class Proceso {
+	private String id;
+	private int inicio;
+	private int tiempo;
+	
+	public Proceso(String id, int inicio, int tiempo) {
+		super();
+		this.id = id;
+		this.inicio = inicio;
+		this.tiempo = tiempo;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public int getInicio() {
+		return inicio;
+	}
+
+	public int getTiempo() {
+		return tiempo;
+	}
+	
+	public void procces() {
+		tiempo--;
+	}
+	
+	public boolean isTerminated() {
+		return tiempo==0;
+	}
+	
+	@Override
+	public int compareTo(Proceso pr) {
+		
+	}
+}

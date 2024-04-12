@@ -1,0 +1,11 @@
+package serpiente;
+
+public class Cuerpo {
+	private int x;
+	private int y;
+	
+	
+	public void moveTo(int x,int y,) {
+		
+	}
+}

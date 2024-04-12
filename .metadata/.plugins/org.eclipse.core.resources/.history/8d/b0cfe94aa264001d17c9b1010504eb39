@@ -1,0 +1,89 @@
+package tienda;
+import javax.swing.*;
+import javax.swing.border.LineBorder;
+
+import java.awt.*;
+
+public class Gato extends Mascota{
+	private String  colorOjos;
+	private boolean pedigri;
+	private char     sexo;
+	
+	public Gato(String pais,String color,int meses,String colorOjos,boolean pedigri,char sexo) {
+		super(pais,color,meses);
+		this.colorOjos=colorOjos;
+		this.pedigri=pedigri;
+		this.sexo=sexo;
+	}
+	
+	public String getColorOjos() {
+		return colorOjos;
+	}
+	
+	public boolean getPedigri() {
+		return pedigri;
+	}
+	
+	public char getSexo() {
+		return sexo;
+	}
+	
+	public float getPrecio() {
+		if(getMeses()<=24)return (1000f/getMeses())*(pedigri?2:1);
+		else return 35*(pedigri?2:1);
+	}
+	
+	public JPanel token() {
+		int b=2;
+		LineBorder borde = new LineBorder(Color.black, b);
+		JPanel panel = new JPanel();
+		panel.setSize(100-b-b-b,150);
+		panel.setLayout(null);
+		panel.setOpaque(true);
+		panel.setBackground(Color.LIGHT_GRAY);
+		panel.setBorder(borde);
+		
+		JLabel tipo = new JLabel("GATO");
+		JLabel meses = new JLabel(""+getMeses());
+		JLabel pais = new JLabel(getPais());
+		JLabel sexo = new JLabel(""+getSexo());
+		
+		tipo.setSize(panel.getWidth()/2,30);
+		
+		pais.setSize(panel.getWidth(),30);
+		pais.setLocation(0,panel.getHeight()-pais.getHeight());
+		meses.setSize(panel.getWidth()/4,tipo.getHeight());
+		meses.setLocation(panel.getWidth()-meses.getWidth()-b-b,0);
+		sexo.setSize(meses.getSize());
+		sexo.setLocation(tipo.getWidth()-b,0);
+		
+		tipo.setHorizontalAlignment(JLabel.CENTER);
+		meses.setHorizontalAlignment(JLabel.CENTER);
+		pais.setHorizontalAlignment(JLabel.CENTER);
+		sexo.setHorizontalAlignment(JLabel.CENTER);
+		
+		tipo.setBorder(borde);
+		meses.setBorder(borde);
+		pais.setBorder(borde);
+		sexo.setBorder(borde);
+		
+		panel.add(tipo);
+		panel.add(meses);
+		panel.add(pais);
+		panel.add(sexo);
+		return panel;
+	}
+	
+	public static void main(String args[]) {
+		JFrame root = new JFrame();
+		root.setLayout(null);
+		root.setSize(500,500);
+		root.setDefaultCloseOperation(root.EXIT_ON_CLOSE);
+		root.setVisible(true);
+		
+		Gato g = new Gato("Cuba","Marron",2,"Azule",true,'M');
+		
+		root.add(g.token());
+		root.repaint();
+	}
+}

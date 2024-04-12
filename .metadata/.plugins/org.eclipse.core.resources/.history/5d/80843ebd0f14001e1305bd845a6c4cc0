@@ -1,0 +1,28 @@
+package todolist;
+
+public class Main {
+
+	public static void main(String[] args) {
+		HeapPriQueue<Task> pq = new HeapPriQueue<>(10);
+		for(int i=0 ; i < 10 ;i++)
+			pq.enqueue(new Task(i));
+		System.out.println("Default list:");
+		pq.printList();
+		System.out.println("Promote element in index 1");
+		pq.promote(1);
+		System.out.println("list:");
+		pq.printList();
+		System.out.println("Demote element in index 5");
+		pq.promote(5);
+		System.out.println("list:");
+		pq.printList();
+		System.out.println("try to add a new Item");
+		try {
+			pq.enqueue(new Task(11));
+		}
+		catch(Exception e) {
+			
+		}
+	}
+		
+}

@@ -1,0 +1,28 @@
+package cadena;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+
+public class Cadena {
+	private ArrayList<Hotel> hoteles;
+	private ArrayList<Cliente> clientes;
+
+	private String leer(String txt) {
+		return JOptionPane.showInputDialog(txt);
+	}
+	
+	
+	public void nuevoHotel() {
+		String nombre = leer("Nombre del Hotel");
+		
+		int cantidadPisos = Integer.parseInt(leer("Ccantidad de Pisos"));
+		
+		ArrayList<Piso> pisos = new ArrayList<>();
+		
+		for(int i=1;i<=cantidadPisos;i++){
+			int cantidadHabitaciones = Integer.parseInt(leer("Cantidad de Habitaciones en el piso "+i));
+			
+			
+		}
+	}
+	
+}

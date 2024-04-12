@@ -1,0 +1,18 @@
+package simulacion;
+
+import elementos.Matriz;
+import elementos.serpiente.*;
+
+public class Main {
+	
+	public static void main(String[] args) {
+		int ancho,alto,pasos
+		try {
+			
+		}
+		catch(Exception e) {
+			
+		}
+	}
+	
+}

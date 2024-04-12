@@ -1,0 +1,28 @@
+package fixer;
+
+import java.util.ArrayList;
+
+public class Fixer {
+
+	String fileRute = "50Names.txt";
+	ArrayList<Person> persons;
+	
+	public Fixer() {
+		try {
+			loadPersons();
+		}
+		catch(Exception e) {
+			
+		}
+		
+	}
+	
+	public void loadPersons()throws Exception {
+		FileReader fr = new FileReader(fuleRute);
+	}
+	
+	
+	public static void main(String[] args) {
+		new Fixer();
+	}
+}

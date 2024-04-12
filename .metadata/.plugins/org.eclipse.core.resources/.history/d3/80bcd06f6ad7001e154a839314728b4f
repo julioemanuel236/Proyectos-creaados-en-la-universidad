@@ -1,0 +1,396 @@
+package mainwindow;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.GraphicsEnvironment;
+import java.awt.Image;
+import java.awt.Point;
+import java.io.File;
+import java.math.BigDecimal;
+import java.sql.Date;
+import javax.imageio.ImageIO;
+import javax.swing.JPanel;
+
+import java.awt.Color;
+import java.awt.GradientPaint;
+import data.*;
+import ventana.configs;
+
+public class VisorGasto extends Component{
+
+	private String[] dias = {"DOMINGO","LUNES","MARTES","MIERCOLES","JUEVES","VIERNES","SABADO"};
+	
+	private Gasto gasto;
+	
+	private Color background = new Color(0,0,0,100);
+	
+	private Font fontNombre = new Font(configs.FONTNAME,Font.PLAIN,12);
+	private Font fontPrecio = new Font(configs.FONTNAME,Font.BOLD,12);	
+	private Font fontDolar = new Font(configs.FONTNAME,Font.PLAIN,9);
+	
+	private final String DOLAR = "$";
+	
+	private Image editButtonImg;
+	private Image deleteButtonImg;	
+	
+	private Button editButton;
+	private Button deleteButton;
+	
+	private GradientPaint fondo;
+	
+	private long changeBackgroundOnEntryTime = 250;
+	private long changeBackgroundOnExitTime = 500;
+	
+	private Color c11 = configs.MAIN_COLOR,c12 = configs.ALTERN_COLOR.darker();
+	private Color color1 = c11,color2 = c12;
+	private Color c21 = c11.darker().darker(), c22 = c12.darker().darker();
+	
+ 	public VisorGasto() {
+		
+	}
+	
+	public VisorGasto(Gasto gasto,Image edit,Image delete,int w,int h) {		
+		this.gasto = gasto;
+		this.editButtonImg = edit;
+		this.deleteButtonImg = delete;
+		setSize(w,h);
+		ini();
+		
+	}
+	
+	public void mostrarGasto(Gasto gasto) {
+		this.gasto = gasto;
+		ini();
+		this.repaint();
+	}
+	
+	private void ini() {
+		setForeground(configs.FOREGROUND);
+		fondo = new GradientPaint(0, getWidth(), c11, getWidth(), getHeight(), c12);
+		
+		if(editButton == null) {
+			editButton = new Button(editButtonImg) {
+				@Override
+				public void movimientoFinalizado() {
+					VisorGasto.this.repaint();
+				}
+			};
+		
+			editButton.setLimiteh(0);
+		}
+	
+		double relacionWH = editButton.getHeight()/(double)editButton.getWidth();
+		editButton.setSize(getHeight()/4,(int)((getHeight()/4)*relacionWH));
+		
+		
+		if(deleteButton == null) {
+			deleteButton = new Button(deleteButtonImg);
+			deleteButton.setLimiteh(getWidth());
+		}
+		
+		relacionWH = deleteButton.getHeight()/(double)deleteButton.getWidth();
+		deleteButton.setSize((int)((getHeight()/4)*relacionWH),getHeight()/4);
+		
+		
+		editButton.setTiempoMovimiento(100);
+		deleteButton.setTiempoMovimiento(100);
+		editButton.setLocation(-editButton.getWidth(), getHeight()-editButton.getHeight()-5);
+		deleteButton.setLocation(getWidth(),getHeight()-deleteButton.getHeight()-5);
+		
+		add(editButton);
+		add(deleteButton);
+		
+	}
+			
+	@Override
+	public void setSize(int widht,int height) {
+		super.setSize(widht, height);
+		ini();
+	}
+	
+	@Override
+	public void setSize(Dimension size) {
+		super.setSize(size);
+		ini();
+	}
+	
+	public void pintarPrecio(Graphics g,BigDecimal precio,int x,int y,int width,int height) {
+		//System.out.println(x+" "+y+" "+width+" "+height);
+		g.setColor(getForeground());
+		int alto = fontPrecio.getSize();
+		String precioTexto = String.valueOf(precio.doubleValue());
+		
+		String textoPrecio = precio.intValue()+".";
+		String textoComa = precioTexto.substring(precioTexto.lastIndexOf('.')+1);
+		
+		if(textoComa.length() == 1)textoComa+='0';
+		else if(textoComa.length() >2)textoComa = textoComa.substring(0, 2);
+		int w = 0;
+		int h = 0;
+		while(w<width && h<height) {
+			w = 0;
+			h = 0;
+			alto++;
+			
+			fontPrecio = ajustarFuente(fontPrecio,alto);
+			fontDolar =	ajustarFuente(fontDolar,alto*3/5);
+						
+			w+=textWidth(fontDolar, DOLAR);
+			w+=textWidth(fontPrecio, textoPrecio);
+			w+=textWidth(fontDolar, textoComa);
+			
+			h = textHeight(fontPrecio, textoPrecio) + textHeight(fontDolar, textoComa) - (2*textHeight(fontDolar, DOLAR)/3);
+			
+		}
+		//System.out.println(w + ">=" + width);
+		while(w>=width || h>=height) {
+			w = 0;
+			alto--;
+			
+			fontPrecio = ajustarFuente(fontPrecio,alto);
+			fontDolar =	ajustarFuente(fontDolar,alto*3/5);
+						
+			w+=textWidth(fontDolar, DOLAR);
+			w+=textWidth(fontPrecio, textoPrecio);
+			w+=textWidth(fontDolar, textoComa);						
+			
+			h = textHeight(fontPrecio, textoPrecio) + textHeight(fontDolar, textoComa) - (2*textHeight(fontDolar, DOLAR)/3);
+		}	
+		
+		
+		
+		
+		
+		int toCenterY = y + (height/2)-(h/2);
+		//System.out.println(h + "--" + height);	
+		//System.out.println(toCenterY);	
+		//System.out.println(fontDolar.getSize() + " " + alto);
+		
+		int dolarY = toCenterY+textHeight(fontDolar, DOLAR) ;
+		int precioY = dolarY + textHeight(fontPrecio, textoPrecio) - (2*textHeight(fontDolar, DOLAR)/3);
+		
+		/*
+		g.setColor(Color.red);
+		g.fillRect(0, 0 , width, height);
+		*/
+		g.setFont(fontDolar);
+		g.setColor(getForeground());
+		
+		x = (width/2) - (w/2);
+		
+		
+		g.drawString(DOLAR, x, dolarY);		
+		x+=textWidth(fontDolar, DOLAR);
+		
+		g.setFont(fontPrecio);
+		
+		g.drawString(textoPrecio, x, precioY);
+		x+=textWidth(fontPrecio, textoPrecio);
+		
+		g.setFont(fontDolar);
+		
+		g.drawString(textoComa, x, dolarY);
+		
+		
+		
+	}
+		
+	private void pintarFecha(Graphics g,int x,int y,int width,int height) {
+		Date d = new Date(gasto.getTiempoCreacion());
+		String fecha = d.getDate()+"";
+		String dia = dias[d.getDay()];
+		pintarTexto(g, fecha, x, y, width, height/2, fontNombre);
+		pintarTexto(g, dia, x, y+height/2, width, height/2, fontNombre);
+		pintarBorde(g,x,y,width,height);
+	}
+	
+	private void pintarBorde(Graphics g,int x,int y,int width,int height) {
+		g.setColor(Color.black);
+		g.drawLine(x, y, x, y+height);
+		g.drawLine(x, y, x+width, y);
+		g.drawLine(x+width-1, y, x+width-1, y+height);
+		g.drawLine(x, y+height-1, x+width, y+height-1);
+	}
+	
+	@Override
+	public void paint(Graphics g) {
+		
+        ((Graphics2D)g).setPaint(fondo);
+		g.fillRect(0, 0, getWidth(), getHeight());
+		
+		
+		int xNombre = editButton.getX()+editButton.getWidth() + 5;
+		int widthNombre = deleteButton.getX() - xNombre - 5;
+		
+		pintarTexto(g,gasto.getNombre(),xNombre,getHeight()*2/3,widthNombre,getHeight()/3,fontNombre);
+		pintarPrecio(g,gasto.getCosteTotal(),0,0,getWidth()*2/3,getHeight()*2/3);
+		pintarFecha(g,getWidth()*2/3,0,getWidth()/3,getHeight()*2/3);
+		pintarBorde(g,0,0,getWidth(),getHeight());
+		super.paint(g);
+		/*
+		g.drawRect(0, getHeight()*1/4, getWidth(), getHeight()*1/4);
+		g.drawRect(0, getHeight()*2/4, getWidth(), getHeight()*2/4);
+		g.drawRect(0, getHeight()*3/4, getWidth(), getHeight()*3/4);
+		g.fillRect(editButton.getX(), editButton.getY(), editButton.getWidth(), editButton.getHeight());
+		g.fillRect(deleteButton.getX(), deleteButton.getY(), deleteButton.getWidth(), deleteButton.getHeight());
+	*/}
+	
+	@Override
+	public void mouseEnter() {		
+
+	}
+	
+	public Color mezclar(Color C1, Color C2,double d) {
+		
+		int r = (int)(C1.getRed() + ((C2.getRed() - C1.getRed())*d));
+		int g = (int)(C1.getGreen() + ((C2.getGreen() - C1.getGreen())*d));
+		int b = (int)(C1.getBlue() + ((C2.getBlue() - C1.getBlue())*d));
+		int a = (int)(C1.getAlpha() + ((C2.getAlpha() - C1.getAlpha())*d));
+		
+		Color result = new Color(r,g,b,a);
+		//System.out.println(d +"="+ result);
+		return result;
+	
+	}
+	
+	@Override
+	public void mouseExit() {
+
+	}
+
+	@Override
+	public void processMouseMove(int x, int y) {
+		super.processMouseMove(x, y);
+		long time = System.currentTimeMillis();
+	
+		if(isMouseIn()) {						
+			boolean changed = false;
+			
+			//cambio color fondo
+			double perc = (double)(time - getLastTimeMouseEntry()) / changeBackgroundOnEntryTime;
+			
+			if(perc<=1.0d) {
+				color1 = mezclar(c11,c21,perc);
+				color2 = mezclar(c12,c22,perc);
+				fondo = new GradientPaint(0, getWidth(), color1, getWidth(), getHeight(), color2);
+				changed = true;
+			}
+			
+			//posicionamiento boton editar -> esta a la izquierda			
+			perc = ((double)(time-getLastTimeMouseEntry())/editButton.getTiempoMovimiento());
+			if(perc<=1.0d) {
+				int xButton = editButton.getLimiteh() - editButton.getWidth();
+				int xObj = editButton.getLimiteh() + 5;
+				int posX = xButton + (int)((double)(xObj - xButton)*perc);
+				editButton.setLocation(new Point(posX,editButton.getY()));
+				changed = true;
+			}
+			
+			
+			//posicionn boton eliminar -> esta a la derecha
+			
+			perc = ((double)(time-getLastTimeMouseEntry())/deleteButton.getTiempoMovimiento());
+			if(perc<=1.0d) {
+				int xButton = deleteButton.getLimiteh();
+				int xObj = deleteButton.getLimiteh() - deleteButton.getWidth() - 5;
+				int posX = xButton + (int)((double)(xObj - xButton)*perc);
+				deleteButton.setLocation(new Point(posX,deleteButton.getY()));
+				changed = true;
+			}
+			
+			if(changed)
+				repaint();
+		}													
+		else if(!isMouseIn()) {
+			boolean changed = false;
+			double perc = (double)(time - getLastTimeMouseExit())/changeBackgroundOnExitTime;
+			
+			if(perc<=1.0d) {				
+				color1 = mezclar(c21,c11,perc);
+				color2 = mezclar(c22,c12,perc);
+				fondo = new GradientPaint(0, getWidth(), color1, getWidth(), getHeight(), color2);
+				changed = true;
+			}
+			
+			//posicionamiento boton editar -> esta a la izquierda			
+			perc = ((double)(time-getLastTimeMouseExit())/editButton.getTiempoMovimiento());
+			if(perc<=1.0d) {
+				int xButton = editButton.getLimiteh() + 5;
+				int xObj = editButton.getLimiteh() - editButton.getWidth() - 5;
+				int posX = xButton + (int)((double)(xObj - xButton)*perc);
+				editButton.setLocation(new Point(posX,editButton.getY()));
+				changed = true;
+			}
+			
+			
+			//posicionn boton eliminar -> esta a la derecha
+			
+			perc = ((double)(time-getLastTimeMouseExit())/deleteButton.getTiempoMovimiento());
+			if(perc<=1.0d) {
+				int xButton = deleteButton.getLimiteh() - deleteButton.getWidth() - 5;
+				int xObj = deleteButton.getLimiteh() + 5;
+				int posX = xButton + (int)((double)(xObj - xButton)*perc);
+				deleteButton.setLocation(new Point(posX,deleteButton.getY()));
+				changed = true;
+			}
+			
+			if(changed)
+				repaint();
+			
+		}
+		
+	}
+
+	
+	public static void main(String[] args) {
+		
+		try {
+			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+			ge.registerFont(Font.createFont(Font.TRUETYPE_FONT,new File(VisorGasto.class.getResource("/fonts/Arciform.otf").getFile())));
+			
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		String skinRute = configs.getImgRute(0);
+		Image editButtonImg = null,deleteButtonImg = null; 
+		try {
+			editButtonImg = ImageIO.read(VisorGasto.class.getResource(skinRute+"edit_button.png"));
+		}			
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		try {
+			deleteButtonImg = ImageIO.read(VisorGasto.class.getResource(skinRute+"delete_button.png"));
+		}			
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		javax.swing.JFrame root = new javax.swing.JFrame();
+		JPanel p = new JPanel();
+		root.add(p);
+		p.setLayout(null);
+		root.setSize(300,1200);
+		p.setSize(root.getSize());
+		root.setUndecorated(true);
+		//root.add(p);			
+				
+		root.setVisible(true);
+		root.setDefaultCloseOperation(root.EXIT_ON_CLOSE);		
+		
+		for(int i=0;i<10;i++) {			
+			for(int j=0;j<1;j++) {
+				VisorGasto vg = new VisorGasto(new Gasto("GASTO ALEATORIO","Tipo 1","200",10),editButtonImg,deleteButtonImg,200,80);					
+				p.add(vg);
+				
+				
+				vg.setLocation(vg.getWidth()*j,vg.getHeight()*i);	
+			}
+			
+		}
+
+		eventos.MouseTrackingThread.run();
+	}
+	
+}

@@ -1,0 +1,18 @@
+package game;
+
+public class Caballero extends Heroe {
+
+	public Caballero() {
+		super(300, 1, 45);
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public void atacar() {
+		int dx[]= {1,1,1,0,-1,-1,-1,0};
+		int dy[]= {0,-1,-1,-1,0,1,1,1};
+
+		
+	}
+
+}

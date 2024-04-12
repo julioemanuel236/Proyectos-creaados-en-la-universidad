@@ -1,0 +1,6 @@
+package ejercicio1;
+
+public class Main {
+	Puerta puerta = new Puerta();	
+	PuertaTemporizada puertaT = new PuertaTemporizada();
+}

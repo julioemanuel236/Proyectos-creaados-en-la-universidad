@@ -1,0 +1,119 @@
+package cadena;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.*;
+
+public class Interfaz extends JFrame{
+	Cadena cadena = new Cadena();
+	private void iniciar() {
+		JPanel panel = new JPanel();
+		add(panel);
+		
+		JButton nuevoHotel = new JButton("Nuevo Hotel");
+		panel.add(nuevoHotel);
+		nuevoHotel.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+					cadena.nuevoHotel();
+				
+			}
+			
+		});
+		
+		JButton nuevaReservacion = new JButton("Nueva Reservacion");
+		panel.add(nuevaReservacion);
+		nuevaReservacion.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+					cadena.nuevaReservacion();
+				
+			}
+			
+		});
+
+		JButton ganancias = new JButton("Ganancias por Reservaciones");
+		panel.add(ganancias);
+		ganancias.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+					String s = cadena.ganancias();
+					JOptionPane.showMessageDialog(null, s);
+			}
+			
+		});
+		
+		JButton paismayorpg= new JButton("Pais Mayor Porcentaje Ganancias");
+		panel.add(paismayorpg);
+		paismayorpg.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+					String s = cadena.paisMasPorcentaje();
+					JOptionPane.showMessageDialog(null, s);
+			}
+			
+		});
+		
+		JButton clientesvip = new JButton("Datos Clientes Vip");
+		panel.add(clientesvip);
+		clientesvip.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+					String s = cadena.datosClientesVip();
+					JOptionPane.showMessageDialog(null, s);
+			}
+			
+		});
+
+		JButton ocupacion = new JButton("Porcentaje de Ocupacion");
+		panel.add(ocupacion);
+		ocupacion.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+					String s = cadena.porcentajeOcupacionFecha();
+					JOptionPane.showMessageDialog(null, s);
+			}
+			
+		});
+
+		JButton paisMasTuristas = new JButton("paisMasTuristas");
+		panel.add(paisMasTuristas);
+		paisMasTuristas.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+					String s = cadena.paisMasTuristas();
+					JOptionPane.showMessageDialog(null, s);
+			}
+			
+		});
+		
+		JButton cantidadDineroPagoEmpleados = new JButton("Pago a Empleados");
+		panel.add(cantidadDineroPagoEmpleados);
+		cantidadDineroPagoEmpleados.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+					String s = cadena.cantidadDineroPagoEmpleados();
+					JOptionPane.showMessageDialog(null, s);
+			}
+			
+		});
+		
+	}
+	
+	public Interfaz(){
+		setSize(250,300);
+		setResizable(false);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		iniciar();
+		setVisible(true);
+	}
+	
+}

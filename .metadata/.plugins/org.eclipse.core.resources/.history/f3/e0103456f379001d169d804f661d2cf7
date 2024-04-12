@@ -1,0 +1,28 @@
+package cadena;
+import java.util.ArrayList;
+
+public class Empleado extends Persona{
+	private int años;
+	private float salario = 5000;
+	private ArrayList<Habitacion> habitaciones;
+
+	public Empleado(String nombre, String id, String sexo, int años) {
+		super(nombre, id, sexo);
+		this.años = años;
+		
+	}
+
+	
+	public int getAños() {
+		return años;
+	}
+	
+	public ArrayList<Habitacion> getHabitaciones() {
+		return habitaciones;
+	}
+	
+	public float Salario() {
+		return salario + ;
+	}
+
+}

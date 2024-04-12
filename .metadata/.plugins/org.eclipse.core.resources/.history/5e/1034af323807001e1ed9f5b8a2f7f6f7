@@ -1,0 +1,17 @@
+package questions;
+
+public class Q26 {
+	private MyData[] myList = null;
+	private int numberOfElements = 0;
+	
+	public int recBinarySearch(int pTarget,int bottom,int top) {
+		if(bottom == top) {
+			if(myList[bottom].compareTo(pTarget))return bottom;
+			else return -1;
+		}
+		int m = (top+bottom)/2;
+		
+		if(myList[m].compareTo(pTarget)==0) return m;
+		if(pTarget.compareTo(myList[m] == -1)
+	}
+}

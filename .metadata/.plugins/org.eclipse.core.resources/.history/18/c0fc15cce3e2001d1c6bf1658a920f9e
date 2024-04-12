@@ -1,0 +1,34 @@
+package App;
+
+import javax.swing.*;
+
+import algoritmos.*;
+
+import java.util.PriorityQueue;
+import java.util.LinkedList;
+public class Ventana extends JFrame{
+
+	PriorityQueue<Proceso> pqp = new PriorityQueue<>();
+	Linked
+	Ventana(){
+		setResizable(false);
+		setSize(900,500);
+		iniTable();
+		iniZone();
+		setLocationRelativeTo(null);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setVisible(true);
+	}
+	
+	private void iniTable() {
+		
+	}
+	
+	private void iniZon() {
+		
+	}
+	
+	public static void main(String args[]) {
+		new Ventana();
+	}
+}

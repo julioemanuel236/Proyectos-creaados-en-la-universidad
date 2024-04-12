@@ -1,0 +1,56 @@
+package elementos.serpiente;
+
+public class Cuerpo {
+	private int x;
+	private int y;
+	private int id;
+	private Cuerpo siguiente;
+	private Cuerpo anterior;
+	
+	public Cuerpo(int x,int y,int id) {
+		this.lastX = this.x = x;
+		this.lastY = this.y = y;
+		this.id = id;
+	}
+
+	public Cuerpo(int x,int y,int id,Cuerpo anterior) {
+		this.x = x;
+		this.y = y;
+		this.id = id;
+		this.anterior = anterior;
+	}
+	
+	public void moveTo(int x,int y) {
+		
+	}
+
+	public int getX() {
+		return x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public Cuerpo getSiguiente() {
+		return siguiente;
+	}
+
+	public void setSiguiente(Cuerpo siguiente) {
+		this.siguiente = siguiente;
+	}
+
+	public Cuerpo getAnterior() {
+		return anterior;
+	}
+
+	public void setAnterior(Cuerpo anterior) {
+		this.anterior = anterior;
+	}
+		
+	
+}

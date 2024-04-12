@@ -1,0 +1,10 @@
+package competencia;
+import java.util.ArrayList;
+public class Equipo {
+	ArrayList<Participante> miembros = new ArrayList<Participante>();
+	private float puntos;
+	
+	public void addMiembro(Participante p ) {
+		
+	}
+}

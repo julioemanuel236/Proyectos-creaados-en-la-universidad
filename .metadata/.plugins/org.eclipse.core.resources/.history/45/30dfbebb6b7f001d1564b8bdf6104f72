@@ -1,0 +1,25 @@
+package banco;
+import javax.swing.*;
+import java.awt.*;
+public class GUI extends JFrame{
+	private Sucursal sucursal;
+	private final Dimension boton = new Dimension(100,50); 
+	
+	public void botones() {
+		
+	}
+	
+	public GUI(){
+		sucursal = new Sucursal();
+		
+		setUndecorated(true);
+		setAlwaysOnTop(true);
+		setSize(750,50);
+		setResizable(false);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		
+		botones();
+		
+		setVisible(true);
+	}
+}

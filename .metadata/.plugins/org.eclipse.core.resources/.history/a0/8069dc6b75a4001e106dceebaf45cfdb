@@ -1,0 +1,129 @@
+package pieza;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.LinkedList;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Point;
+
+import tablero.Tablero;
+import visual.GestorMovimiento;
+
+public abstract class Pieza extends Container implements MouseListener{
+	
+	//atributos
+
+	private int i;
+	private int j;
+	private boolean color;	
+	private Tablero tablero;
+				
+	public Pieza(int i,int j,boolean color,Tablero tablero) {
+		this.i = i;
+		this.j = j;		
+		setLocation(tablero.getAnchoCasilla()*j,tablero.getAltoCasilla()*i);
+		this.color = color;		
+		this.tablero = tablero;
+		tablero.add(this);
+		System.out.println("PEON CREADO");
+		addMouseListener(this);
+	}
+		
+	public abstract LinkedList<Point> getCasillasComer();
+		
+	public abstract LinkedList<Point> getCasillasMovimiento();
+	
+	public void morir() {
+		setVisible(false);
+	}
+
+	public int getI() {
+		return i;
+	}
+
+	public void moverA(Pieza p) {
+		GestorMovimiento.agregarMovimiento(this, p.getX(), p.getY(), 250);		
+	}
+
+	public void setI(int i) {
+		this.i = i;
+	}
+
+	public int getJ() {
+		return j;
+	}
+
+	public void setJ(int j) {
+		this.j = j;
+	}
+
+	public boolean isColor() {
+		return color;
+	}
+
+	public void setColor(boolean color) {
+		this.color = color;
+	}
+
+	public Tablero getTablero() {
+		return tablero;
+	}
+
+	public void setTablero(Tablero tablero) {
+		this.tablero = tablero;
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {		
+		tablero.notificarSeleccion(this);
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	public abstract Image getImage();
+	
+	@Override
+	public void paint(Graphics g) {
+		Image img = getImage();
+		if(img == null) {
+			System.out.println("IMAGEN NULL");
+			g.setColor(Color.red);
+			g.fillRect(0, 0,getWidth(), getHeight());
+		}
+		
+		else {
+			setSize(tablero.getAnchoCasilla(),tablero.getAltoCasilla());
+			System.out.println(getSize());
+			g.setColor(new Color(0,0,0,1));
+			g.fillRect(0, 0, getWidth(), getHeight());
+			img = img.getScaledInstance(getWidth(), getHeight(), Image.SCALE_SMOOTH);
+			g.drawImage(img, 0, 0, null);
+		}
+		
+	}
+	
+}

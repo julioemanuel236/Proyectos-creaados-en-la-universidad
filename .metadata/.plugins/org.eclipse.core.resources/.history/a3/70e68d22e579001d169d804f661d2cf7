@@ -1,0 +1,17 @@
+package cadena;
+
+import java.util.ArrayList;
+
+public class Jefe extends Empleado{
+	private int tiempoCargo;
+
+	public Jefe(String nombre, String id, String sexo, int años, ArrayList<Habitacion> habitaciones, int tiempoCargo) {
+		super(nombre, id, sexo, años, habitaciones);
+		this.tiempoCargo = tiempoCargo;
+	}
+
+	public int getTiempoCargo() {
+		return tiempoCargo;
+	}
+	
+}

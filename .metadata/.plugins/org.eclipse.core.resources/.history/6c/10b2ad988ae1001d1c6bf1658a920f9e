@@ -1,0 +1,21 @@
+package App;
+
+public class Almacen {
+	
+	Tablero tableros[] = new Tablero[50];
+	int nuevo=0;
+	
+	public Almacen() {
+		
+	}
+	
+	public void add(Tablero t) {
+		tableros[nuevo]=t;
+		t.setLocation(getLocation(nuevo));
+		nuevo++;
+	}
+	
+	public void getLocation(int n) {
+		
+	}
+}

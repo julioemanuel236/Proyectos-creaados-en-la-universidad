@@ -1,0 +1,54 @@
+package tareas;
+import java.util.Random;
+
+import javax.swing.JOptionPane;
+
+public class Cifrado {
+
+	int[][] clave;
+	
+    public static void main(String[] args) {
+        String texto = JOptionPane.showInputDialog("Texto a cifrar");
+        
+        int[][] clave = {{1, 2}, {3, 4}}; // matriz de clave de cifrado
+
+        // Convertir el texto a una matriz de caracteres
+        char[] caracteres = texto.toCharArray();
+        int n = caracteres.length;
+        int m = (int) Math.ceil((double) n / clave.length);
+        char[][] textoMatriz = new char[m][clave.length];
+        int indice = 0;
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < clave.length; j++) {
+                if (indice < n) {
+                    textoMatriz[i][j] = caracteres[indice];
+                    indice++;
+                } else {
+                    textoMatriz[i][j] = ' ';
+                }
+            }
+        }
+
+        // Multiplicar la matriz del texto por la matriz de la clave de cifrado
+        int[][] cifradoMatriz = new int[m][clave[0].length];
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < clave[0].length; j++) {
+                cifradoMatriz[i][j] = 0;
+                for (int k = 0; k < clave.length; k++) {
+                    cifradoMatriz[i][j] += textoMatriz[i][k] * clave[k][j];
+                }
+            }
+        }
+
+        // Convertir la matriz cifrada en texto cifrado
+        StringBuilder cifrado = new StringBuilder();
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < clave[0].length; j++) {
+                cifrado.append((char) (cifradoMatriz[i][j] % 256));
+            }
+        }
+
+        System.out.println("Texto original: " + texto);
+        System.out.println("Texto cifrado: " + cifrado.toString());
+    }
+}

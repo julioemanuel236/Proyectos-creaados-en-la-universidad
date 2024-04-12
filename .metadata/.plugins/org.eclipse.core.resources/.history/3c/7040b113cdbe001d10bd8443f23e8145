@@ -1,0 +1,17 @@
+package game;
+
+public class ElixirVerde extends Item {
+
+	public ElixirVerde(int precio) {
+		super("Elixir Verde",25);
+		// TODO Auto-generated constructor stub
+	}
+	
+	@Override
+	public void usar(Heroe e) {
+		e.vida+=50;
+		e.vida=Math.min(e.vida, e.vidaMaxima);
+
+	}
+
+}

@@ -1,0 +1,21 @@
+package cadena;
+import java.util.ArrayList;
+
+public class Piso {
+	private ArrayList<Habitacion> habitaciones;
+	private Jefe jefe;
+	private int numero;
+	public Piso(int numero) {
+		this.numero=numero;
+	}
+
+	public ArrayList<Habitacion> getHabitaciones() {
+		return habitaciones;
+	}
+
+	public Jefe getJefe() {
+		return jefe;
+	}
+	
+	
+}

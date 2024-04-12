@@ -1,0 +1,16 @@
+package numeros;
+
+public class numeros {
+	
+	public static void main (String[] asrg) {
+		
+		byte entero=12;
+		
+		System.out.print("numero entero : "+entero);
+		
+		
+		
+		
+	}
+
+}

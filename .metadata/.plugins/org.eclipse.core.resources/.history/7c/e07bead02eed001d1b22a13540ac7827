@@ -1,0 +1,56 @@
+package objectsPackage;
+
+import interfacePackage.ShapesInterface;
+
+public class Square implements ShapesInterface{
+	private final double SIDE;
+	private final String SHAPE="Cube";
+	private final double SURFACE_AREA;
+	
+	public Square() {
+		SIDE=Math.random()*10;
+		SURFACE_AREA=calcBaseArea();				
+	}
+	
+	public Square(double size) {
+		SIDE=size;
+		SURFACE_AREA=calcBaseArea();		
+	}
+	
+	
+	
+	private double calcBaseArea() {
+		return SIDE*SIDE;
+	}
+
+	@Override
+	public double getArea() {
+		return SURFACE_AREA;
+	}
+
+	@Override
+	public double getVolume() {
+		return VOLUME;
+		
+	}
+
+	@Override
+	public void displayArea()
+	{
+		System.out.printf("This is a %s with an area of %3.2f square units%n",SHAPE, SURFACE_AREA);
+
+	}
+
+	@Override
+	public void displayVolume()
+	{
+		System.out.printf("This is a %s with a volume of %3.2f cubic units%n",SHAPE, VOLUME);
+
+	}
+	public String toString()
+	{
+		return SHAPE;
+	}
+	
+
+}

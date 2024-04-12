@@ -1,0 +1,16 @@
+package game;
+
+import java.util.ArrayList;
+
+public class Tienda {
+
+	ArrayList<Heroe> heroes;
+	Item items[] = new Item[3];
+	Player p;
+	public Tienda() {
+	
+	}
+	
+	
+
+}

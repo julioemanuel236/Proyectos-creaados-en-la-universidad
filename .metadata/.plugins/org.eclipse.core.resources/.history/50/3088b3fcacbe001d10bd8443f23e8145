@@ -1,0 +1,22 @@
+package game;
+
+public class Dragon extends Heroe {
+
+	public Dragon(Tablero t) {
+		super(250, 75,3, true , t);
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public void atacar() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void die() {
+		// TODO Auto-generated method stub
+
+	}
+
+}

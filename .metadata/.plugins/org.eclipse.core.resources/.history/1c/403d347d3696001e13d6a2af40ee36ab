@@ -1,0 +1,12 @@
+package app;
+import javax.swing.JFrame;
+public class Muestra extends JFrame{
+	
+	public Muestra() {
+		
+	}
+	
+	public void main(String[] args){
+		
+	}
+}

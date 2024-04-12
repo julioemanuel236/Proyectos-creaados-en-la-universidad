@@ -1,0 +1,39 @@
+package game;
+
+public abstract class Mob {
+	int vida;
+	int movimientos;
+	int damage;
+	int x;
+	int y;
+	
+	public Mob(int vida, int movimientos, int damage) {
+		super();
+		this.vida = vida;
+		this.movimientos = movimientos;
+		this.damage = damage;
+	}
+
+	public int getVida() {
+		return vida;
+	}
+
+	public int getMovimientos() {
+		return movimientos;
+	}
+
+	public int getDamage() {
+		return damage;
+	}
+
+	public int getX() {
+		return x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	public abstract void atacar();
+
+}

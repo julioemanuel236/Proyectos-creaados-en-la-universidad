@@ -1,0 +1,21 @@
+package tareas;
+
+public class Primos {
+
+	public static void main(String[] args) {
+		
+		int cantidad=0;
+		for(int i=2;cantidad<5;i++) {
+			boolean primo=true;
+			for(int j=2;j<=i/2;j++) {
+				if(i%j==0)primo=false;
+			}
+			//System.out.println("es primo "+primo);
+			if(primo) {
+				System.out.println(i+" es Primo");
+				cantidad++;
+			}
+		}
+		
+	}
+}

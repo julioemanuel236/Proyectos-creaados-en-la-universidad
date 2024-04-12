@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename local variable &apos;font&apos; in &apos;tablero.Tablero.cartelVictoria(...).new Component() {...}.paint(...)&apos; to &apos;fuente&apos;&#x0D;&#x0A;- Original project: &apos;Ajedrez&apos;&#x0D;&#x0A;- Original element: &apos;tablero.Tablero.cartelVictoria(...).new Component() {...}.paint(Graphics).font&apos;&#x0D;&#x0A;- Renamed element: &apos;font&apos;&#x0D;&#x0A;- Update references to refactored element" description="Rename local variable &apos;font&apos;" id="org.eclipse.jdt.ui.rename.local.variable" input="/src&lt;tablero{Tablero.java[Tablero~cartelVictoria~QGraphics;[~paint~QGraphics;@font!11866!11895!11871!11874!QFont;!0!false" name="fuente" references="true" stamp="1704415709408" version="1.0"/>
+</session>

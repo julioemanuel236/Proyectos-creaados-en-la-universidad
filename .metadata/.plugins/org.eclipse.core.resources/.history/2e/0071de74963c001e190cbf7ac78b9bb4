@@ -1,0 +1,24 @@
+package simulacion;
+import java.util.concurrent.CyclicBarrier;
+import java.util.concurrent.locks.ReentrantLock;
+import elementos.serpiente.*;
+public class Simulacion extends ReentrantLock{
+
+	public static CyclicBarrier BARRIERSNAKES;
+	public static CyclicBarrier BARRIER;
+	
+	public Simulacion(int hilos) {
+		BARRIERSNAKES = new CyclicBarrier(hilos);
+		BARRIERSNAKES = new CyclicBarrier(hilos+1);
+	}
+	
+	public void actualizarSerpiente(Serpiente s) {
+		lock();
+		try {
+			s.move();
+		}		
+		finally {
+			unlock();
+		}
+	}
+}

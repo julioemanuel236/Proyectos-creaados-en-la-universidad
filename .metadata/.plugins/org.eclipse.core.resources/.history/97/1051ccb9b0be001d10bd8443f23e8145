@@ -1,0 +1,32 @@
+package game;
+
+public class Bruja extends Enemigo {
+
+	public Bruja(Tablero t) {
+		super(150, 45, 3, true, t);
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public void atacar() {
+		for(int i=1;i<4;i++) {
+			for(int j=1;j<3;j++) {
+					
+				int ax=getX()+(dx[i]*j);
+				int ay=getY()+(dy[i]*j);
+				
+				if(tablero.map[ax][ay] instanceof Heroe) {
+					this.hit(tablero.map[ax][ay]);
+					break;
+				}
+			}
+		}
+	}
+
+	@Override
+	public void die() {
+		// TODO Auto-generated method stub
+
+	}
+
+}

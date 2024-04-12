@@ -1,0 +1,24 @@
+package App;
+
+import java.util.HashMap;
+
+public class Historial {
+	HashMap<String,Tablero> tableros = new HashMap<>();
+	
+	public Historial() {
+		try {
+			
+		}
+		catch(Exception e) {
+			System.out.println("OCURRIO UN ERROR AL CARGAR EL HISTORIAL");
+		}
+	}
+	
+	public void add(Tablero t) {
+		tableros.put(t.getCodigo(), t);
+	}
+	
+	public void update(Tablero t) {
+		tableros.put(t.getCodigo(), t);
+	}
+}

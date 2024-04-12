@@ -1,0 +1,34 @@
+package game;
+
+import java.util.Scanner;
+
+public class Menu {
+
+	boolean salir=false;
+	
+	public Menu() {
+		
+	}
+	
+	public void selectTablero() {
+		
+	}
+	
+	public int inicio() {
+		String ops="1-Jugar\n2-Ver Estado de la Partida\n0-Salir\n";
+		
+		Scanner cin = new Scanner(System.in);
+		while(!salir) {
+			System.out.println(ops);
+			int op = cin.nextInt();
+			switch(op) {
+				case 1:return 1;
+				case 2:return 2;
+				case 3:salir=true;return 0;
+				default:System.out.println("Opcion no valida\n");
+			}
+		}
+		return 0;
+	}
+
+}

@@ -1,0 +1,11 @@
+package empresa_turistica;
+
+public class Guia extends Persona{
+	Excursion excursion;
+
+	public Guia(String nombre, char sexo, Excursion excursion) {
+		super(nombre, sexo);
+		this.excursion = excursion;
+	}
+	
+}

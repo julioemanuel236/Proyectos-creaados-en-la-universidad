@@ -1,0 +1,11 @@
+package game;
+
+public class Menu {
+
+	boolean salir=false;
+	
+	public Menu() {
+		
+	}
+
+}

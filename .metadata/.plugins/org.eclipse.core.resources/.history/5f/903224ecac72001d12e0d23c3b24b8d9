@@ -1,0 +1,43 @@
+package lietys;
+
+import java.io.Serializable;
+import java.util.Date;
+
+
+public class Vuelo implements Serializable{
+	Terminal terminal;
+	String tipo;
+	Avion avion;
+	Date salida;
+	Date arribo;
+	String paisDestino;
+	String ciudadDestino;
+	int capacidad;
+	int ocupado=0;
+	int km;
+	float preciovuelo;
+	float preciokm;
+	float precio;
+	public Vuelo(String tipo,Date salida,Date arribo,Avion avion,Terminal terminal,
+			     String paisDestino,String ciudadDestino,int km,float preciovuelo,float preciokm,float precio) {
+		this.tipo=tipo;
+		this.avion=avion;
+		this.salida=salida;
+		this.arribo=arribo;
+		this.terminal=terminal;
+		this.paisDestino=paisDestino;
+		this.ciudadDestino=ciudadDestino;
+		this.km=km;
+		this.capacidad=avion.cantidadAsientos;
+		this.preciovuelo=preciovuelo;
+		this.preciokm=preciokm;
+		this.precio=precio;
+	}
+	
+	public String toString() {
+		return terminal+"\t "+tipo+"\t "+avion.toString()+"\t "+ciudadDestino+"\t "+paisDestino+"\t "
+	    +salida.getDate()+"/ "+salida.getMonth()+"/ "+salida.getYear()+"-"+
+	    arribo.getDate()+"/"+arribo.getMonth()+"/"+arribo.getYear()+" ";
+	}
+	
+}

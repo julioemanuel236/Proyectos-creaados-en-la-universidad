@@ -1,0 +1,48 @@
+package game;
+
+public class Tablero {
+	int width=8;
+	int height=8;
+	Object map[][];
+	
+	int porPlanicie=60;
+	int porArbol=25;
+	int porAgua=10;
+	int porLava=5;
+	
+	public Tablero(int t) {
+		if(t==2) {
+			width=height=16;
+			porPlanicie=0;
+			porArbol=0;
+			porAgua=0;
+			porLava=30;
+		}
+		generar();
+	}
+
+	public Tablero(int width, int height, int porPlanicie, int porArbol, int porAgua, int porLava) {
+		this.width = width;
+		this.height = height;
+		this.porPlanicie = porPlanicie;
+		this.porArbol = porArbol;
+		this.porAgua = porAgua;
+		this.porLava = porLava;
+		generar();
+	}
+	
+	
+	public void generar() {
+		map = new Object[height][width];
+		
+		for(int i=0;i<height;i++) {
+			for(int j=0;j<width;j++) {
+				
+			}
+		}
+	}
+	
+	
+	
+
+}

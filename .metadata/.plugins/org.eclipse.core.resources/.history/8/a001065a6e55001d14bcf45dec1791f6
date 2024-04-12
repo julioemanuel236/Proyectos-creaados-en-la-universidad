@@ -1,0 +1,339 @@
+package empresa;
+import javax.swing.*;
+import java.awt.*;
+
+public class Entradas {
+	static private Dimension tam = new Dimension(200,40);
+	static int pos=0;
+	
+	public static void nuevoTrabajador() {
+		JDialog panel = new JDialog();
+		panel.setLayout(null);
+		Point p = new Point(0,0);
+		
+		JTextField nombre = new JTextField("Nombre");
+		nombre.setSize(tam);
+		nombre.setLocation(p);
+		panel.add(nombre);
+		p.y+=tam.getHeight()+5;
+		
+		JTextField edad = new JTextField("Edad");
+		edad.setSize(tam);
+		edad.setLocation(p);
+		panel.add(edad);
+		p.y+=tam.getHeight()+5;
+
+		JTextField salario = new JTextField("Salario Base");
+		salario.setSize(tam);
+		salario.setLocation(p);
+		panel.add(salario);
+		p.y+=tam.getHeight()+5;
+		
+		JTextField ID = new JTextField("ID");
+		ID.setSize(tam);
+		ID.setLocation(p);
+		panel.add(ID);
+		p.y+=tam.getHeight()+5;
+		
+		JComboBox<String>sexo = new JComboBox<String>();
+		sexo.addItem("Masculino");
+		sexo.addItem("Femenino");
+		sexo.setSize(tam);
+		sexo.setLocation(p);
+		panel.add(sexo);
+		p.y+=tam.getHeight()+5;
+		
+		
+		JComboBox<String>tipo = new JComboBox<String>();
+		tipo.addItem("Lider");
+		tipo.addItem("Programador");
+		tipo.setSize(tam);
+		tipo.setLocation(p);
+		panel.add(tipo);
+		p.y+=tam.getHeight()+5;
+		
+		JButton aceptar = new JButton("Aceptar");
+		aceptar.setSize(tam);
+		aceptar.setLocation(p);
+		aceptar.addActionListener((ActionEvent)->{
+			if(((String)tipo.getSelectedItem()).equals("Programador")) {
+				String lenguajes = JOptionPane.showInputDialog("Introduzca los lenguajes que domina separados por espacio");
+				String categoria = JOptionPane.showInputDialog("Introduzca la categoría del "+nombre.getText()+"(A,B,C)");
+				String len[] = new String[100];
+				boolean marcar=true;
+				boolean existe=false;
+				int j=0,up=0;
+				lenguajes+=' ';
+				lenguajes=' '+lenguajes;
+				for(int i=0;i<lenguajes.length();i++) {
+					char c=lenguajes.charAt(i);
+					if(marcar&&c!=' ') {
+						up=i;
+						marcar=false;
+					}
+					if(c==' '&&!marcar) {
+						//System.out.println(lenguajes.substring(up,i));
+						len[j++]=lenguajes.substring(up,i);
+						marcar=true;
+						existe=true;
+					}
+					
+					
+				}
+				if(!existe) {
+					JOptionPane.showMessageDialog(panel,"No se introdujo ningun lenguaje");
+					return;
+				}
+				//System.out.println(lenguajes);
+				try {
+					Ventana.nuevoProgramador(new Programador(nombre.getText(),Integer.parseInt(edad.getText()),(String)sexo.getSelectedItem(),
+							Float.parseFloat(salario.getText()),ID.getText(),
+							len,categoria.charAt(0)));
+					JOptionPane.showMessageDialog(panel, "Programador regitrado con exito");
+				}
+				catch(Exception e) {
+					JOptionPane.showMessageDialog(panel,"Datos Invalidos");
+					e.printStackTrace();
+					return;
+				}
+			}
+			
+			else {				
+				try {
+					int exp = Integer.parseInt(JOptionPane.showInputDialog("Años de experiencia"));
+					int proyectos = Integer.parseInt(JOptionPane.showInputDialog("Cantidad de proyectos dirigidos"));
+					Ventana.nuevoLider(new Lider(nombre.getText(),Integer.parseInt(edad.getText()),(String)sexo.getSelectedItem(),
+							Float.parseFloat(salario.getText()),ID.getText(),exp,proyectos));
+					JOptionPane.showMessageDialog(panel, "Lider regitrado con exito");
+				}
+				catch(Exception e) {
+					JOptionPane.showMessageDialog(panel,"Datos Invalidos");
+					e.printStackTrace();
+					return;
+				}
+			}
+			
+			panel.setVisible(false);
+			
+		});
+		panel.add(aceptar);
+		p.y+=tam.getHeight()+5;
+		
+		panel.setSize((int)tam.getWidth()+20,p.y+50);
+		panel.setLocationRelativeTo(null);
+		panel.setVisible(true);
+	}
+	
+	public static void nuevoEquipo() {
+		JDialog panel = new JDialog();
+		panel.setLayout(null);
+		Point p = new Point(0,0);
+		Programador arr[] = new Programador[100];
+		pos=0;
+		
+		JTextField nombre = new JTextField("Nombre");
+		nombre.setSize(tam);
+		nombre.setLocation(p);
+		panel.add(nombre);
+		p.y+=tam.getHeight()+5;
+		
+		JComboBox<Lider> lider = new JComboBox<Lider>();
+		for(Lider i :Ventana.lideres) {
+			if(i==null)break;
+			if(i.tieneEquipo())lider.addItem(i);
+		}
+		
+		lider.setSize(tam);
+		lider.setLocation(p);
+		panel.add(lider);
+		p.y+=tam.getHeight()+5;
+		
+		JComboBox<Programador> programador = new JComboBox<Programador>();
+		for(Programador i :Ventana.programadores) {
+			if(i==null)break;
+			if(i.desocupado())programador.addItem(i);
+		}
+		
+	
+		programador.setSize(tam);
+		programador.setLocation(p);
+		programador.addActionListener((ActionEvent)->{
+			if(programador.getSelectedItem()==null)return;
+			int r = JOptionPane.showConfirmDialog(panel, ((Programador)programador.getSelectedItem()).getInfo(),"Añadir programador al equipo",JOptionPane.YES_NO_OPTION);
+			if(r==0) {
+				agregarProgramador(((Programador)programador.getSelectedItem()),arr);
+				programador.removeItem((Programador)programador.getSelectedItem());
+			}
+			
+		});
+		panel.add(programador);
+		p.y+=tam.getHeight()+5;
+		
+		
+		
+		JButton aceptar = new JButton("Aceptar");
+		aceptar.setSize(tam);
+		aceptar.setLocation(p);
+		aceptar.addActionListener((ActionEvent)->{
+			if(pos==0) {
+				JOptionPane.showMessageDialog(null,"El equipo de programadores no puede estar vacio");
+				return;
+			}
+			if((Lider)lider.getSelectedItem()==null) {
+				JOptionPane.showMessageDialog(null,"El equipo debe tener un lider");
+				return;
+			}
+			try {
+				Ventana.nuevoEquipo(new Equipo(nombre.getText(),((Lider)lider.getSelectedItem()),arr));
+				JOptionPane.showMessageDialog(panel, "Equipo agregado con exito");
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+				JOptionPane.showMessageDialog(null,"Error al conformar el equipo");
+			}
+			panel.setVisible(false);
+		});
+		panel.add(aceptar);
+		p.y+=tam.getHeight()+5;
+		
+		panel.setSize((int)tam.getWidth()+20,p.y+50);
+		panel.setLocationRelativeTo(null);
+		panel.setVisible(true);
+	
+	}
+	
+	private static void agregarProgramador(Programador programador,Programador[] programadores) {
+		System.out.println("Agregadod en la posicion: "+pos);
+		programadores[pos++]=programador;
+		
+	}
+
+	public static void nuevoProyecto() {
+		JDialog panel = new JDialog();
+		panel.setLayout(null);
+		Point p = new Point(0,0);
+		
+		JTextField nombre = new JTextField("Nombre del proyecto");
+		nombre.setSize(tam);
+		nombre.setLocation(p);
+		panel.add(nombre);
+		p.y+=tam.getHeight()+5;
+		
+		JTextField descripcion = new JTextField("Descripcion del proyecto");
+		descripcion.setSize(tam);
+		descripcion.setLocation(p);
+		panel.add(descripcion);
+		p.y+=tam.getHeight()+5;
+		
+		JTextField desarrollo = new JTextField("Tiempo que demora (Dias)");
+		desarrollo.setSize(tam);
+		desarrollo.setLocation(p);
+		panel.add(desarrollo);
+		p.y+=tam.getHeight()+5;
+
+		JTextField precio = new JTextField("Precio del proyecto");
+		precio.setSize(tam);
+		precio.setLocation(p);
+		panel.add(precio);
+		p.y+=tam.getHeight()+5;
+		
+		JComboBox<Equipo> equipo = new JComboBox<Equipo>();
+		equipo.setSize(tam);
+		equipo.setLocation(p);
+		for(Equipo i :Ventana.equipos) {
+			if(i==null)break;
+			if(i.desocupado())equipo.addItem(i);
+		}
+		panel.add(equipo);
+		p.y+=tam.getHeight()+5;
+				
+		JComboBox<String> tipo = new JComboBox<String>();
+		tipo.setSize(tam);
+		tipo.setLocation(p);
+		tipo.addItem("Multimedia");
+		tipo.addItem("Gestion");
+		p.y+=tam.getHeight()+5;
+		panel.add(tipo);
+		JButton aceptar = new JButton("Aceptar");
+		aceptar.setSize(tam);
+		aceptar.setLocation(p);
+		aceptar.addActionListener((ActionEvent)->{
+			if(((String)tipo.getSelectedItem()).equals("Multimedia")) {
+				String s =(String)JOptionPane.showInputDialog(panel, "Tipo de Multimedia", "Proyecto", JOptionPane.QUESTION_MESSAGE, null,Multimedia.TIPOS, null);
+				//System.out.println(s);
+				if(s==null) {
+					JOptionPane.showMessageDialog(panel, "Error no se selecciono un tipo de multimedia");
+				}
+				
+				try{
+					Ventana.nuevoProyecto(new Multimedia(nombre.getText(),descripcion.getText(),
+							Integer.parseInt(desarrollo.getText()),Float.parseFloat(precio.getText()),s),(Equipo)equipo.getSelectedItem());
+					JOptionPane.showMessageDialog(panel, "Proyecto regitrado con exito");
+				}
+				catch(Exception e){
+					e.printStackTrace();
+					JOptionPane.showMessageDialog(panel, "Error al crear el proyecto");
+				}
+			}
+			else {
+				String s =(String)JOptionPane.showInputDialog(panel, "Tipo de Gestion", "Proyecto", JOptionPane.QUESTION_MESSAGE, null,Gestion.TIPOS, null);
+				//System.out.println(s);
+				if(s==null) {
+					JOptionPane.showMessageDialog(panel, "Error no se selecciono un tipo de gestion");
+				}
+				
+				try{
+					Ventana.nuevoProyecto(new Gestion(nombre.getText(),descripcion.getText(),
+							Integer.parseInt(desarrollo.getText()),Float.parseFloat(precio.getText()),s),(Equipo)equipo.getSelectedItem());
+					JOptionPane.showMessageDialog(panel, "Proyecto regitrado con exito");
+				}
+				catch(Exception e){
+					e.printStackTrace();
+					JOptionPane.showMessageDialog(panel, "Error al crear el proyecto");
+				}
+			}
+			panel.setVisible(false);
+		});
+		p.y+=tam.getHeight()+5;
+		panel.add(aceptar);
+		panel.setSize((int)tam.getWidth()+20,p.y+50);
+		panel.setLocationRelativeTo(null);
+		panel.setVisible(true);
+	}
+
+	public static void cambiarProgramador() {
+		JDialog panel = new JDialog();
+		panel.setLayout(null);
+		Point p = new Point(0,0);
+		
+		JComboBox<Programador> programador = new JComboBox<Programador>();
+		for(int i=0;i<Ventana.cProgramadores;i++) {
+			programador.addItem(Ventana.programadores[i]);
+		}
+		programador.setSize(tam);
+		programador.setLocation(p);
+		panel.add(programador);
+		p.y+=tam.getHeight()+5;
+		
+		
+		JButton aceptar = new JButton("aceptar");
+		aceptar.setSize(tam);
+		aceptar.setLocation(p);
+		aceptar.addActionListener((ActionEvent)->{
+			Programador pro = (Programador)programador.getSelectedItem(); 
+			Equipo equipostemp[] = new Equipo[Ventana.cEquipos];
+			for(int i=0;i<Ventana.cEquipos;i++) {
+				if(Ventana.equipos[i]!=pro.getEquipo())equipostemp[i]=Ventana.equipos[i];
+			}
+			JOptionPane.showInputDialog(panel, "Equipo a transferir", "Equipo",JOptionPane.QUESTION_MESSAGE,null ,equipostemp, null);
+		});
+		panel.add(aceptar);
+		p.y+=tam.getHeight()+5;
+		
+		
+		panel.setSize((int)tam.getWidth()+20,p.y+50);
+		panel.setLocationRelativeTo(null);
+		panel.setVisible(true);
+	}
+	
+}

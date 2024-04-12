@@ -1,0 +1,106 @@
+package gui;
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import bikes.*;
+import javax.swing.*;
+
+
+public class MainWindow extends JFrame{
+
+	BasicBike [] basicBikeArray; // Declaring the array 
+	basicBikeArray = new BasicBike[MAX_INVENTORY_SIZE_PER_TYPE]; // Creating
+	
+	MountainBike [] mountainBikeArray; // Declare 
+	mountainBikeArray = new MountainBike[MAX_INVENTORY_SIZE_PER_TYPE]; // Creating
+	
+	RoadBike [] roadBikeArray; // Declare 
+	roadBikeArray = new RoadBike[MAX_INVENTORY_SIZE_PER_TYPE]; // Creating
+	
+	EBike [] eBikeArray; // Declare 
+	eBikeArray = new EBike[MAX_INVENTORY_SIZE_PER_TYPE]; // Creating
+	
+	RoadEBike [] roadEBikeArray; // Declare 
+	roadEBikeArray = new RoadEBike[MAX_INVENTORY_SIZE_PER_TYPE]; // Creating
+	
+	SelectTypePanel stp;
+	Reporte reporte;
+	JPanel table;
+	JPanel newz;
+	JPanel editz;
+	public MainWindow(){
+		int w=500,h=700;
+		setResizable(false);
+		setSize(w,h);
+		setLayout(null);
+		setLocationRelativeTo(null);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		stp = new SelectTypePanel(w,h);
+		setVisible(true);
+	//	iniTableZone();
+	//	iniNewZone();	
+	//	iniEditZone();
+		iniButtons();
+			
+		
+	}
+	
+	private void iniButtons() {
+		String texts[] = {"List Selected Inventary","Display All Inventory","New Bike","Remove a Bike","Edit a existence Bike"};
+		JButton buttons[] = new JButton[texts.length];
+		int x=getWidth()/4,y=5;
+		for(int i=0;i<texts.length;i++) {
+			JButton jb = new JButton(texts[i]);
+			jb.setSize(getWidth()/2,40);
+			jb.setLocation(x,y);
+			y+=45;
+			add(jb);
+			buttons[i]=jb;
+		}
+		
+	buttons[0].addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			String ops[] = {"Basic Bike","Mountain Bike","Road Bike","EBike","Road EBike"};
+			String op = (String)JOptionPane.showInputDialog(null, "Type of Bike","Select Type", JOptionPane.QUESTION_MESSAGE, null, ops, null);
+			System.out.println(op);
+		}
+	});
+	
+	}
+	
+	private void iniEditZone() {
+		editz = new JPanel();
+		editz.setSize(getWidth()/2,table.getY());
+		editz.setLocation(editz.getWidth(),0);
+		editz.setBackground(Color.yellow);
+		add(editz);
+		editz.repaint();
+	}
+	
+	private void iniNewZone() {
+		newz = new JPanel();
+		newz.setSize(getWidth()/2,table.getY());
+		newz.setLocation(0,0);
+		newz.setBackground(Color.green);
+		add(newz);
+		newz.repaint();
+	}
+	
+	private void iniTableZone() {
+		table = new JPanel();
+		table.setLayout(null);
+		table.setBackground(Color.red);
+		table.setSize(getWidth(),460);
+		table.setLocation(0,getHeight()-table.getHeight());
+		add(table);
+		reporte = new Reporte(table.getWidth(),table.getHeight(),0);
+		table.add(reporte);
+		table.repaint();
+	}
+	
+	
+	public static void main(String args[]) {
+		new MainWindow();
+	}
+	
+}

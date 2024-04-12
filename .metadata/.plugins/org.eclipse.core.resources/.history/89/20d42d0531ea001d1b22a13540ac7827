@@ -1,0 +1,317 @@
+package gui;
+
+import bikes.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.util.TreeMap;
+import java.util.Set;
+
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import javax.swing.border.LineBorder;
+
+public class Reporte extends JPanel{
+
+	private final int START;
+	private final int CUNATITI=15;
+	private String texts[][]= {{"WareHouse","Basic Info","Mountain Info","Road Info","Electric Info"},
+							   {"Slot","Type",
+			                    "Max Speed","No. Gears","Paint Color","Safety",
+							    "Seat Height","Full Suspension","Flat Proff Type",
+							    "Flat handle Bar",
+							    "B Type","B Size","B Voltaje","Range Miler","Motor Power"}};
+	private final int widts[][] = {{100,320,270,100,350},
+								   {50,50,
+									80,80,80,80,
+									90,90,90,
+									100,
+									70,70,70,70,70}};
+								   
+	private JLabel labels[][];
+	private JTextField table[][] = new JTextField[CUNATITI][widts[1].length];
+	private int pagina=0;
+	private JTextField page;
+	private JLabel many;
+	private JTextField selection;
+	private String tableName[] = {"BASIC BIKES","MOUNTAIN BIKES","ROAD BIKES","ELECTRIC BIKES","ELECTRIC ROAD BIKES","ALL BIKES"};
+	public Reporte(int w,int h,int type){
+		setLayout(null);
+		setSize(w,h);
+		START=80;
+		iniMenu();
+		iniTable(type);
+		setVisible(true);
+		update("");
+	}
+	
+	private void iniMenu() {
+		JButton next,back,forward,backward;
+		Image nextImg=null,backImg=null,forwardImg=null,backwardImg=null;
+		try {			
+			nextImg = ImageIO.read(getClass().getResource("/img/next.png"));
+			backImg = ImageIO.read(getClass().getResource("/img/back.png"));
+			forwardImg = ImageIO.read(getClass().getResource("/img/forward.png"));
+			backwardImg = ImageIO.read(getClass().getResource("/img/backward.png"));
+		}		
+		catch(Exception e) {
+			System.out.println("Error al cargar imagenes");
+			return;
+		}
+		
+		next = new JButton();
+		next.setSize(20,20);
+		next.setIcon(new ImageIcon(nextImg.getScaledInstance(next.getWidth(), next.getHeight(), Image.SCALE_SMOOTH)));
+		next.setContentAreaFilled(false);
+		next.setBorder(null);
+		
+		back = new JButton();
+		back.setSize(20,20);
+		back.setIcon(new ImageIcon(backImg.getScaledInstance(next.getWidth(), next.getHeight(), Image.SCALE_SMOOTH)));
+		back.setContentAreaFilled(false);
+		back.setBorder(null);
+		
+		forward = new JButton();
+		forward.setSize(20,20);
+		forward.setIcon(new ImageIcon(forwardImg.getScaledInstance(next.getWidth(), next.getHeight(), Image.SCALE_SMOOTH)));
+		forward.setContentAreaFilled(false);
+		forward.setBorder(null);
+		
+		backward = new JButton();
+		backward.setSize(20,20);
+		backward.setIcon(new ImageIcon(backwardImg.getScaledInstance(next.getWidth(), next.getHeight(), Image.SCALE_SMOOTH)));
+		backward.setContentAreaFilled(false);
+		backward.setBorder(null);
+		
+		page = new JTextField("1");
+		page.setSize(40,20);
+		many = new JLabel("of "+((1/CUNATITI)+1));
+		many.setSize(40,20);
+		
+		backward.setLocation(5,10);
+		back.setLocation(backward.getX()+backward.getWidth()+5,10);
+		page.setLocation(back.getX()+back.getWidth()+5,10);
+		many.setLocation(page.getX()+page.getWidth()+5,10);
+		next.setLocation(many.getX()+many.getWidth()+5,10);
+		forward.setLocation(next.getX()+next.getWidth()+5,10);
+
+		JTextField search = new JTextField("ID");
+		search.setSize(70,20);
+		search.setLocation(forward.getX()+forward.getWidth()+5,10);
+		
+		JButton find = new JButton("Find");
+		find.setSize(70,20);
+		find.setForeground(Color.blue);
+		find.setLocation(search.getX()+search.getWidth()+5,10);
+		
+		
+		ActionListener act = new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int last = pagina;
+				int paginas = 0;
+				if(e.getSource()==backward)pagina=0 ;
+				else if(e.getSource()==back)pagina--;	
+				else if(e.getSource()==next)pagina++;				
+				else if(e.getSource()==forward)pagina = paginas;
+				if(pagina<0)pagina=0;
+				else if(pagina>paginas)pagina=paginas;
+				page.setText(""+(pagina+1));
+				if(last!=pagina)update("");
+			}			
+			
+		};
+		
+		backward.addActionListener(act);
+		back.addActionListener(act);
+		next.addActionListener(act);
+		forward.addActionListener(act);
+		
+		page.addKeyListener(new KeyListener() {
+
+			@Override
+			public void keyTyped(KeyEvent e) {
+				//System.out.println(e.getKeyChar()+"/"+KeyEvent.VK_ENTER);
+				if(e.getKeyChar()==KeyEvent.VK_ENTER)update("");
+				
+			}
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+		
+		find.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				TreeMap<String,BasicBike> historial = null;
+				Set<String> st = historial.keySet();
+				String arr[];
+				arr = (String[])st.toArray(new String[] {});
+				for(int i=0;i<arr.length;i++) {
+					if(arr[i].equals(search.getText())) {
+						pagina = i/CUNATITI;
+						page.setText(""+(pagina+1));
+						update(search.getText());
+						return;
+					}
+				}
+				
+			}
+			
+		});
+		
+		add(next);
+		add(back);
+		add(page);
+		add(many);
+		add(forward);
+		add(backward);
+		add(search);
+		add(find);
+	}
+	
+	private void iniTable(int type) {
+		
+		JComboBox<String> name = new JComboBox<>();
+		for(int i=0;i<tableName.length;i++)
+			name.addItem(tableName[i]);
+		name.setSelectedIndex(type);
+		int width=0;
+		for(int i=0;i<widts[0].length;i++)
+			width+=widts[0][i];
+		name.setSize(width,40);
+		name.setBorder(new LineBorder(Color.lightGray,1));
+		name.setForeground(Color.BLUE);
+		name.setLocation(0,40);
+		name.setFont(new Font("Arial",Font.BOLD,30));
+		add(name);
+		labels = new JLabel[texts.length][0];
+		
+		for(int i=0;i<texts.length;i++) {
+			labels[i] = new JLabel[texts[i].length];
+			int x=0;
+			int y=START+i*20 ;
+			for(int j=0;j<texts[i].length;j++) {
+				JLabel jl = new JLabel(texts[i][j]);
+				jl.setSize(widts[i][j],20);
+				jl.setLocation(x,y);
+				jl.setOpaque(true);
+				jl.setHorizontalAlignment(JLabel.CENTER);
+				jl.setBackground(Color.blue);
+				jl.setBorder(new LineBorder(Color.lightGray,1));
+				jl.setForeground(Color.white);
+				jl.setFont(new Font("Arial",Font.BOLD,jl.getFont().getSize()));
+				jl.setHorizontalTextPosition(JLabel.TRAILING);;
+				if(texts[i][j].contains("Part"))jl.setHorizontalAlignment(JLabel.CENTER);
+				x+=jl.getWidth();
+				labels[i][j]=jl;
+				
+				add(jl);
+			}
+			
+		}
+		
+		for(int i=0;i<table.length;i++) {
+			int x=0;
+			int y=START+40+(i*20);
+			for(int j=0;j<table[i].length;j++) {
+				JTextField jl = new JTextField();
+				jl.setSize(widts[1][j],20);
+				jl.setLocation(x,y);
+				jl.setOpaque(true);
+				jl.setHorizontalAlignment(JTextField.CENTER);
+				jl.setBackground(Color.white);
+				jl.setBorder(new LineBorder(Color.LIGHT_GRAY,1));
+				jl.setForeground(Color.black);
+				jl.setFont(new Font("Arial",Font.PLAIN,jl.getFont().getSize()));
+				jl.setEditable(false);
+				x+=jl.getWidth();
+				add(jl);
+				table[i][j]=jl;
+			}
+		}
+		JPanel background = new JPanel();
+		background.setSize(getSize());
+		background.setOpaque(true);
+		background.setBackground(Color.white);
+		add(background);
+		
+	}
+	
+	public void update(String codigo) {
+		System.out.println("Actualizando la tabla");
+		TreeMap<String,BasicBike> historial = null;
+		if(historial==null)return;
+		Set<String> st = historial.keySet();
+		
+		String arr[];
+		arr = (String[])st.toArray(new String[] {});
+		try {
+			int p = Integer.parseInt(page.getText())-1;
+			//if(p<0 || p>Ventana.historial.tableros.size()/CANTIDAD)throw new Exception();		
+			pagina=p;
+		}
+		catch(Exception e) {
+			System.out.println("Pagina incorrecta");
+			return;
+		}
+		//System.out.println("PAGINA: "+pagina);
+		int inicio = pagina*CUNATITI;		
+		page.setText(""+(pagina+1));
+		many.setText("of "+((historial.size()/CUNATITI)+1));
+		selection=null;
+		for(int i=0;i<CUNATITI;i++) {
+			//System.out.println("fila "+i+"\npos "+(inicio+i));
+			if(inicio+i<arr.length) {
+				BasicBike t = historial.get(arr[inicio+i]);
+				String datos[] = t.getDatos();
+				for(int j=0;j<datos.length;j++) {
+					table[i][j].setText(datos[j]);
+					if(codigo!=null && !codigo.equals("")&& codigo.equals(datos[j])) {
+						System.out.print("LO ENCONTRE");
+						selection = table[i][j];
+					}
+				}
+			}
+			else {
+				for(int j=0;j<table[i].length;j++)
+					table[i][j].setText("");
+			}
+		}
+		repaint();
+		if(selection!=null) {
+			(new Thread() {
+				public void run() {
+					long time = System.currentTimeMillis()+1000;
+					selection.setBackground(Color.green);
+					while(System.currentTimeMillis()<time) {
+						try {
+							sleep(10);
+						}
+						catch(Exception e) {
+							
+						}
+					}
+					selection.setBackground(Color.white);
+				}
+			}).start();
+		}
+	}
+	
+}

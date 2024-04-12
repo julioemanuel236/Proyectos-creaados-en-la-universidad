@@ -1,0 +1,83 @@
+package app;
+
+public class Student extends Person{
+	private final String studentID;	
+	private String iniversityName; 
+	private int creditsEnrolled;
+	private boolean qualifiesForInstateRate;
+	private boolean LateFeeAssessed;
+	private char foodOptionChoice;
+	private boolean healthOptionChoice;
+		
+	public Student(Name name, int age, String gender, String streetAddress, String city, String state, String zip,
+			String phoneNumber, String studentID, String iniversityName, int creditsEnrolled,
+			boolean qualifiesForInstateRate, boolean lateFeeAssessed, char foodOptionChoice,
+			boolean healthOptionChoice) {
+		super(name, age, gender, streetAddress, city, state, zip, phoneNumber);
+		this.studentID = studentID;
+		this.iniversityName = iniversityName;
+		this.creditsEnrolled = creditsEnrolled;
+		this.qualifiesForInstateRate = qualifiesForInstateRate;
+		LateFeeAssessed = lateFeeAssessed;
+		this.foodOptionChoice = foodOptionChoice;
+		this.healthOptionChoice = healthOptionChoice;
+	}
+
+	
+	public boolean equals(Student s) {
+		return getName().equals(s.getName()) && studentID.equals(s.studentID);
+	}
+	
+	public String getIniversityName() {
+		return iniversityName;
+	}
+	
+	public void setIniversityName(String iniversityName) {
+		this.iniversityName = iniversityName;
+	}
+	
+	public int getCreditsEnrolled() {
+		return creditsEnrolled;
+	}
+	
+	public void setCreditsEnrolled(int creditsEnrolled) {
+		this.creditsEnrolled = creditsEnrolled;
+	}
+	
+	public boolean isQualifiesForInstateRate() {
+		return qualifiesForInstateRate;
+	}
+	
+	public void setQualifiesForInstateRate(boolean qualifiesForInstateRate) {
+		this.qualifiesForInstateRate = qualifiesForInstateRate;
+	}
+	
+	public boolean isLateFeeAssessed() {
+		return LateFeeAssessed;
+	}
+	
+	public void setLateFeeAssessed(boolean lateFeeAssessed) {
+		LateFeeAssessed = lateFeeAssessed;
+	}
+	
+	public char getFoodOptionChoice() {
+		return foodOptionChoice;
+	}
+
+	public void setFoodOptionChoice(char foodOptionChoice) {
+		this.foodOptionChoice = foodOptionChoice;
+	}
+	
+	public boolean isHealthOptionChoice() {
+		return healthOptionChoice;
+	}
+	
+	public void setHealthOptionChoice(boolean healthOptionChoice) {
+		this.healthOptionChoice = healthOptionChoice;
+	}
+	
+	public String getStudentID() {
+		return studentID;
+	}
+		
+}

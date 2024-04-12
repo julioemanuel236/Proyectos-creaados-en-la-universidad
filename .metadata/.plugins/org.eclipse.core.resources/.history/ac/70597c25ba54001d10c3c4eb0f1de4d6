@@ -1,0 +1,22 @@
+package decanato;
+
+public class Alumno {
+	private String nombre;
+	private String apellidos;
+	private String sexo;
+	private String ID;
+	private String grupo;
+	private int    year;
+	private String proyecto;
+	
+	public Alumno(String n,String a,String s,String id,String gru,int year,String p) {
+		this.nombre=n;
+		this.apellidos=a;
+		this.sexo=s;
+		this.ID=id;
+		this.grupo=gru;
+		this.year=year;
+		this.proyecto=p;
+	}
+	
+}

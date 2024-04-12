@@ -1,0 +1,15 @@
+package game;
+
+public class Game {
+
+	Player p;
+	
+	public Game() {
+		p = new Player();
+	}
+
+	
+	public static void main(String args[]) {
+		new Game();
+	}
+}

@@ -1,0 +1,44 @@
+package agencia;
+import javax.swing.*;
+import java.awt.*;
+
+public class Ventana extends JFrame{
+
+	JPanel menu;
+	
+	public void menu() {
+		menu = new JPanel();
+		menu.setSize(200,500);
+		menu.setLocation(getWidth()-menu.getWidth(),0);
+		botones();
+		
+		add(menu);
+	}
+	
+	public void botones() {
+		JButton nuevo,cargasemana,distanciapromediocamion;
+		
+		nuevo = new JButton("Nuevo");
+		menu.add(nuevo);
+				
+		cargasemana = new JButton("Carga Semanal");
+		menu.add(cargasemana);			
+		
+		distanciapromediocamion = new JButton("Distancia Promedio");
+		menu.add(distanciapromediocamion);
+	}
+	
+	Ventana(){
+		setSize(800,500);
+		setResizable(false);
+		setLayout(null);
+		menu();
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setVisible(true);
+	}
+	
+	public static void main(String args[]) {
+		new Ventana();
+	}
+	
+}

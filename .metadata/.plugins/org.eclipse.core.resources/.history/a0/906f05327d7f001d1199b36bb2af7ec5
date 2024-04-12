@@ -1,0 +1,5 @@
+package correo;
+import java.io.Serializable;
+public class Correspondencia implements Serializable {
+
+}

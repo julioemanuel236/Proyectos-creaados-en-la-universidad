@@ -1,0 +1,14 @@
+package game;
+
+public class Partida {
+
+	Player p;
+	Tienda t;
+	public Partida(Player p,Tienda t) {
+		this.p=p;
+		this.t=t;
+	}
+	
+	
+
+}

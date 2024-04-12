@@ -1,0 +1,60 @@
+package decanato;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+
+public class Decanato {
+	ArrayList<Alumno> alumnos = new ArrayList<Alumno>();
+	ArrayList<Ayudante> ayudantes = new ArrayList<Ayudante>();
+	ArrayList<Licencia> licencias = new ArrayList<Licencia>();
+	
+	public void nuevoAlumno(Alumno a) {
+		alumnos.add(a);
+	}
+	public void nuevoAyudante(Ayudante a) {
+		alumnos.add(a);
+		ayudantes.add(a);
+	}
+	public void nuevoLicencia(Licencia a) {
+		alumnos.add(a);
+		licencias.add(a);
+	}
+	
+	public Alumno buscarGrupo(String ID) {
+		for(Alumno i:alumnos) {
+			if(i.getID().equals(ID))
+				return i;
+		}
+		return null;
+	}
+	
+	public float promedioNombre(String nombre,String apellido,int year) {
+		for(Alumno i:alumnos) {
+			if(i.getNombre().equals(nombre)||i.getApellidos().equals(apellido)) {
+				float promedio=0;
+				int cantidad=0;
+				for(Asignatura j:i.asignaturas) {
+					if(j.getYear()==year) {
+						promedio+=j.getNota();
+						cantidad++;
+					}
+				}
+				return promedio/cantidad;
+			}
+		}
+		return -1;
+	}
+
+
+	public ArrayList<Alumno> titulosOro() {
+		ArrayList<Alumno> a = new ArrayList<Alumno>();
+		for(Alumno i : alumnos)
+			if(i.getPromedio()>=4.75)a.add(i);
+		return a;
+	}
+	
+	public String getEscalafon() {
+		Collections.sort(alummnos);
+		Collections.reverse(alumnos);
+	}
+}

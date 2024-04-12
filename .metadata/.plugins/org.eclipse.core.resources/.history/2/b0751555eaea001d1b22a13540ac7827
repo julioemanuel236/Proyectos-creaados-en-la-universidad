@@ -1,0 +1,1116 @@
+package gui;
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;;
+import javax.swing.*;
+
+
+
+
+public class MainWindow extends JFrame{
+
+	// Define the properties and features of the basic bike type 
+	// This file is not intended for execution so there is no need for a PSVM
+
+	// BasicBike is the base class or (parent class) or (super class) or (root class) for all the other 4 
+	// classes we will be writing
+
+	// Base class is used to describe the common attributes for all the bikes we want to include
+	// In general the base class must be the least common demonimator of sorts for all the classes
+	// one would want to define. This would depend on the problem one is attempting to solve. 
+
+	// What is the problem we are trying to solve?
+	// We want to create an inventory management system for a bike shop 
+	// This implies we need a way to model a bike for sale that is in the shop
+	// We need to know the types of bikes that are in the shop
+
+	// We can then create a class for each bike type and then create objects when ever new inventory 
+	// arrives at the shop or delete the objects when the bikes are sold or lost
+
+	// Base class or Root or Parent class or Super class are name that are all used interchangeably
+
+	public  class BasicBike
+	{
+		// Public member (fellow) variables - inheriatable
+		public int maxSpeed; // This is the max safe operating speed
+		public int noOfGears; // No of gears for the bike
+		public String paintColor; // Frame color for the bike
+		public String safetyFeatures; // List of safety features
+		public int currSpeed; //A variable to hold the current speed (when testing)
+		
+		// Private member variable - NOT INHERITABLE
+		private int justAnExample;
+		
+		// Protected member variable - Selectively inheritable
+		protected int justAnOtherExample;
+
+		// Constructors
+		
+		// Null 
+		public BasicBike()
+		{
+			maxSpeed = 0;
+			noOfGears = 0;
+			paintColor = "";
+			safetyFeatures = "";
+			currSpeed = 0;
+		}
+		
+		public BasicBike(int S)
+		{
+			maxSpeed = S;
+			noOfGears = 0;
+			paintColor = "";
+			safetyFeatures = "";
+			currSpeed = 0;
+		}
+		
+		public BasicBike(int S, int G)
+		{
+			maxSpeed = S;
+			noOfGears = G;
+			paintColor = "";
+			safetyFeatures = "";
+			currSpeed = 0;
+		}
+		
+		public BasicBike(int S, int G, String C)
+		{
+			maxSpeed = S;
+			noOfGears = G;
+			paintColor = C;
+			safetyFeatures = "";
+			currSpeed = 0;
+		}
+		
+		public BasicBike(int S, int G, String C, String SF)
+		{
+			maxSpeed = S;
+			noOfGears = G;
+			paintColor = C;
+			safetyFeatures = SF;
+			currSpeed = 0;
+		}
+
+		// The above multiple constructors for a class is an example of PolyMorphism
+		// Poly = Many and Morp = forms i.e. the same method having many forms (different list of 
+		// arguments being passed to it) this is aka method signature
+		
+		// Methods 
+		// Public methods - These are inheritable methods
+		// These methods are open to access by anyone
+		
+		public void applyBrake(int decrement)
+		{
+			if(currSpeed > 0)
+				currSpeed -= decrement;
+			if (currSpeed < 0)
+				currSpeed = 0;
+		}
+		
+		public void speedUp(int increment)
+		{
+			if(currSpeed < maxSpeed)
+				currSpeed += increment;
+			if(currSpeed > maxSpeed)
+				currSpeed = maxSpeed;		
+		}
+		
+			
+		public String getInfo()
+		{
+			String msg;
+			msg = "Bike Info: {Max speed setting: " + maxSpeed + " | No of gears: " + noOfGears + " | Frame color: " + paintColor + " | Safety features: " + safetyFeatures + "}";
+			return msg;
+		}
+		
+		// Getters and Setters for public variable are not needed as they can be 
+		// accessed freely by others.
+		
+		// Private methods - These methods are NOT inheritable
+		// These methods are meant to be used by object of this (base) class ONLY
+
+		// Protected methods - These methods are selectively inheritable
+		// These methods are accessable by objects of this (base) class and objects of any interited class
+		
+		// PSVM is not needed in this example as this file is not intented for 
+		// execution rather its for the main execution class/file to import
+		
+		
+		public String[] getDatos() {
+			return null;
+		}
+		
+		
+
+	}
+
+	public class MountainBike extends BasicBike
+	{
+		// There are properties and methods that are specific to the MountainBike 
+		// class. There are in addition to the inherited ones from the base class (BasicBike). 
+		
+		// public variables
+		public int seatHeight;
+		public boolean fullSuspension;
+		public boolean flatProofTyres;
+		
+		// protected variable
+		
+		// private variables
+		
+		// Constructors  - only one is used here - you can have multiple 
+		// constructors if you want to
+		
+		public MountainBike(int SH, boolean FS, boolean FPT, int S, int G, String C, String SF)
+		{
+			//Passing the base class parameters to the base class constructor
+			// "super" is a keyword
+			// Make sure this is the first line in any inherited class' constructor
+			super(S, G, C, SF);
+			// super(); - to call the base class's constructor - it is the same as 
+			// BasicBike();
+			// super.noOfGears is not the same as this.noOfGears
+			
+			this.seatHeight = SH;
+			this.fullSuspension = FS;
+			this.flatProofTyres = FPT;
+		}
+		
+			
+		// Methods 
+		
+		// getters and setters
+		
+		// Getters and Setters for public variable are not needed as they can be 
+		// accessed freely by others.
+		
+		// behavior methods
+		
+		// Polymorphism (run time) - this inherited class method OVERRIDES 
+		// the base class method
+		
+		public String getInfo()
+		{
+			String msg;
+			msg = "Bike Info 1/2: {Max speed setting: " + maxSpeed + " | No of gears: " + noOfGears + " | Frame color: " + paintColor + " | Safety features: " + safetyFeatures + "}\n";
+			msg = msg + "Bike Info 2/2: {Seat Height: " + seatHeight + " | Full Suspension " + fullSuspension + " | Flat Proof Tyres " + flatProofTyres + " }\n";
+			return msg;
+			
+		}
+
+	} // End class MountainBike
+	
+	public class EBike extends MountainBike
+	{
+		// There are properties and methods that are specific to the MountainBike 
+		// class. There are in addition to the inherited ones from the base class (BasicBike). 
+		
+		// public variables
+		public int rangeMiles; // Range in miles
+		public String batteryType; // Li-ion, NiMH, SLA, AGM, LiPo
+		public int batterySize; // A-hours
+		public int batteryVolt; // 12/24/36/48 
+		public double motorPower; // in KW 0.5. 1.0 etc
+		
+		// protected variable
+		
+		// private variables
+		
+		// Constructors  - only one is used here - you can have multiple 
+		// constructors if you want to
+		
+		public EBike(int RM, String BTy, int BSz, int BVt, double MP, int SH, boolean FS, boolean FPT, int S, int G, String C, String SF)
+		{
+			super(SH, FS, FPT, S, G, C, SF);
+					
+			this.rangeMiles = RM;
+			this.batteryType = BTy;
+			this.batterySize = BSz;
+			this.batteryVolt = BVt;
+			this.motorPower = MP;		
+			
+		}
+		
+			
+		// Methods 
+		
+		public String getBatteryInfo()
+		{
+			String msg = "";
+			msg = "Battery Type: " + this.batteryType + " | Battery Size: " + this.batterySize + " | Battery Voltage: " + this.batteryVolt;
+			return msg;
+		}
+		
+		
+		// getters and setters
+		
+		// Getters and Setters for public variable are not needed as they can be 
+		// accessed freely by others.
+		
+		// behavior methods
+		
+		// Polymorphism (run time) - this inherited class method OVERRIDES 
+		// the base class method
+		
+		public String getInfo()
+		{
+			String msg;
+			msg = "Bike Info 1/4: {Max speed setting: " + maxSpeed + " | No of gears: " + noOfGears + " | Frame color: " + paintColor + " | Safety features: " + safetyFeatures + "}\n";
+			msg = msg + "Bike Info 2/4: {Seat Height: " + seatHeight + " | Full Suspension " + fullSuspension + " | Flat Proof Tyres " + flatProofTyres + " }\n";
+			msg = msg + "Bike Info 3/4: {" + getBatteryInfo() + " }\n";
+			msg = msg + "Bike Info 3/4: {Range in Miles: " + rangeMiles + " | Motor Power: " + motorPower + " }\n";
+			
+			return msg;
+			
+		}
+
+	} // End class EBike
+
+	public class RoadBike extends BasicBike
+	{
+		// There are properties and methods that are specific to the MountainBike 
+		// class. There are in addition to the inherited ones from the base class (BasicBike). 
+		
+		// public variables
+		
+		// protected variable
+		
+		// private variables
+		// This is a private variable for data encapsulation example
+		private boolean flatHandleBar;
+		
+		// Constructors  - only one is used here - you can have multiple 
+		// constructors if you want to
+		
+		public RoadBike(boolean FHB, int S, int G, String C, String SF)
+		{
+			//Passing the base class parameters to the base class constructor
+			// "super" is a keyword
+			// Make sure this is the first line in any inherited class' constructor
+			super(S, G, C, SF);
+			// super(); - to call the base class's constructor - it is the same as 
+			// BasicBike();
+			// super.noOfGears is not the same as this.noOfGears
+			
+			this.flatHandleBar = FHB;	
+		}
+		
+			
+		// Methods 
+		
+		// getters and setters
+		
+		// Getters and Setters for public variable are not needed as they can be 
+		// accessed freely by others.
+		// Here we only need one getter and setter since we have only one private variable i.e. flatHandleBar
+		
+		// Getter
+		public boolean isFlatHandleBar()
+		{
+			return flatHandleBar;
+		}
+		
+		// Setter
+		public void setFlatHandleBar(boolean type)
+		{
+			flatHandleBar = type;
+		}
+			
+		// behavior methods
+		
+		// Polymorphism (run time) - this inherited class method OVERRIDES 
+		// the base class method
+		
+		public String getInfo()
+		{
+			String msg;
+			msg = "Bike Info 1/2: {Max speed setting: " + maxSpeed + " | No of gears: " + noOfGears + " | Frame color: " + paintColor + " | Safety features: " + safetyFeatures + "}\n";
+			msg = msg + "Bike Info 2/2: {Flat Handle Bar: " + flatHandleBar + " }\n";
+			return msg;
+			
+		}
+
+	} // End class RoadBike
+
+
+	interface EBikeInterface
+	{
+		// Variable in an interface must have a default value, which is not changeable
+		public int rangeMiles = 100; // Range in miles
+		public String batteryType = "Li-ion"; // Li-ion, NiMH, SLA, AGM, LiPo
+		public int batterySize = 25; // A-hours
+		public int batteryVolt = 48; // 12/24/36/48 
+		public double motorPower = 1.1; // in KW 0.5. 1.0 etc
+
+		// Methods in an interface cannot have a body and must be declarations only i.e. abstract method
+		// The intentions is for any class that implements this interface to redefine these methods
+		public String getBatteryInfo();
+		public String getInfo();
+
+		
+		
+	}
+
+	public class Control {
+
+		public static void show(String txt) {
+			JOptionPane.showMessageDialog(null, txt);
+		}
+
+		
+		static void addToInventory(int maxSize, boolean verbose, BasicBike [] arr1, MountainBike [] arr2, RoadBike [] arr3, EBike [] arr4, RoadEBike [] arr5)
+		{
+			KeyboardReader myKBR = new KeyboardReader();
+			
+			// Display user options
+					
+			// Wait for user choice
+			String ops[] = {"Basic Bike","Mountain Bike","Road Bike","EBike","Road EBike"};
+			String choice = (String)JOptionPane.showInputDialog(null, "Type of Bike","Select Type", JOptionPane.QUESTION_MESSAGE, null, ops, null);
+				
+			
+			switch (choice)
+			{
+				
+				case ("Basic Bike"): 	addBasicBike(maxSize, verbose, arr1);
+							break;
+						
+				case ("Mountain Bike"):	addMountainBike(maxSize, verbose, arr2);
+							break;
+				
+				case ("Road Bike"):	addRoadBike(maxSize, verbose, arr3);
+							break;
+				
+				case ("EBike"): 	addEBike(maxSize, verbose, arr4);
+							break;
+				
+				case ("Road EBike"):	addRoadEBike(maxSize, verbose, arr5);
+							break;
+			
+				default: 	System.out.println("Unknown bike type - return to main menu\n");
+							break; 
+			
+			}
+		}
+
+
+		static void addBasicBike(int maxSize, boolean verbose, BasicBike [] arr)
+		{
+			KeyboardReader myKBR = new KeyboardReader();
+			int MS = 0;
+			int NG = 0;
+			String PC = "";
+			String SF = "";
+			boolean found = false;
+			
+			for(int i = 0; i < maxSize; i++)
+			{
+				if( !found & arr[i] == null)
+				{				
+					MS = myKBR.getKeyboardInt("Enter Max Speed rating");
+					
+					NG = myKBR.getKeyboardInt("Enter No of Gears");
+					
+					PC = myKBR.getKeyboardInput("Enter Paint Color");
+					
+					SF = myKBR.getKeyboardInput("Enter Safety Features");				
+				
+					found = true;			
+				}
+				
+							
+				if (found)
+				{	arr[i] = new BasicBike();
+					arr[i].maxSpeed = MS;
+					arr[i].noOfGears = NG;
+					arr[i].paintColor = PC;
+					arr[i].safetyFeatures = SF;
+					break;		
+				}
+			}
+			show("Added Basic Bike");
+		}
+			
+		static void addMountainBike(int maxSize, boolean verbose, MountainBike [] arr)
+		{
+			
+			KeyboardReader myKBR = new KeyboardReader();
+			int SH = 0;
+			boolean FS = false;
+			boolean FPT = false;
+			int MS = 0;
+			int NG = 0;
+			String PC = "";
+			String SF = "";
+			boolean found = false;
+			
+			for(int i = 0; i < maxSize; i++)
+			{
+				if( !found && arr[i]==null)
+				{
+					
+					SH = myKBR.getKeyboardInt("Enter Seat height");
+					
+					FS = (myKBR.getKeyboardInput("Enter if Full suspension (T/F)").equals("T"));
+					
+					FPT = (myKBR.getKeyboardInput("Enter if Flat proof tyres (T/F)").equals("T"));
+					
+					MS = myKBR.getKeyboardInt("Enter Max Speed rating");
+					
+					NG = myKBR.getKeyboardInt("Enter No of Gears");
+					
+					PC = myKBR.getKeyboardInput("Enter Paint Color");
+					
+					SF = myKBR.getKeyboardInput("Enter Safety Features");				
+				
+					found = true;			
+				}
+					
+				if (found)
+				{	
+					arr[i] = new MountainBike(0, false, false, 0, 0," "," ");
+					arr[i].seatHeight = SH;
+					arr[i].flatProofTyres = FPT;
+					arr[i].fullSuspension = FS;
+					arr[i].maxSpeed = MS;
+					arr[i].noOfGears = NG;
+					arr[i].paintColor = PC;
+					arr[i].safetyFeatures = SF;
+					break;		
+				}
+			}
+
+			show("Added Mountain Bike");
+		}
+		
+		static void addRoadBike(int maxSize, boolean verbose, RoadBike [] arr)
+		{
+			KeyboardReader myKBR = new KeyboardReader();
+			boolean FHB = false;
+			int MS = 0;
+			int NG = 0;
+			String PC = "";
+			String SF = "";
+			boolean found = false;
+
+			for(int i = 0; i < maxSize; i++)
+			{
+				if( !found && arr[i] == null)
+				{
+					
+					FHB = (myKBR.getKeyboardInput("Enter if Flat handlebar (T/F)").equals("T"));
+					
+					MS = myKBR.getKeyboardInt("Enter Max Speed rating");
+					
+					NG = myKBR.getKeyboardInt("Enter No of Gears");
+					
+					PC = myKBR.getKeyboardInput("Enter Paint Color");
+					
+					SF = myKBR.getKeyboardInput("Enter Safety Features");				
+				
+					found = true;			
+				}
+					
+				if (found)
+				{	
+					arr[i] = new RoadBike(false,0,0," "," ");
+					arr[i].maxSpeed = MS;
+					arr[i].noOfGears = NG;
+					arr[i].paintColor = PC;
+					arr[i].safetyFeatures = SF;
+					arr[i].setFlatHandleBar(FHB);
+									
+					break;		
+				}
+			}
+
+			System.out.println("Added Road Bike\n\n");		
+		}
+
+		static void addEBike(int maxSize, boolean verbose, EBike [] arr)
+		{
+			KeyboardReader myKBR = new KeyboardReader();
+			int RM = 0;
+			String BT = "";
+			int BS = 0;
+			int BV = 0;
+			double MP = 0.0;
+			int SH = 0;
+			boolean FS = false;
+			boolean FPT = false;
+			int MS = 0;
+			int NG = 0;
+			String PC = "";
+			String SF = "";
+			boolean found = false;
+			
+			for(int i = 0; i < maxSize; i++)
+			{
+				if( !found & (arr[i].maxSpeed == 0) & (arr[i].noOfGears == 0) & (arr[i].paintColor.equals("")))
+				{
+					
+					RM = myKBR.getKeyboardInt("Enter range in miles");
+					
+					BT = myKBR.getKeyboardInput("Enter battery type");
+					
+					BS = myKBR.getKeyboardInt("Enter battery size A-h");
+					
+					BV = myKBR.getKeyboardInt("Enter battery volt V");
+					
+					MP = myKBR.getKeyboardDouble("Enter motor power kW");
+									
+					SH = myKBR.getKeyboardInt("Enter Seat height");
+					
+					FS = (myKBR.getKeyboardInput("Enter if Full suspension (T/F)").equals("T"));
+					
+					FPT = (myKBR.getKeyboardInput("Enter if Flat proof tyres (T/F)").equals("T"));
+					
+					MS = myKBR.getKeyboardInt("Enter Max Speed rating");
+					
+					NG = myKBR.getKeyboardInt("Enter No of Gears");
+					
+					PC = myKBR.getKeyboardInput("Enter Paint Color");
+					
+					SF = myKBR.getKeyboardInput("Enter Safety Features");				
+				
+					found = true;			
+				}
+					
+				if (found)
+				{	
+					arr[i] = new EBike(i, SF, i, i, MP, i, found, found, i, i, SF, SF);
+					arr[i].rangeMiles = RM;
+					arr[i].batteryType = BT;
+					arr[i].batterySize = BS;
+					arr[i].batteryVolt = BV;
+					arr[i].motorPower = MP;
+					arr[i].seatHeight = SH;
+					arr[i].flatProofTyres = FPT;
+					arr[i].fullSuspension = FS;
+					arr[i].maxSpeed = MS;
+					arr[i].noOfGears = NG;
+					arr[i].paintColor = PC;
+					arr[i].safetyFeatures = SF;
+					break;		
+				}
+			}
+			
+			show("Added E Bike");
+		}
+
+		static void addRoadEBike(int maxSize, boolean verbose, RoadEBike [] arr)
+		{
+			KeyboardReader myKBR = new KeyboardReader();
+			boolean FHB = false;
+			int MS = 0;
+			int NG = 0;
+			String PC = "";
+			String SF = "";
+			boolean found = false;
+
+			for(int i = 0; i < maxSize; i++)
+			{
+				if( !found && arr[i] == null)
+				{
+					
+					FHB = (myKBR.getKeyboardInput("Enter if Flat handlebar (T/F)").equals("T"));
+					
+					MS = myKBR.getKeyboardInt("Enter Max Speed rating");
+					
+					NG = myKBR.getKeyboardInt("Enter No of Gears");
+					
+					PC = myKBR.getKeyboardInput("Enter Paint Color");
+					
+					SF = myKBR.getKeyboardInput("Enter Safety Features");				
+				
+					found = true;			
+				}
+					
+				if (found)
+				{	
+					arr[i] = new RoadEBike(found, i, i, SF, SF);
+					arr[i].maxSpeed = MS;
+					arr[i].noOfGears = NG;
+					arr[i].paintColor = PC;
+					arr[i].safetyFeatures = SF;
+					arr[i].setFlatHandleBar(FHB);
+									
+					break;		
+				}
+			}
+		
+			show("Added Road E Bike");
+		}
+		
+		static void removeFromInventory(int maxSize, boolean verbose, BasicBike [] arr1, MountainBike [] arr2, RoadBike [] arr3, EBike [] arr4, RoadEBike [] arr5)
+		{
+			KeyboardReader myKBR = new KeyboardReader();
+			
+			// Display user options
+
+			String ops[] = {"Basic Bike","Mountain Bike","Road Bike","EBike","Road EBike"};
+			String choice = (String)JOptionPane.showInputDialog(null, "Type of Bike","Select Type", JOptionPane.QUESTION_MESSAGE, null, ops, null);
+			if(choice == null)return;
+			// Wait for user choice		
+			
+			int stockNo = myKBR.getKeyboardInt("Enter the bike type to remove");
+					
+			switch (choice)
+			{
+				
+				case ("Basic Bike"): 	
+							stockNo = myKBR.getKeyboardInt("Enter the basic bike stock number to remove");
+							arr1[stockNo - 1] = null;
+							show("Removed 1 basic bike !!");
+							break;
+						
+				case ("Mountain Bike"):	
+							stockNo = myKBR.getKeyboardInt("Enter the mountain bike stock number to remove");			
+							arr2[stockNo - 1] = null;
+							show("Removed 1 mountain bike !!");
+							break;
+				
+				case ("Road Bike"):	
+							stockNo = myKBR.getKeyboardInt("Enter the road bike stock number to remove");
+							arr3[stockNo - 1] = null;
+							show("Removed 1 road bike !!");
+							break;
+				
+				
+				case ("EBike"): 	
+							stockNo = myKBR.getKeyboardInt("Enter the E bike stock number to remove");
+							arr4[stockNo - 1] = null;
+							show("Removed 1 E bike !!");
+							break;
+				
+							
+				case ("Road EBike"):	
+							stockNo = myKBR.getKeyboardInt("Enter the road E bike stock number to remove");
+							arr5[stockNo - 1] = new RoadEBike(false, 0, 0, "", "");
+							show("Removed 1 road E bike !!");
+							break;
+			
+				default:	System.out.println("Unknown bike type - return to main menu\n");
+							break; 
+			
+			}
+
+			
+		}
+		
+		static void modifyCurrentInventory(int maxSize, boolean verbose, BasicBike [] arr1, MountainBike [] arr2, RoadBike [] arr3, EBike [] arr4, RoadEBike [] arr5)
+		{
+			KeyboardReader myKBR = new KeyboardReader();
+			
+			String ops[] = {"Basic Bike","Mountain Bike","Road Bike","EBike","Road EBike"};
+			String choice = (String)JOptionPane.showInputDialog(null, "Type of Bike","Select Type", JOptionPane.QUESTION_MESSAGE, null, ops, null);
+			
+			// Wait for user choice		
+			int stockNo;
+					
+			switch (choice)
+			{
+				
+				case ("Basic Bike"): 	
+							stockNo = myKBR.getKeyboardInt("Enter the basic bike stock number to modify");
+							arr1[stockNo - 1] = modifyBasicBike(arr1[stockNo - 1]);
+							show("Modified 1 basic bike !!");					
+							break;
+						
+				case ("Mountain Bike"):	
+							stockNo = myKBR.getKeyboardInt("Enter the mountain bike stock number to modify");
+							arr2[stockNo - 1] = modifyMountainBike(arr2[stockNo - 1]);
+							show("Modified 1 mountain bike !!");					
+							break;			
+				case ("Road Bike"):	
+							stockNo = myKBR.getKeyboardInt("Enter the road bike stock number to modify");
+							arr3[stockNo - 1] = modifyRoadBike(arr3[stockNo - 1]);
+							show("Modified 1 road bike !!");					
+							break;			
+				
+				case ("EBike"): 	
+							stockNo = myKBR.getKeyboardInt("Enter the electric bike stock number to modify");
+							arr4[stockNo - 1] = modifyEBike(arr4[stockNo - 1]);
+							show("Modified 1 road bike !!");
+							break;
+										
+				case ("Road EBike"):	
+							
+							stockNo = myKBR.getKeyboardInt("Enter the road electric bike stock number to modify");
+							arr5[stockNo - 1] = modifyRoadEBike(arr5[stockNo - 1]);
+							show("Modified 1 road electric bike !!");
+							break;
+							
+				default:	System.out.println("Unknown bike type - return to main menu\n");
+							break; 
+			
+			}
+			
+			
+		}
+		
+		
+		static BasicBike modifyBasicBike(BasicBike bike)
+		{
+			KeyboardReader myKBR = new KeyboardReader();
+			String userEdits;
+					
+			show(
+			"\nThe current data on this bike is as follow:\n" + bike.getInfo()+
+			"\nEnter the data you want to modify separated by a semicolon, as shown below.\n"+
+			"Max speed; No of gears; Paint color; Safety features"
+			);
+			
+			userEdits = myKBR.getKeyboardInput("Data");
+			
+			String [] values = userEdits.split(";");
+			try {			
+				bike.maxSpeed = Integer.valueOf(values[0]);
+				bike.noOfGears = Integer.valueOf(values[1]);
+				bike.paintColor = values[2];
+				bike.safetyFeatures = values[3];	
+			}
+			catch(Exception e) {
+				
+			}
+			return bike;
+		}
+
+		static MountainBike modifyMountainBike(MountainBike bike)
+		{
+			KeyboardReader myKBR = new KeyboardReader();
+			String userEdits;
+					
+			show(
+					"\nThe current data on this bike is as follow:\n" + bike.getInfo()+
+					"\nEnter the data you want to modify separated by a semicolon, as shown below.\n\n"+
+					"Max speed; No of gears; Paint color; Safety features"
+					);
+					
+			userEdits = myKBR.getKeyboardInput("Data");
+			
+			
+			String [] values = userEdits.split(";");
+			try {
+				bike.maxSpeed = Integer.valueOf(values[0]);
+				bike.noOfGears = Integer.valueOf(values[1]);
+				bike.paintColor = values[2];
+				bike.safetyFeatures = values[3];	
+				bike.seatHeight = Integer.parseInt(values[4]);
+				bike.fullSuspension = values[5].equals("F");
+			}
+			catch(Exception e) {
+				
+			}
+			return bike;
+		}
+		
+		static RoadBike modifyRoadBike(RoadBike bike)
+		{
+			KeyboardReader myKBR = new KeyboardReader();
+			String userEdits;
+					
+			show(
+					"\nThe current data on this bike is as follow:\n" + bike.getInfo()+
+					"\nEnter the data you want to modify separated by a semicolon, as shown below.\n"+
+					"Max speed; No of gears; Paint color; Safety features"
+					);
+					
+			userEdits = myKBR.getKeyboardInput("Data");
+			
+			String [] values = userEdits.split(";");
+			try {
+					
+				bike.maxSpeed = Integer.valueOf(values[0]);
+				bike.noOfGears = Integer.valueOf(values[1]);
+				bike.paintColor = values[2];
+				bike.safetyFeatures = values[3];	
+				bike.setFlatHandleBar(values[4].equals("T"));
+			}
+			catch(Exception e) {
+				
+			}
+			return bike;
+		}
+		
+		static EBike modifyEBike(EBike bike)
+		{
+			KeyboardReader myKBR = new KeyboardReader();
+			String userEdits;
+					
+			show(
+					"\nThe current data on this bike is as follow:\n" + bike.getInfo()+
+					"\nEnter the data you want to modify separated by a semicolon, as shown below.\n"+
+					"Max speed; No of gears; Paint color; Safety features"
+					);
+					
+			userEdits = myKBR.getKeyboardInput("Data");
+			
+			String [] values = userEdits.split(";");
+		try{	
+			bike.maxSpeed = Integer.valueOf(values[0]);
+			bike.noOfGears = Integer.valueOf(values[1]);
+			bike.paintColor = values[2];
+			bike.safetyFeatures = values[3];	
+			bike.seatHeight = Integer.parseInt(values[4]);
+			bike.fullSuspension = values[5].equals("F");
+			bike.flatProofTyres = values[6].equals("T");
+			bike.batteryType = values[7];
+			bike.batterySize = Integer.parseInt(values[8]);
+			bike.batteryVolt = Integer.parseInt(values[9]);
+			bike.rangeMiles = Integer.parseInt(values[10]);
+			bike.motorPower = Integer.parseInt(values[11]);
+		}
+		catch(Exception e) {
+		
+		}
+			return bike;
+		}
+			
+		static RoadEBike modifyRoadEBike(RoadEBike bike)
+		{
+			KeyboardReader myKBR = new KeyboardReader();
+			String userEdits;
+					
+			show(
+					"\nThe current data on this bike is as follow:\n" + bike.getInfo()+
+					"\nEnter the data you want to modify separated by a semicolon, as shown below.\n"+
+					"Max speed; No of gears; Paint color; Safety features"
+					);
+					
+			userEdits = myKBR.getKeyboardInput("Data");
+			
+			String [] values = userEdits.split(";");
+			try {
+				bike.maxSpeed = Integer.valueOf(values[0]);
+				bike.noOfGears = Integer.valueOf(values[1]);
+				bike.paintColor = values[2];
+				bike.safetyFeatures = values[3];	
+				bike.setFlatHandleBar(values[4].equals("T"));
+			}
+			catch(Exception e) {
+				
+			}
+			return bike;
+		}	
+		
+	}
+
+	public class RoadEBike extends RoadBike implements EBikeInterface
+	{
+		
+		// Constructors  - only one is used here - you can have multiple 
+		// constructors if you want to
+		
+		public RoadEBike(boolean FHB, int S, int G, String C, String SF)
+		{
+			//Passing the base class parameters to the base class constructor
+			// "super" is a keyword
+			// Make sure this is the first line in any inherited class' constructor
+			super(FHB, S, G, C, SF);
+			// super(); - to call the base class's constructor - it is the same as 
+			// RoadBike();
+			// super.noOfGears is not the same as this.noOfGears
+			
+			
+		}
+		
+			
+		// Methods 
+		
+		// getters and setters
+		
+		// Getters and Setters for public variable are not needed as they can be 
+		// accessed freely by others.
+		// Here we only need one getter and setter since we have only one private variable i.e. flatHandleBar
+		
+		
+		// behavior methods
+			
+		// Polymorphism (run time) - this inherited class method OVERRIDES 
+		// the base class method
+
+		
+		
+		public String getBatteryInfo()
+		{
+			String msg = "";
+			msg = "Battery Type: " + this.batteryType + " | Battery Size: " + this.batterySize + " | Battery Voltage: " + this.batteryVolt;
+			return msg;
+		}
+			
+		
+		public String getInfo()
+		{
+			String msg;
+			
+			msg = "Bike Info 1/4: {Max speed setting: " + maxSpeed + " | No of gears: " + noOfGears + " | Frame color: " + paintColor + " | Safety features: " + safetyFeatures + "}\n";
+			msg = msg + "Bike Info 2/4: {" + getBatteryInfo() + " }\n";
+			msg = msg + "Bike Info 3/4: {Range in Miles: " + rangeMiles + " | Motor Power: " + motorPower + " }\n";
+			msg = msg + "Bike Info 4/4: {Flat Handle Bar: " + isFlatHandleBar() + " }\n";
+			
+			return msg;
+			
+		}
+
+		
+		
+	} // End class RoadEBike
+	
+	int MAX_INVENTORY_SIZE_PER_TYPE = 100;	
+	//arrays for data
+	BasicBike[] basicBikeArray = new BasicBike[MAX_INVENTORY_SIZE_PER_TYPE]; // Creating  // Declaring the array 
+		
+	MountainBike[] mountainBikeArray = new MountainBike[MAX_INVENTORY_SIZE_PER_TYPE]; // Declare 	
+	
+	RoadBike[] roadBikeArray = new RoadBike[MAX_INVENTORY_SIZE_PER_TYPE]; // Creating // Declare 	
+	
+	EBike[] eBikeArray = new EBike[MAX_INVENTORY_SIZE_PER_TYPE]; // Declare 	
+	
+	RoadEBike[] roadEBikeArray = new RoadEBike[MAX_INVENTORY_SIZE_PER_TYPE]; // Declare 	
+	
+	JPanel table;
+	JPanel newz;
+	JPanel editz;
+	JTextArea info;
+	
+	public MainWindow(){
+		int w=600,h=700;//size of the windows
+		setResizable(false);//can not change the size
+		setSize(w,h);
+		setLayout(null);//to put things whetever u whant
+		setLocationRelativeTo(null);//put the windows at center of screen
+		setDefaultCloseOperation(EXIT_ON_CLOSE);//really close it when you press the exit X
+		setVisible(true);
+		iniButtons();//create and asign a funtion to buttons
+		iniInfoZone();//create a locate the area to write text for suer
+		repaint();
+	}
+	
+	private void iniInfoZone() {
+		info = new JTextArea();
+		info.setSize(getWidth(),getHeight()/2);
+		info.setEditable(false);//can edit the text
+		JScrollPane jsp = new JScrollPane(info);	//this its for scroll 	
+		jsp.setSize(info.getSize());
+		jsp.setLocation(0,getHeight()/2 - 50);//set at the bottom middle
+		add(jsp);//add to the window 
+	}
+	
+	private void iniButtons() {
+		//buttons name
+		String texts[] = {"List Selected Inventary","Display All Inventory","New Bike","Remove a Bike","Edit a existence Bike"};
+		
+		JButton buttons[] = new JButton[texts.length];
+		int x=getWidth()/4,y=5;
+		for(int i=0;i<texts.length;i++) {
+			JButton jb = new JButton(texts[i]);
+			jb.setSize(getWidth()/2,40);
+			jb.setLocation(x,y);
+			y+=45;
+			add(jb);
+			buttons[i]=jb;
+		}
+		
+	buttons[0].addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			
+			String ops[] = {"Basic Bike","Mountain Bike","Road Bike","EBike","Road EBike"};
+			String op = (String)JOptionPane.showInputDialog(null, "Type of Bike","Select Type", JOptionPane.QUESTION_MESSAGE, null, ops, null);
+			System.out.println(op);
+			info.setText("");
+			BasicBike arr[];
+			if(op.equals(ops[0])) {
+				arr = basicBikeArray;
+			}
+			else if(op.equals(ops[1])) {
+				arr = mountainBikeArray;			
+			}
+			else if(op.equals(ops[2])) {
+				arr = basicBikeArray;
+			}
+			else if(op.equals(ops[3])) {
+				arr = basicBikeArray;
+			}
+			else {
+				arr = basicBikeArray;
+			}
+			
+			for(int i = 0;i<arr.length;i++) {
+				if(arr[i]!=null)info.setText(info.getText()+arr[i].getInfo()+"\n");
+			}
+
+		}
+	});
+	
+	buttons[1].addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {					
+			info.setText("");			
+			BasicBike[] arr = basicBikeArray;
+			info.setText(info.getText()+"\n-----------------------------------------------------------------------\n"
+					+ 					  "|                                  BASIC BIKES                              \n"
+					+ 					  "-----------------------------------------------------------------------\n");
+			for(int i = 0;i<arr.length;i++) {
+				
+				if(arr[i]!=null)info.setText(info.getText()+arr[i].getInfo()+"\n");
+			}
+			info.setText(info.getText()+"\n-----------------------------------------------------------------------\n"
+					+ 					  "|                                  MOUNTAIN BIKE                       \n"
+					+ 					  "-----------------------------------------------------------------------\n");
+			arr = mountainBikeArray;
+			for(int i = 0;i<arr.length;i++) {
+				if(arr[i]!=null)info.setText(info.getText()+arr[i].getInfo()+"\n");
+			}
+			
+			info.setText(info.getText()+"\n-----------------------------------------------------------------------\n"
+					+ 					  "|                                      ROAD BIKE                       \n"
+					+ 					  "-----------------------------------------------------------------------\n");
+			arr = roadBikeArray;
+			for(int i = 0;i<arr.length;i++) {
+				if(arr[i]!=null)info.setText(info.getText()+arr[i].getInfo()+"\n");
+			}
+			
+			info.setText(info.getText()+"\n-----------------------------------------------------------------------\n"
+					+ 					  "|                                  ELECTRIC BIKE                    \n"
+					+ 					  "-----------------------------------------------------------------------\n");
+			arr = eBikeArray;
+			for(int i = 0;i<arr.length;i++) {
+				if(arr[i]!=null)info.setText(info.getText()+arr[i].getInfo()+"\n");
+			}
+			
+			info.setText(info.getText()+"\n-----------------------------------------------------------------------\n"
+					+ 					  "|                                ROAD ELECTRIC BIKE                \n"
+					+ 					  "-----------------------------------------------------------------------\n");
+			arr = roadEBikeArray;
+			for(int i = 0;i<arr.length;i++) {
+				if(arr[i]!=null)info.setText(info.getText()+arr[i].getInfo()+"\n");
+			}
+		}
+	});	
+	
+	buttons[2].addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {					
+			Control.addToInventory(MAX_INVENTORY_SIZE_PER_TYPE, false , basicBikeArray, mountainBikeArray, roadBikeArray, eBikeArray, roadEBikeArray);
+		}
+	});	
+	
+	buttons[3].addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {					
+			Control.removeFromInventory(MAX_INVENTORY_SIZE_PER_TYPE, false, basicBikeArray, mountainBikeArray, roadBikeArray, eBikeArray, roadEBikeArray);
+		}
+	});
+	
+	buttons[4].addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {					
+			Control.modifyCurrentInventory(MAX_INVENTORY_SIZE_PER_TYPE, false, basicBikeArray, mountainBikeArray, roadBikeArray, eBikeArray, roadEBikeArray);
+		}
+	});
+	
+	}
+				
+	public static void main(String args[]) {
+		new MainWindow();
+	}
+	
+}

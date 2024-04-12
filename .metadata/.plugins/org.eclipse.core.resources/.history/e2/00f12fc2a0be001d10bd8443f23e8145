@@ -1,0 +1,11 @@
+package game;
+
+public class Tablero {
+	int n;
+	int m;
+	char map[][];
+	public Tablero() {
+		// TODO Auto-generated constructor stub
+	}
+
+}

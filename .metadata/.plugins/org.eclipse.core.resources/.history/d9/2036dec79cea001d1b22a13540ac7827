@@ -1,0 +1,62 @@
+package gui;
+import java.awt.Color;
+
+import javax.swing.*;
+
+public class MainWindow extends JFrame{
+
+	SelectTypePanel stp;
+	Reporte reporte;
+	JPanel table;
+	JPanel newz;
+	JPanel editz;
+	public MainWindow(){
+		int w=1157,h=720;
+		setResizable(false);
+		setSize(w,h);
+		setLayout(null);
+		setLocationRelativeTo(null);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		stp = new SelectTypePanel(w,h);
+		setVisible(true);
+	//	iniTableZone();
+	//	iniNewZone();	
+	//	iniEditZone();
+	}
+	
+	private void iniEditZone() {
+		editz = new JPanel();
+		editz.setSize(getWidth()/2,table.getY());
+		editz.setLocation(editz.getWidth(),0);
+		editz.setBackground(Color.yellow);
+		add(editz);
+		editz.repaint();
+	}
+	
+	private void iniNewZone() {
+		newz = new JPanel();
+		newz.setSize(getWidth()/2,table.getY());
+		newz.setLocation(0,0);
+		newz.setBackground(Color.green);
+		add(newz);
+		newz.repaint();
+	}
+	
+	private void iniTableZone() {
+		table = new JPanel();
+		table.setLayout(null);
+		table.setBackground(Color.red);
+		table.setSize(getWidth(),460);
+		table.setLocation(0,getHeight()-table.getHeight());
+		add(table);
+		reporte = new Reporte(table.getWidth(),table.getHeight(),0);
+		table.add(reporte);
+		table.repaint();
+	}
+	
+	
+	public static void main(String args[]) {
+		new MainWindow();
+	}
+	
+}

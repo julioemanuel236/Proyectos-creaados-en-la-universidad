@@ -1,0 +1,25 @@
+package events;
+
+import javax.swing.*;
+import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.event.KeyListener;
+public class App extends JFrame{
+	
+	public App() {
+		this.setSize(500,500);
+		this.setLayout(null);
+		this.setCursor(Cursor.HAND_CURSOR);
+		this.setBackground(Color.DARK_GRAY);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setLocationRelativeTo(null);
+		this.setVisible(true);
+		KeyListener key= new KeyListener() {
+			
+		};
+	}
+	
+	public static void main(String[] args) {
+		App root=new App();
+	}
+}

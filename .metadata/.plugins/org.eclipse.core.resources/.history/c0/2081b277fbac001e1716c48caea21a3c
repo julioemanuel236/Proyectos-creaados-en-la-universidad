@@ -1,0 +1,24 @@
+package visorgasto;
+
+import java.awt.Color;
+import java.awt.Graphics;
+
+import java.awt.Component;
+
+public class VerticalScrollBar extends Component{
+		
+	private static final long serialVersionUID = 1L;
+
+	Color activeColor;
+	Color inactiveColor;
+	
+	public VerticalScrollBar() {
+		
+	}
+	
+	public void paint(Graphics g) {
+		
+	}
+
+}
+

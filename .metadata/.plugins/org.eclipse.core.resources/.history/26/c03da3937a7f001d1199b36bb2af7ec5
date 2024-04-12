@@ -1,0 +1,8 @@
+package aplicacion;
+
+public class Omnibus implements Serializable{
+	private String chapa;
+	private Persona chofer;
+	
+	
+}

@@ -1,0 +1,39 @@
+package aplicación;
+
+public class Trabajador {
+	private String nombre;
+	private String id;
+	private String telefono;
+	private String direccion;
+	private String tipo;
+	private String centro_especialidad;
+	private String grado;
+	private int    experiencia;
+	
+	public Trabajador(String nombre,String id,String telefono,String direccion,String tipo,String centro_especialidad,String grado,int experiencia) {
+		this.nombre=nombre;
+		this.id=id;
+		this.telefono=telefono;
+		this.direccion=direccion;
+		this.tipo=tipo;
+		this.centro_especialidad=centro_especialidad;
+		this.grado=grado;
+		this.experiencia=experiencia;
+	}
+	
+	public String getTipo() {
+		return tipo;
+	}
+	
+	
+	public String informacion() {
+		String s = "Nombre: "+nombre+'\n'+
+				"Carnet ID: "+id+'\n'+
+				"Teléfono: "+telefono+'\n'+
+				"Dirección: "+direccion+'\n'+
+				"Categoría: "+tipo+'\n';
+		if(tipo.equals("Productor"))return s+"Experiencia: "+experiencia+'\n';
+		else if (tipo.equals("Técnico"))return s+"Especialidad: "+centro_especialidad+'\n';
+		return s+"Centro de Estudio: "+centro_especialidad+'\n'+"Grado: "+grado+'\n';
+	}
+}

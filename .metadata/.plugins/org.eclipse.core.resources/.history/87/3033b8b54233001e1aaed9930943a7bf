@@ -1,0 +1,360 @@
+package controlador;
+
+import java.awt.Image;
+import java.awt.event.KeyEvent;
+
+import javax.imageio.ImageIO;
+import modelo.*;
+
+import javax.swing.ImageIcon;
+
+public class PlayerControl {	
+	
+	private boolean LEFT = false, RIGHT = false,JUMP = false, SHOTING, SIT, BALL;
+	private boolean isSit = false;
+	private boolean looking = true;
+	private boolean jumping = false;
+	private int jumpForce = 0;	
+	private int moving = 0;
+	char lastPress = '\0';
+	private List<Image> sprite_left = new List<>();
+	private List<Image> sprite_right = new List<>();
+	private List<Image> sprite_right_shot = new List<>();
+	private List<Image> sprite_left_shot = new List<>();
+	private List<Image> sprite_left_ball = new List<>();
+	private List<Image> sprite_right_ball = new List<>();
+	private Image stand_by;
+	private Image stand_by_left_shot;
+	private Image stand_by_right_shot;
+	private Image sit_right;
+	private Image sit_left;	
+	private Samus player = new Samus();
+
+	public PlayerControl() {
+		cargarSprite();
+		player.setSize(24, 39);		
+		player.setIcon(new ImageIcon(stand_by));
+		player.setFocusable(true);
+		player.requestFocusInWindow();		
+	}
+
+	public void cargarSprite() {
+		try {
+			int scale = 2;
+			// moviniento normal izquierda
+			Image img = ImageIO.read(getClass().getResource("/images/player_left_1.png"));
+			img = img.getScaledInstance(img.getWidth(null) * scale, img.getHeight(null) * scale, Image.SCALE_SMOOTH);
+			sprite_left.add(img);
+			sprite_left.add(img);
+			sprite_left.add(img);
+			sprite_left.add(img);
+
+			img = ImageIO.read(getClass().getResource("/images/player_left_2.png"));
+			img = img.getScaledInstance(img.getWidth(null) * scale, img.getHeight(null) * scale, Image.SCALE_SMOOTH);
+			sprite_left.add(img);
+			sprite_left.add(img);
+			sprite_left.add(img);
+			sprite_left.add(img);
+
+			img = ImageIO.read(getClass().getResource("/images/player_left_3.png"));
+			img = img.getScaledInstance(img.getWidth(null) * scale, img.getHeight(null) * scale, Image.SCALE_SMOOTH);
+			sprite_left.add(img);
+			sprite_left.add(img);
+			sprite_left.add(img);
+			sprite_left.add(img);
+
+			// moviniento normal izquierda disparo
+			img = ImageIO.read(getClass().getResource("/images/player_left_shot_1.png"));
+			img = img.getScaledInstance(img.getWidth(null) * scale, img.getHeight(null) * scale, Image.SCALE_SMOOTH);
+			sprite_left_shot.add(img);
+			sprite_left_shot.add(img);
+			sprite_left_shot.add(img);
+			sprite_left_shot.add(img);
+			
+			img = ImageIO.read(getClass().getResource("/images/player_left_shot_2.png"));
+			img = img.getScaledInstance(img.getWidth(null) * scale, img.getHeight(null) * scale, Image.SCALE_SMOOTH);
+			sprite_left_shot.add(img);
+			sprite_left_shot.add(img);
+			sprite_left_shot.add(img);
+			sprite_left_shot.add(img);
+
+			img = ImageIO.read(getClass().getResource("/images/player_left_shot_3.png"));
+			img = img.getScaledInstance(img.getWidth(null) * scale, img.getHeight(null) * scale, Image.SCALE_SMOOTH);
+			sprite_left_shot.add(img);
+			sprite_left_shot.add(img);
+			sprite_left_shot.add(img);
+			sprite_left_shot.add(img);
+
+			//movimiento bolita izquierda
+			img = ImageIO.read(getClass().getResource("/images/player_left_ball_1.png"));
+			img = img.getScaledInstance(img.getWidth(null) * scale, img.getHeight(null) * scale, Image.SCALE_SMOOTH);
+			sprite_left_ball.add(img);
+			sprite_left_ball.add(img);
+			sprite_left_ball.add(img);
+			sprite_left_ball.add(img);
+			
+			img = ImageIO.read(getClass().getResource("/images/player_left_ball_2.png"));
+			img = img.getScaledInstance(img.getWidth(null) * scale, img.getHeight(null) * scale, Image.SCALE_SMOOTH);
+			sprite_left_ball.add(img);
+			sprite_left_ball.add(img);
+			sprite_left_ball.add(img);
+			sprite_left_ball.add(img);
+			
+			img = ImageIO.read(getClass().getResource("/images/player_left_ball_3.png"));
+			img = img.getScaledInstance(img.getWidth(null) * scale, img.getHeight(null) * scale, Image.SCALE_SMOOTH);
+			sprite_left_ball.add(img);
+			sprite_left_ball.add(img);
+			sprite_left_ball.add(img);
+			sprite_left_ball.add(img);
+			
+			img = ImageIO.read(getClass().getResource("/images/player_left_ball_4.png"));
+			img = img.getScaledInstance(img.getWidth(null) * scale, img.getHeight(null) * scale, Image.SCALE_SMOOTH);
+			sprite_left_ball.add(img);
+			sprite_left_ball.add(img);
+			sprite_left_ball.add(img);
+			sprite_left_ball.add(img);
+			
+			//movimiento bolita derecha
+			img = ImageIO.read(getClass().getResource("/images/player_right_ball_1.png"));
+			img = img.getScaledInstance(img.getWidth(null) * scale, img.getHeight(null) * scale, Image.SCALE_SMOOTH);
+			sprite_right_ball.add(img);
+			sprite_right_ball.add(img);
+			sprite_right_ball.add(img);
+			sprite_right_ball.add(img);			
+			
+			img = ImageIO.read(getClass().getResource("/images/player_right_ball_2.png"));
+			img = img.getScaledInstance(img.getWidth(null) * scale, img.getHeight(null) * scale, Image.SCALE_SMOOTH);
+			sprite_right_ball.add(img);
+			sprite_right_ball.add(img);
+			sprite_right_ball.add(img);
+			sprite_right_ball.add(img);			
+			
+			img = ImageIO.read(getClass().getResource("/images/player_right_ball_3.png"));
+			img = img.getScaledInstance(img.getWidth(null) * scale, img.getHeight(null) * scale, Image.SCALE_SMOOTH);
+			sprite_right_ball.add(img);
+			sprite_right_ball.add(img);
+			sprite_right_ball.add(img);
+			sprite_right_ball.add(img);			
+			
+			img = ImageIO.read(getClass().getResource("/images/player_right_ball_4.png"));
+			img = img.getScaledInstance(img.getWidth(null) * scale, img.getHeight(null) * scale, Image.SCALE_SMOOTH);
+			sprite_right_ball.add(img);
+			sprite_right_ball.add(img);
+			sprite_right_ball.add(img);
+			sprite_right_ball.add(img);			
+			// movimiento normal derecha
+			img = ImageIO.read(getClass().getResource("/images/player_right_1.png"));
+			img = img.getScaledInstance(img.getWidth(null) * scale, img.getHeight(null) * scale, Image.SCALE_SMOOTH);
+			sprite_right.add(img);
+			sprite_right.add(img);
+			sprite_right.add(img);
+			sprite_right.add(img);
+
+			img = ImageIO.read(getClass().getResource("/images/player_right_2.png"));
+			img = img.getScaledInstance(img.getWidth(null) * scale, img.getHeight(null) * scale, Image.SCALE_SMOOTH);
+			sprite_right.add(img);
+			sprite_right.add(img);
+			sprite_right.add(img);
+			sprite_right.add(img);
+
+			img = ImageIO.read(getClass().getResource("/images/player_right_3.png"));
+			img = img.getScaledInstance(img.getWidth(null) * scale, img.getHeight(null) * scale, Image.SCALE_SMOOTH);
+			sprite_right.add(img);
+			sprite_right.add(img);
+			sprite_right.add(img);
+			sprite_right.add(img);
+			
+
+			// moviniento normal derecha disparo
+			img = ImageIO.read(getClass().getResource("/images/player_right_shot_1.png"));
+			img = img.getScaledInstance(img.getWidth(null) * scale, img.getHeight(null) * scale, Image.SCALE_SMOOTH);
+			sprite_right_shot.add(img);
+			sprite_right_shot.add(img);
+			sprite_right_shot.add(img);
+			sprite_right_shot.add(img);
+
+			img = ImageIO.read(getClass().getResource("/images/player_right_shot_2.png"));
+			img = img.getScaledInstance(img.getWidth(null) * scale, img.getHeight(null) * scale, Image.SCALE_SMOOTH);
+			sprite_right_shot.add(img);
+			sprite_right_shot.add(img);
+			sprite_right_shot.add(img);
+			sprite_right_shot.add(img);
+
+			img = ImageIO.read(getClass().getResource("/images/player_right_shot_3.png"));
+			img = img.getScaledInstance(img.getWidth(null) * scale, img.getHeight(null) * scale, Image.SCALE_SMOOTH);
+			sprite_right_shot.add(img);
+			sprite_right_shot.add(img);
+			sprite_right_shot.add(img);
+			sprite_right_shot.add(img);
+
+			// normal en espera
+			img = ImageIO.read(getClass().getResource("/images/player_stand_by.png"));
+			img = img.getScaledInstance(img.getWidth(null) * scale, img.getHeight(null) * scale, Image.SCALE_SMOOTH);
+			stand_by = img;
+
+			// en espera disparo derecha
+			img = ImageIO.read(getClass().getResource("/images/player_stand_by_right_shot.png"));
+			img = img.getScaledInstance(img.getWidth(null) * scale, img.getHeight(null) * scale, Image.SCALE_SMOOTH);
+			stand_by_right_shot = img;
+
+			// en espera disparo izquierda
+			img = ImageIO.read(getClass().getResource("/images/player_stand_by_left_shot.png"));
+			img = img.getScaledInstance(img.getWidth(null) * scale, img.getHeight(null) * scale, Image.SCALE_SMOOTH);
+			stand_by_left_shot = img;
+
+			// agachado disparo izquierda
+			img = ImageIO.read(getClass().getResource("/images/player_sit_left.png"));
+			img = img.getScaledInstance(img.getWidth(null) * scale, img.getHeight(null) * scale, Image.SCALE_SMOOTH);
+			sit_left = img;
+
+			// agachado disparo derecha
+			img = ImageIO.read(getClass().getResource("/images/player_sit_right.png"));
+			img = img.getScaledInstance(img.getWidth(null) * scale, img.getHeight(null) * scale, Image.SCALE_SMOOTH);
+			sit_right = img;
+		} 
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+			
+	public Mob getPlayer() {
+		return player;
+	}
+	
+	public void proccesAction(KeyEvent e) {
+		if (e.getID() == e.KEY_PRESSED) {
+			if (e.getExtendedKeyCode() == e.VK_D)
+				{RIGHT = true; player.setdMove(10);looking = true;}
+			else if (e.getExtendedKeyCode() == e.VK_A)
+				{LEFT = true; player.setaMove(10);looking = false;}
+			else if (e.getExtendedKeyCode() == e.VK_SPACE)
+				{SHOTING = true;}
+			else if (e.getExtendedKeyCode() == e.VK_S)
+				{SIT = true;/*player.setsMove(10);*/}
+			else if (e.getExtendedKeyCode() == e.VK_W)
+				{JUMP = true;}
+			else if (e.getExtendedKeyCode() == e.VK_SHIFT)
+				{BALL = true;}
+		}
+		if (e.getID() == e.KEY_RELEASED) {
+			if (e.getExtendedKeyCode() == e.VK_D)
+				{RIGHT = false;player.setdMove(0);}
+			else if (e.getExtendedKeyCode() == e.VK_A)
+				{LEFT = false;player.setaMove(0);}
+			else if (e.getExtendedKeyCode() == e.VK_SPACE)
+				SHOTING = false;
+			else if (e.getExtendedKeyCode() == e.VK_S)
+				{SIT = false;/*player.setsMove(0);*/}
+			else if (e.getExtendedKeyCode() == e.VK_W)
+				{JUMP = false;}
+			else if (e.getExtendedKeyCode() == e.VK_SHIFT)
+				{BALL = false;}
+		}
+	}
+
+	
+
+	public Image agacharse() {
+		Image img;
+		if(looking)img = sit_right;
+		else img = sit_left;		
+		isSit = true;
+		return img;
+	}
+	
+		
+	public Image pararse() {
+		Image img;
+		if(SHOTING) {
+			if(looking)img = stand_by_right_shot;
+			else img = stand_by_left_shot;
+		}		
+		else img = stand_by;		
+		isSit=false;
+		
+		return img;
+	}
+	
+
+	
+	public void update() {
+		if(JUMP && !player.isInAir()) {			
+			jumpForce = 40;
+			player.setInAir(true);
+		}
+		if(SIT || isSit)moving = 0;
+		else if (LEFT && RIGHT) moving = 0;
+		else if (LEFT) {
+			moving = -1;
+			looking = false;
+		}
+		else if (RIGHT) {
+			moving = 1;
+			looking = true;
+		}
+		else moving = 0;
+		
+		
+		Image img = stand_by;
+		switch (moving) {
+			case 0: {		
+
+				if(player.isInAir()) {
+					
+				}
+				else if(SIT && !isSit)img = agacharse();							
+				else if(!SIT && isSit)img = pararse();
+				else if(SIT && isSit) {
+					if(looking)img = sit_right;
+					else img = sit_left;
+				}
+				else {
+					if(SHOTING) {
+						if(looking)img = stand_by_right_shot;
+						else img = stand_by_left_shot;
+						
+					}
+					else if(BALL) {
+						if(looking)img = sprite_right_ball.getCurrent();
+						else img = sprite_left_ball.getCurrent();
+					}
+				}
+				
+			}break;
+			
+			case 1: {
+				// MOVING right
+				//System.out.println(isSit);
+				int fps = 4;
+				img = sprite_right.getNext();
+				if (SHOTING) img = sprite_right_shot.get(sprite_right.getCurrentPosition());
+				else if(BALL)img = sprite_right_ball.getNext();
+				//update para no tener retardo entre el movimiento y la animacion
+
+			}break;
+			
+			case -1: {
+				// MOVING LEFT
+				//System.out.println(isSit);
+				int fps = 4;
+				img = sprite_left.getNext();
+				if (SHOTING) img = sprite_left_shot.get(sprite_left.getCurrentPosition());							
+				else if(BALL)img = sprite_left_ball.getNext();
+				//update para no tener retardo entre el movimiento y la animacion									
+				
+			}break;					
+		}
+		
+		if(jumpForce>0)jumpForce-=5;
+		if(jumpForce<0)jumpForce = 0;
+		System.out.println(JUMP+" "+player.isInAir() + " "+jumpForce);
+		int dx = player.getxMove();
+		if(moving==0)dx = 0;			
+		player.moveTo(player.getX() + dx,player.getY()+(player.getyMove()-jumpForce));
+		
+		//actualizar el frame		
+		player.update(img);
+		
+	}
+	
+}

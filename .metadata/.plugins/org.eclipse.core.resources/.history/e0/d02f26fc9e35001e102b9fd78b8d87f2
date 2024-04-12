@@ -1,0 +1,160 @@
+package controlador;
+
+import java.awt.Point;
+import javax.imageio.ImageIO;
+import modelo.*;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.Image;
+import javax.swing.JComponent;
+
+public class MapControl{
+	
+	public static Mapa mapa;
+	private Image textura;
+	
+	Container container;
+	
+	public static List<Struct> bloques =  new List<>();
+	
+	public MapControl(Container c) {
+		mapa = new Mapa();
+		cargarTextura();
+		crearColisiones();
+		container = c;
+	}
+	
+	public MapControl(int width ,int height,Container c){
+		mapa = new Mapa(width,height);
+		cargarTextura();
+		crearColisiones();
+		container = c;		
+	}
+
+	public MapControl(Dimension size,Container c) {
+		mapa = new Mapa(size.width,size.height);				
+		cargarTextura();
+		crearColisiones();
+		container = c;
+	}
+	
+	public void crearColisiones(){
+		int scale = PlayerControl.SCALE;
+		for(int[] arr: hitBoxes) {
+			Struct box = new Struct();
+			box.setSize(arr[2]*scale,arr[3]*scale);
+			box.setLocation(arr[0]*scale,arr[1]*scale);
+			mapa.setLayer(box, 1);
+			mapa.add(box);
+		}
+		
+	}
+	
+	public void cargarTextura() {
+		try {
+			textura = ImageIO.read(getClass().getResource("/images/SNES - Super Metroid - Crateria.png"));
+			textura = textura.getScaledInstance(textura.getWidth(null)*PlayerControl.SCALE, textura.getHeight(null)*PlayerControl.SCALE, Image.SCALE_FAST);					
+			mapa.setFondo(textura);
+			System.out.println(mapa.getSize());
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public Mapa getMapa() {
+		return mapa;
+	}
+	
+	int stop = 100;
+	public void reLocate(Point p) {
+		
+		int x = p.x + mapa.getX();
+		int y = p.y + mapa.getY();
+		
+		int toX = container.getWidth()/2;
+		int toY = container.getHeight()/2;
+		
+		int difX = Math.abs(x-toX);
+		int difY = Math.abs(y-toY);
+				
+		if(difX<100 && difY<50)return;
+				
+		int dx = x>toX?-1:x==toX?0:1;
+		int dy = y>toY?-1:y==toY?0:1;;
+		
+		if(difX<100)dx = 0;
+		
+		toX = mapa.getX()+dx;
+		toY = mapa.getY()+dy;
+				
+		if(toX>0)toX=0;
+		if(toX<-(mapa.getWidth()-container.getWidth()))toX=-(mapa.getWidth()-container.getWidth());		
+		if(toY>0)toY=0;
+		if(toY<-(mapa.getHeight()-container.getHeight()))toY=-(mapa.getHeight()-container.getHeight());
+		
+		mapa.setLocation(toX,toY);
+		mapa.repaint();
+		stop--;
+		if(stop == 0) {
+			stop=100;
+			return;
+		}
+		reLocate(p);
+		stop = 100;
+	}
+	
+	public void update() {
+		for(int i = 0 ; i < bloques.size(); i++) {
+			Struct bloque = bloques.getNext();
+			if(bloque.haveGravity())bloque.updateLocation();
+		}
+			
+	}
+
+	public void put(JComponent j) {
+		mapa.add(j);
+	}
+	
+	private int[][] hitBoxes = {
+			{500,200,130,1090},
+			{70,180,70,20},
+			{370,1040,30,20},
+			{450,1090,60,30},
+			{240,40,40,80},
+			{130,170,160,70},
+			{1260,0,20,190},
+			{430,1220,70,40},
+			{0,170,70,20},
+			{260,1260,260,30},
+			{260,1090,60,30},
+			{270,1220,70,40},
+			{440,950,110,20},
+			{350,1140,70,20},
+			{390,880,41,20},
+			{340,820,41,20},
+			{450,820,60,20},
+			{420,756,30,20},
+			{370,550,30,10},
+			{240,950,110,30},
+			{110,240,160,1050},
+			{0,0,20,190},
+			{480,600,40,130},
+			{320,570,40,90},
+			{450,320,70,20},
+			{270,540,100,70},
+			{270,680,120,20},
+			{260,360,80,20},
+			{480,430,40,130},
+			{440,640,40,30},
+			{440,470,40,30},
+			{340,450,30,20},
+			{400,390,30,20},
+			{270,200,100,10},
+			{350,260,70,20},
+			{400,200,250,20},
+			{130,170,160,70},
+			{20,10,1240,40},
+	};
+	
+}

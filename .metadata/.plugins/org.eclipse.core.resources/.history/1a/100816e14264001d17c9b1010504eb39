@@ -1,0 +1,38 @@
+package aplicación;
+
+public class Material {
+	private String nombre;
+	private String clasificacion;
+	private String proveedor;
+	private float precio;
+	private int tiempo;
+	
+	public Material(String nombre,String proveedor,float precio,int tiempo,String clasificacion) {
+		this.nombre=nombre;
+		this.proveedor=proveedor;
+		this.precio=precio;
+		this.tiempo=tiempo;
+		this.clasificacion=clasificacion;
+	}
+	
+	public float getCoste() {
+		return this.precio;
+	}
+	
+	public String getMercado() {
+		return this.clasificacion;
+	}
+	
+	public String toString() {
+		return this.nombre+" "+this.proveedor;
+	}
+	
+	public String informacion() {
+		return this.nombre+"|"+this.clasificacion+"|"+this.proveedor+"|"+this.precio+"|"+(clasificacion.equals("Nacional")?"":tiempo);
+	}
+
+	public String fichero() {
+		return this.nombre+" @\n"+this.clasificacion+"\n"+this.proveedor+"\n"+this.precio+"\n"+(clasificacion.equals("Nacional")?"":tiempo);
+	}
+	
+}

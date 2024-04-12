@@ -1,0 +1,71 @@
+package lietys;
+
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.Date;
+
+import javax.swing.JOptionPane;
+
+import java.util.ArrayList;
+
+public class Aereopuerto extends JFrame {
+	String rutaterminales="Terminales.dat";
+	String rutaaviones="Aviones.dat";
+
+
+	private void cargar_datos_terminales() {
+		FileInputStream fis = null;
+		try {
+			fis = new FileInputStream(rutaterminales);
+			ObjectInputStream oos = new ObjectInputStream(fis);
+			ArrayList<Terminal> readObject = (ArrayList<Terminal>) oos.readObject();
+			terminales = readObject;
+
+			fis.close();
+		}
+		catch(java.io.FileNotFoundException e) {
+			
+		}
+		catch(Exception e) {
+			new JOptionPane().showMessageDialog(null,  "Error al cargar datos");
+			e.printStackTrace();
+		}
+	}
+
+	private void cargar_datos_aviones() {
+		FileInputStream fis = null;
+		try {
+			fis = new FileInputStream(rutaaviones);
+			ObjectInputStream oos = new ObjectInputStream(fis);
+			ArrayList<Avion> readObject = (ArrayList<Avion>) oos.readObject();
+			aviones = readObject;
+
+			fis.close();
+		}
+		catch(java.io.FileNotFoundException e) {
+			
+		}
+		catch(Exception e) {
+			new JOptionPane().showMessageDialog(null,  "Error al cargar datos");
+			e.printStackTrace();
+		}
+	}
+	
+	public Aereopuerto() {
+		cargar_datos_terminales();
+		cargar_datos_aviones();
+	}
+
+	public static void main(String[] args) throws Exception{
+		try{
+			new Aereopuerto();
+		}
+		catch(Exception e) {
+			
+		}
+	}
+
+}
+

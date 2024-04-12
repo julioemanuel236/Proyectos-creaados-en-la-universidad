@@ -1,0 +1,36 @@
+package registroProveedores;
+
+import java.util.Scanner;
+
+public class App {
+
+    public static void main(String[] args) {
+        Scanner leer = new Scanner(System.in);
+        String[][] proveedores;
+        String[][] productos;
+        int f = 0, fProductos = 0;
+        int opcion = 0;
+        Metodos obj = new Metodos();
+        f = obj.pedirTamañoProveedores(f);
+        if (f > 0) {
+            proveedores = new String[f][2];
+            obj.ingresarProveedores(proveedores);
+            System.out.println("\nSus proveedores son:");
+            System.out.println("ID  NOMBRE");
+            obj.mostrarProveedores(proveedores);
+            productos = new String[fProductos][5];
+            String id = "";
+            String idProductos = "";
+            obj.ingresarProductos(fProductos, id, productos, idProductos);
+            String IDProductos ="";
+            System.out.println("Se buscara el producto por la id ");
+            for(int i=0;i<productos.length;i++) {
+            	System.out.println(productos[i][1]);
+            }
+            obj.buscarProductos(productos, IDProductos);
+        } else {
+            System.out.println("\nUsted ha ingredado un número menor o igual a 0, así que no puede ingresar ningún proveedor");
+            System.out.println("Gracias por utilizar nuestro programa");
+        }
+    }
+}

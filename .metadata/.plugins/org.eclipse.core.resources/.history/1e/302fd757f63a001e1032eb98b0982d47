@@ -1,0 +1,85 @@
+package controlador;
+
+
+import modelo.*;
+import modelo.enemigo.Enemigo;
+import modelo.items.Item;
+import modelo.jugador.Samus;
+import modelo.jugador.Shot;
+import modelo.mapa.Struct;
+import modelo.mapa.StructCabina;
+
+import java.awt.Dimension;
+import java.awt.Point;
+
+import javax.swing.ImageIcon;
+
+public class EntityControl {
+	
+	public static boolean colision(Mob a,Mob b) {
+		
+		//u hace referencia a que (a) esta encima de (b)
+		//d hace referencia a que (a) esta debajo de (b)
+		//r hace referencia a que (a) esta a la derecha de (b)
+		//l hace feferencia a que (a) esta a la derecha de (b)
+		//touch es si se estan tocando en general
+				
+		boolean u,d,r,l,touch,pies;		
+		
+		u = a.getBottomBounds().intersects(b.getTopBounds());
+		l = a.getRightBounds().intersects(b.getLeftBounds()); 
+		r = a.getLeftBounds().intersects(b.getRightBounds()); 
+		d = a.getTopBounds().intersects(b.getBottomBounds()); 		
+		touch = a.getBounds().intersects(b.getBounds());
+		
+		if(a instanceof Shot) {
+			if(b instanceof Shot)return false;
+			if(touch) {
+				if(!(b instanceof Samus)) {
+					((Shot)a).impactar(b);
+					return true;
+				}				
+			}
+			return false;
+		}
+				
+		if(b instanceof Enemigo && !(a instanceof Enemigo) && touch) {
+			((Enemigo)b).atacar(a);
+			return true;
+		}
+		
+		if(a instanceof Samus && b instanceof Item && touch) {
+			((Item)b).usarSobre(a);			
+			return false;
+		}
+		
+		if(b instanceof Struct && u) {
+			a.setInAir(false);
+			if(a instanceof Samus) {
+				((Samus)a).setJumping(false);
+			}
+		} 
+		
+		if(a instanceof Samus && b instanceof StructCabina && touch) {
+			System.out.println("TOCANDO CABINA");
+			Global.win = true;
+			return false;
+		}
+										
+		if (u || d)	a.setLocation(a.getX(),a.getLastY());					
+						
+		else if(r || l) a.setLocation(a.getLastX(),a.getY());						
+		
+		else if (touch) {
+			a.setLocation(a.getLastX(),a.getLastY());
+			if(a.getLastImg() != null)
+				a.setIcon(new ImageIcon(a.getLastImg()));
+		}
+
+		
+		return u || d || r || l || touch;
+		
+		
+	}	
+
+}

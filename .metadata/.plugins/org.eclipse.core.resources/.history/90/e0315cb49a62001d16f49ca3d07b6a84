@@ -1,0 +1,72 @@
+package aplicación;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+
+import javax.swing.JOptionPane;
+import javax.swing.JTextArea;
+
+public class Funciones {
+	static Trabajador[] trabajadores = new Trabajador[1000];
+	static int cTrabajadores=0;
+	
+	static ArrayList<Producto> productos = new ArrayList<Producto>();
+	static int cProductos=0;
+	
+	static Material[] materiales = new Material[1000];
+	static int cMateriales=0;
+	
+	public static void addTrabajador(Trabajador t){
+		trabajadores[cTrabajadores++]=t;
+		JOptionPane.showMessageDialog(null, "Trabajador añadido con exito" );
+	}
+	
+	public static void addProducto(Producto p){
+		if(cProductos==10) {
+			JOptionPane.showMessageDialog(null, "Se ha alcanzado el límite de productos" );
+			return;
+		}
+		productos.add(p);
+		cProductos++;
+		JOptionPane.showMessageDialog(null, "Producto añadido con exito" );
+	}
+	
+	public static void addMaterial(Material m){
+		materiales[cMateriales++]=m;
+		JOptionPane.showMessageDialog(null, "Material añadido con exito" );
+	}
+	
+	private static void ordenarProductos() {
+		Comparator<Producto> cmp = new Comparator<Producto>() {
+
+			@Override
+			public int compare(Producto o1, Producto o2) {
+				if
+				return 0;
+			}
+			
+		};
+		Collections.sort(productos,cmp);
+	}
+	
+
+	public static void productosDatos(JTextArea txt) {
+		ordenarProductos();
+		for(int i=0;i<cProductos;i++) 
+			txt.setText(txt.getText()+productos.get(i).informacion()+'\n');
+		
+	}
+	
+	
+	public static void exportacionDatos(JTextArea txt) {
+		for(int i=0;i<cProductos;i++) 
+			if(productos.get(i).exportacion())txt.setText(txt.getText()+productos.get(i).informacion()+'\n');
+		
+	}	
+	
+	public static void trabajadoresDatos(JTextArea txt) {
+		for(int i=0;i<cTrabajadores;i++)
+			if(trabajadores[i].getTipo().equals("Científico"))txt.setText(txt.getText()+trabajadores[i].informacion()+'\n');
+	}
+}

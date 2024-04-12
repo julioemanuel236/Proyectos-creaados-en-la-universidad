@@ -1,0 +1,60 @@
+package controlador;
+
+
+import modelo.*;
+import java.awt.Dimension;
+import java.awt.Point;
+
+public class EntityControl {
+
+	public static List<Mob> entidades =  new List<>();	
+	
+	public static boolean colision(Mob a,Mob b) {
+
+		boolean u,d,r,l;		
+		
+		u = a.getBounds().intersects(b.getTopBounds());
+		l = a.getBounds().intersects(b.getLeftBounds()); 
+		r = a.getBounds().intersects(b.getRightBounds()); 
+		d = a.getBounds().intersects(b.getBottomBounds()); 
+		
+		/*	
+  		if((d||u) && (l||r)) {
+			a.setLocation(a.getLastX(),a.getLastY());
+			b.setLocation(b.getLastX(),b.getLastY());
+		}
+		*/
+		
+/*		
+		if(u)System.out.println("COLISION ARRIBA");
+		if(d)System.out.println("COLISION ABAJO");
+		if(l)System.out.println("COLISION IZQUIERDA");
+		if(r)System.out.println("COLISION DERECHA");
+*/
+		
+		if (u || d) {
+			a.setLocation(a.getX(),a.getLastY());			
+		}
+		
+		if(r || l) {		
+			a.setLocation(a.getLastX(),a.getY());						
+		}
+		
+		return false;
+		
+	}
+	
+	
+	public static Point lugar_choque(Mob a,Mob b) {		
+		Point p= new Point(0,0);
+		int mx=5;
+		int my=5;	
+		if(b.getX()+b.getWidth()<a.getX()+mx)p.x=-1;
+		else if(b.getX()>a.getX()+a.getWidth()-mx)p.x=1;
+		if(b.getY()+b.getHeight()<a.getY()+my)p.y=1;
+		else if(b.getY()>a.getY()+a.getHeight()-my)p.y=-1;
+		
+		return p;
+	}
+
+}

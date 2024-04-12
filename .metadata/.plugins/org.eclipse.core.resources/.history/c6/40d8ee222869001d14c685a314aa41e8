@@ -1,0 +1,18 @@
+package agencia;
+
+public class Camion {
+
+	private String chapa;
+	
+	public Camion(String chapa) {
+		this.chapa=chapa;
+	}
+	
+	public String getChapa() {
+		return this.chapa;
+	}
+	
+	public String datos() {
+		return "Chapa: "+chapa;;
+	}
+}

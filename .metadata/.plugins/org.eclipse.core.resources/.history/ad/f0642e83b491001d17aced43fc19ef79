@@ -1,0 +1,10 @@
+package competencia;
+
+public class Participante {
+	String nombre;
+	String carnet;
+	int    edad;
+	String sexo;
+	Pais pais;
+	
+}

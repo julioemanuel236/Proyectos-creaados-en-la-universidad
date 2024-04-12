@@ -1,0 +1,212 @@
+package visorgasto;
+
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
+
+import javax.swing.JComponent;
+import javax.swing.JPanel;
+
+
+protected class VerticalScrollBar extends JComponent{
+	
+	private boolean bigerv=false;
+	private boolean smallerv=false;
+	
+	private void little() {
+		(new Thread() {
+			public void run() {
+				bigerv=false;
+				smallerv=true;
+				while(vsb.width>4) {
+					if(!smallerv)return;
+					  vsb.width--;
+					  //if(vsb.width%2==0)vsb.xpos++;
+					  vsb.repaint();
+					try {
+						sleep(10);
+					}
+					catch(Exception e) {
+						
+					}
+				}
+				vsb.big=false;
+			}
+		}).start();			
+	}
+	
+	private void crecer() {
+		(new Thread() {
+			public void run() {
+				bigerv=true;
+				smallerv=false;
+				while(vsb.width<widthmax) {
+					  if(!bigerv)return;
+					  vsb.width++;
+					  //if(vsb.width%2==0)vsb.xpos--;
+					  vsb.repaint();
+					try {
+						sleep(10);
+					}
+					catch(Exception e) {
+						
+					}
+				}
+				vsb.big=true;
+			}
+		}).start();			
+	}
+		
+	boolean big=false,mp=false,mi=false;
+	int x=0;
+	int xpos;
+	int y=0;
+	int my;
+	int ty;
+	int width   =4;
+	int widthmax =10;
+	int height  =1;
+	int heightnow = 1;
+	Color active=Color.green,inactive=Color.darkGray;
+	public VSB() {
+		__init();
+	}
+	
+	private void __init() {
+		xpos=ScrollPanel.this.getWidth()-width-7;
+		this.setBackground(Color.DARK_GRAY);
+		//this.setOpaque(true);
+		this.setSize(widthmax,height);
+		this.addMouseMotionListener(new MouseMotionListener() {
+			@Override
+			public void mouseDragged(MouseEvent e) {
+			//	System.out.println(y+"/"+ e.getY());
+				int toy = ty+e.getYOnScreen()-my;
+				
+				if(toy<0)toy=0;
+				else if(toy>ScrollPanel.this.getHeight()-VSB.this.getHeight())
+					toy=ScrollPanel.this.getHeight()-VSB.this.getHeight();
+				
+				VSB.this.setLocation(VSB.this.getX(),toy);
+				VSB v = VSB.this;
+				JPanel b = ScrollPanel.this.back;
+				b.setLocation(b.getX(),-(int)(b.getHeight()*(double)v.getY()/ScrollPanel.this.getHeight()));
+				//System.out.println(b.getHeight()*(double)v.getY()/ScrollPanel.this.getHeight());
+				
+			}
+
+			@Override
+			public void mouseMoved(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+		this.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub(int)
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				my=e.getYOnScreen();
+				ty=VSB.this.getY();
+				mp=true;
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				mp=false;
+				if(!mi)
+				little();
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				mi=true;
+				crecer();
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				mi=false;
+				if(!mp)
+				little();
+				
+			}
+			
+		});
+		ScrollPanel.this.addMouseWheelListener(new MouseWheelListener() {
+
+			int MOVE=50;
+			
+			private void Move(int d) {
+			//	System.out.println("ruedita VSB");
+				JPanel b = ScrollPanel.this.back;
+				VSB v = VSB.this;
+				(new Thread() {
+					public void run() {
+					if(ScrollPanel.VSB.this.isVisible())
+						for(int i=0;i<10;i++) {	
+							int t=(int)(((double)MOVE/b.getHeight())*100.00);
+						//	System.out.println("porcentaje: "+t);
+							int toy = v.getY()+(d>0?t:-t);
+							if(toy<0)toy=0;
+							else if(toy>ScrollPanel.this.getHeight()-VSB.this.getHeight())toy=ScrollPanel.this.getHeight()-VSB.this.getHeight();
+							v.setLocation(v.getX(),toy);
+							b.setLocation(b.getX(),-(int)(b.getHeight()*(double)v.getY()/ScrollPanel.this.getHeight()));
+						try {
+							sleep(10);
+						}
+						catch(Exception e) {
+							
+						}
+						}
+					}
+				}).start();
+
+			}
+		
+			@Override
+			public void mouseWheelMoved(MouseWheelEvent e) {
+			//	System.out.println(e.getWheelRotation());
+				Move(e.getWheelRotation());
+			}
+		});
+		if(ScrollPanel.this.getHeight()<=ScrollPanel.this.back.getHeight())this.setVisible(false);
+		toRight();
+	}
+	
+	protected void toLeft() {
+		xpos=5;
+	}
+	
+	protected void toRight() {
+		xpos=ScrollPanel.this.getWidth()-widthmax-(width/2);
+	}
+	
+	@Override
+	public void paint(Graphics g) {
+			toRight();
+			this.setLocation(xpos,this.getY());
+			//System.out.println(this.getLocation().toString());
+			height = (int) (ScrollPanel.this.getHeight()*(double)ScrollPanel.this.getHeight()/back.getHeight());
+			//	height = Math.max(height, 20);
+			this.setSize(width,heightnow<height?heightnow+=5:heightnow>height?--heightnow:height);
+			//this.setSize(width,height);
+			//System.out.println(ScrollPanel.this.getHeight()*(double)ScrollPanel.this.getHeight()/back.getHeight());
+			g.setColor(width>4?active:inactive);
+			g.fillRoundRect(x-1, y, width, height, width, width);
+	}
+
+
+}
+

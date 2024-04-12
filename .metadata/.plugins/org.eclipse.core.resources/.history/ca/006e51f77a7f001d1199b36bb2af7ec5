@@ -1,0 +1,24 @@
+package aplicacion;
+
+public class Astro extends Omnibus{
+	private int diaSalida;
+	private int horaSalida;
+	
+	
+	
+	
+	public int getDia() {
+		return dia;
+	}
+	
+	public int getHora() {
+		return hora;
+	}
+	
+	public String getDestino() {
+		return destino;
+	}
+	
+	
+	
+}

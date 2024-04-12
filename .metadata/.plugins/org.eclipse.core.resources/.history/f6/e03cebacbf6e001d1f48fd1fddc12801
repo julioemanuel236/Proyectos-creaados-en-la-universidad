@@ -1,0 +1,9 @@
+package mercado;
+
+public class Nacional extends Producto{
+
+	public Nacional(String n,String c,float p,int ca) {
+		super(n,c,p,ca);
+		
+	}
+}

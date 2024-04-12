@@ -1,0 +1,51 @@
+package Algoritmos;
+
+import java.util.Comparator;
+import java.util.PriorityQueue;
+public class ShortesJobFirst {
+
+	PriorityQueue<Proceso> procesos;
+	
+	private Proceso inProcces;
+	
+	public ShortesJobFirst() {
+		procesos = new PriorityQueue<Proceso>(/*new Comparator() {
+
+			@Override
+			public int compare(Object o1, Object o2) {
+				return ((Proceso)o1).compareTo(o2);				
+			}
+			
+		}*/);
+		inProcces=null;		
+	}
+	
+	public void add(Proceso pr) {
+		procesos.add(pr);
+	}
+	
+	public Proceso procces() {
+		if(inProcces == null || inProcces.isTerminated()) {
+			if(procesos.isEmpty())return null;
+			inProcces = procesos.poll();							
+		}
+		inProcces.procces();
+		return inProcces;
+	}
+	
+	public static void main(String args[]) {
+		ShortesJobFirst sjf = new ShortesJobFirst();
+		System.out.println();
+		sjf.add(new Proceso(1,1,1));
+		sjf.add(new Proceso(2,2,2));
+		sjf.add(new Proceso(3,2,4));
+		sjf.add(new Proceso(4,2,3));
+		
+		while(!sjf.procesos.isEmpty()) {
+			System.out.println (sjf.procesos.poll().getId());
+				
+			
+		}
+	}
+	
+}

@@ -1,0 +1,315 @@
+package App;
+
+import javax.swing.*;
+import javax.swing.border.LineBorder;
+
+import algoritmos.*;
+
+import java.util.PriorityQueue;
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Comparator;
+public class Ventana extends JFrame{
+
+	PriorityQueue<Proceso> procesos = new PriorityQueue<>(new Comparator() {
+
+		@Override
+		public int compare(Object o1, Object o2) {
+			Proceso p1 = (Proceso)o1;
+			Proceso p2 = (Proceso)o2;
+			if(p1.getInicio()<p2.getInicio())return -1;
+			else if(p1.getInicio()>p2.getInicio())return 1;
+			return 0;
+		}
+		
+	});
+	
+	ScrollPanel zone;
+	ScrollPanel table;
+	AlgoritmoPlanificacion algoritmo;
+	int tiempo=0;
+	
+	Ventana(){
+		setLayout(null);
+		setResizable(false);
+		setSize(900,500);
+		iniZone();
+		iniTable();		
+		iniButtons();
+		setLocationRelativeTo(null);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		JPanel p = new JPanel();
+		p.setSize(getSize());
+		p.setBackground(Color.DARK_GRAY);
+		add(p);
+/*		algoritmo = new ShortesJobFirst();
+		procesos.add(new Proceso(1,1,1,1));
+		procesos.add(new Proceso(2,5,2,1));
+		procesos.add(new Proceso(3,4,3,1));
+		procesos.add(new Proceso(4,3,4,1));
+		procesos.add(new Proceso(5,2,5,1));*/
+		setVisible(true);
+//		run();
+	}
+	
+	private void iniButtons() {	
+		JComboBox<String> jcb = new JComboBox<>();
+		jcb.setSize(table.getWidth(),50);
+		jcb.setLocation(getWidth()-jcb.getWidth()-15,15);
+		jcb.requestFocus();
+		jcb.addItem("Prioridad Apropiativo");		
+		jcb.addItem("Round Robin");		
+		jcb.addItem("SJF");
+		add(jcb);
+		
+		JTextField arr[] = new JTextField[5];
+		JLabel arrj[] = new JLabel[5];
+		String txt[]= {"Tiempo","T Inicio","Prioridad","Quantum","SIM"};
+		for(int i=0;i<arr.length;i++) {
+			JLabel jl = new JLabel(txt[i]);
+			JTextField jt = new JTextField();
+			jl.setSize((jcb.getX()-table.getWidth()-table.getX()-20)/8,25);
+			jl.setForeground(Color.white);
+			jl.setLocation((5+(table.getWidth()+table.getX())+(i*(jl.getWidth()*2)))+(i*5),5);
+			jl.setHorizontalAlignment(JLabel.CENTER);
+			jt.setSize(jl.getSize());
+			//jt.setForeground(Color.white);
+			jt.setLocation(jl.getX(),jl.getY()+jl.getHeight());			
+			add(jl);
+			add(jt);
+			arr[i]=jt;
+			arrj[i]=jl;
+		}
+		arr[4].setLocation(arr[3].getLocation());
+		arrj[4].setLocation(arrj[3].getLocation());
+		arr[3].setLocation(arr[2].getLocation());
+		arrj[3].setLocation(arrj[2].getLocation());
+		
+		jcb.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				procesos.clear();
+				if(jcb.getSelectedIndex()==0) {
+					arr[3].setVisible(false);
+					arrj[3].setVisible(false);
+					arr[2].setVisible(true);
+					arrj[2].setVisible(true);
+					algoritmo = new PrioridadApropiativo();
+				}
+				else if(jcb.getSelectedIndex()==1) {
+					arr[2].setVisible(false);
+					arrj[2].setVisible(false);
+					arr[3].setVisible(true);
+					arrj[3].setVisible(true);					
+				}
+				else {
+					arr[3].setVisible(false);
+					arrj[3].setVisible(false);
+					arr[2].setVisible(false);
+					arrj[2].setVisible(false);
+					algoritmo = new ShortesJobFirst();
+				}
+				zone.back.removeAll();
+				zone.back.repaint();
+				table.back.setSize(table.back.getWidth(),0);
+				table.back.removeAll();
+				table.back.repaint();
+				
+			}
+			
+		});
+		jcb.setSelectedIndex(0);
+		
+		JButton agregar = new JButton("Agregar Proceso"); 
+			
+		agregar.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {				
+				int id=procesos.size()+1,time = 0,tInicio=0,prioridad=0,quantum=0;
+				try {
+					tiempo = Integer.parseInt(arr[5].getText());
+				}
+				catch(Exception ee) {
+					
+				}
+				if(jcb.getSelectedIndex()==0) {					
+					try {	
+						 time = Integer.parseInt(arr[0].getText());
+						 tInicio = Integer.parseInt(arr[1].getText());
+						 prioridad = Integer.parseInt(arr[2].getText());
+						 algoritmo = new PrioridadApropiativo();
+					}
+					catch(Exception ee) {
+						ee.printStackTrace();
+					}
+				}
+				else if(jcb.getSelectedIndex()==1) {
+					try {
+						time = Integer.parseInt(arr[0].getText());
+						 tInicio = Integer.parseInt(arr[1].getText());
+						quantum = Integer.parseInt(arr[3].getText());	
+						algoritmo = new RoundRobin(quantum);
+					}
+					catch(Exception ee) {
+						ee.printStackTrace();
+					}
+				}
+				else {
+					try {
+						time = Integer.parseInt(arr[0].getText());
+						tInicio = Integer.parseInt(arr[1].getText());
+						algoritmo = new ShortesJobFirst();
+					}
+					catch(Exception ee) {
+						ee.printStackTrace();
+					}
+				}
+				Proceso pr = new Proceso(id,tInicio,time,prioridad);
+				procesos.add(pr);
+				
+				JPanel p = new JPanel();
+				p.setLayout(null);
+				p.setBackground(Color.DARK_GRAY);
+				p.setSize(table.getWidth(),20);
+				int arr[]= {id,time,tInicio,prioridad};
+				for(int i=0;i<arr.length;i++) {
+					JLabel jl = new JLabel(""+arr[i]);
+					jl.setSize(table.getWidth()/4,20);			
+					jl.setOpaque(true);
+					jl.setBackground(Color.DARK_GRAY);
+					jl.setForeground(Color.white);
+					jl.setBorder(new LineBorder(Color.blue));
+					jl.setLocation(0+(i*jl.getWidth()),0);
+					jl.setHorizontalAlignment(JLabel.CENTER);
+					jl.setForeground(Color.white);
+					p.add(jl);
+				}
+				table.add_item(p, 5);
+			}
+			
+		});
+		
+		agregar.setSize(170,20);
+		agregar.setLocation((getWidth()-table.getWidth()-table.getX())/2-(agregar.getWidth()/2),zone.getY()-agregar.getHeight());
+		add(agregar);
+		
+		JButton ejecutar = new JButton("->");
+		ejecutar.setSize(50,50);
+		ejecutar.setLocation(jcb.getX()-ejecutar.getWidth(),15);
+		add(ejecutar);
+		
+		ejecutar.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				run();				
+			}
+		});
+	}
+	
+	private void iniTable() {
+		table = new ScrollPanel(zone.getX(),getHeight()-55);
+		table.border.color("all",Color.blue);
+		table.back.setBackground(Color.darkGray);
+		table.setLocation(0,20);
+		String arr[]= {"ID","T","Ti","P"};
+		for(int i=0;i<arr.length;i++) {
+			JLabel jl = new JLabel(arr[i]);
+			jl.setSize(table.getWidth()/4,20);			
+			jl.setBorder(new LineBorder(Color.blue));
+			jl.setLocation(0+(i*jl.getWidth()),0);
+			jl.setHorizontalAlignment(JLabel.CENTER);
+			jl.setForeground(Color.white);
+			add(jl);
+		}
+		add(table);
+	}
+	
+	private void iniZone() {
+		zone= new ScrollPanel (getWidth()-200,getHeight()-115);	
+		zone.border.color("all",Color.blue);
+		zone.back.setBackground(Color.darkGray);		
+		zone.hsb.inactive = Color.white;
+		zone.hsb.active = Color.cyan;
+		zone.vsb.inactive = Color.white;
+		zone.vsb.active = Color.cyan;
+		zone.setLocation(180,80);
+		zone.setOpaque(true);
+		zone.setBackground(Color.gray);
+		add(zone);
+					
+	}
+	
+	void run() {
+		
+		for(int i=1;i<=tiempo;i++) {
+			JLabel jl = new JLabel(""+i);
+			jl.setSize(25,25);
+			jl.setLocation((i*jl.getWidth()),0);
+			jl.setForeground(Color.white);
+			jl.setHorizontalAlignment(JLabel.CENTER);			
+			zone.back.add(jl);
+			zone.back.setSize(Math.max(zone.back.getWidth(), (i+1)*25),zone.back.getHeight());
+		}
+		for(int i=1;i<=procesos.size();i++) {
+			JLabel jl = new JLabel();
+			jl.setSize(25,25);
+			jl.setText(""+i);
+			jl.setLocation(5,(i*jl.getHeight()));
+			jl.setForeground(Color.white);
+			jl.setHorizontalAlignment(JLabel.CENTER);
+			jl.setVerticalAlignment(JLabel.CENTER);			
+			zone.back.setSize(zone.back.getWidth(),Math.max(zone.back.getHeight(), (i+1)*25));
+			zone.back.add(jl);
+		}
+		
+		(new Thread() {
+			@Override
+			public void run() {
+
+				PriorityQueue<Proceso> procesos = new PriorityQueue<>(new Comparator() {
+
+					@Override
+					public int compare(Object o1, Object o2) {
+						Proceso p1 = (Proceso)o1;
+						Proceso p2 = (Proceso)o2;
+						if(p1.getInicio()<p2.getInicio())return -1;
+						else if(p1.getInicio()>p2.getInicio())return 1;
+						return 0;
+					}
+					
+				});
+
+				procesos.addAll(Ventana.this.procesos);
+				for(int i=0;i<=tiempo;i++) {
+					while(!procesos.isEmpty() && procesos.peek().getInicio()==i) {
+						System.out.println("AGREGANDO A ALGORITMO");
+						algoritmo.add(procesos.poll());
+					}
+					System.out.println();
+					Proceso pro = algoritmo.procces();	
+					System.out.println(pro);
+					if(pro==null)continue;
+					JLabel jl = new JLabel();
+					jl.setSize(25,25);
+					jl.setOpaque(true);					
+					jl.setLocation((i*jl.getWidth()),(pro.getId()*jl.getHeight()));
+					if(pro.isTerminated())jl.setBackground(Color.green);
+					else jl.setBackground(Color.yellow);
+					zone.back.setSize(Math.max(zone.back.getWidth(), i*25),zone.back.getHeight());
+					zone.back.add(jl);
+					zone.back.repaint();
+					
+				}
+			}
+		}).start();
+		
+	}
+	
+	public static void main(String args[]) {
+		new Ventana();
+	}
+}

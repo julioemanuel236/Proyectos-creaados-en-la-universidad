@@ -1,0 +1,16 @@
+package agencia;
+
+public class Chofer extends Trabajador{
+
+	private	char categoria;
+	
+	public Chofer(String n,String c,String ne,String s,String t,String d,int x) {
+		super(n,c,ne,s,t,d,x);
+		if(x>=5)categoria='A';
+		else categoria='B';
+	}
+	
+	public char getCategoria(){
+		return categoria;
+	}
+}

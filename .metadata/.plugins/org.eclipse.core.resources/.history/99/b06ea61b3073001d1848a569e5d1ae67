@@ -1,0 +1,17 @@
+package lietys;
+
+import java.io.Serializable;
+
+public class Reservacion implements Serializable{
+	Persona cliente;
+	Asiento asiento;
+	Vuelo   vuelo;
+	float   precio;
+	
+	public Reservacion(Persona cliente,Asiento asiento,Vuelo vuelo,float precio){
+		this.cliente=cliente;
+		this.asiento=asiento;
+		this.vuelo  =vuelo;
+		this.precio=precio;
+	}
+}

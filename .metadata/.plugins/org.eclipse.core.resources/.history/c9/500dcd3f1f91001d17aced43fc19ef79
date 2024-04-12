@@ -1,0 +1,9 @@
+package empresa_turistica;
+
+public class Guia extends Persona{
+
+	public Guia(String nombre, char sexo, String pasaporte) {
+		super(nombre, sexo, pasaporte);
+	}
+		
+}

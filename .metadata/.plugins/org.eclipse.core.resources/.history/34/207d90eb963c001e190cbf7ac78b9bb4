@@ -1,0 +1,58 @@
+package simulacion;
+import java.util.concurrent.CyclicBarrier;
+import java.util.concurrent.locks.ReentrantLock;
+
+import elementos.Matriz;
+import elementos.serpiente.*;
+public class Simulacion extends ReentrantLock{
+
+	public static CyclicBarrier BARRIERSNAKES;
+	public static CyclicBarrier BARRIER;
+	private int muertes = 0;
+	private int serpientes;
+	public Simulacion(int hilos) {
+		this.serpientes = hilos;
+		BARRIERSNAKES = new CyclicBarrier(hilos);
+		BARRIERSNAKES = new CyclicBarrier(hilos+1);
+	}
+	
+	public void actualizarSerpiente(Serpiente s) {
+		lock();
+		try {
+			s.move();
+		}		
+		finally {
+			unlock();
+		}
+	}
+	
+	public void mostrar(Matriz tablero) {
+		boolean ok = true;
+		while(ok) {
+
+			try {
+				Thread.sleep(300);
+				for(int i=0 ; i<tablero.getSize(); i++) {
+					for(int j=0 ; j<tablero.getSize(); j++) {
+						int s = tablero.get(i, j);
+						if(s == -1 )System.out.print('*');
+						else System.out.print(s);
+					}
+					System.out.println();
+				}
+				BARRIER.await();
+				
+			}
+			catch(Exception e) {
+				
+			}
+			
+			
+			
+			
+			System.out.println();
+
+			
+		}
+	}
+}

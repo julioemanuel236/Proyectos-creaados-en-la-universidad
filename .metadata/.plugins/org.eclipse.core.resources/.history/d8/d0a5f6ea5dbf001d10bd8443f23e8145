@@ -1,0 +1,10 @@
+package game;
+
+public class Arbol extends Entity {
+
+	public Arbol(String color) {
+		super(75,'#',color);
+		// TODO Auto-generated constructor stub
+	}
+
+}

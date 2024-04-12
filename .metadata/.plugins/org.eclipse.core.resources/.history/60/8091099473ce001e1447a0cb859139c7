@@ -1,0 +1,21 @@
+package eventos;
+
+public final class MouseTrackingThread {
+	
+	public static Thread mouseTrakcingThread = new Thread() {
+		
+		public void run() {
+			while(true) {
+				
+				try {
+					sleep(10);
+				}
+				catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
+	};
+	
+}

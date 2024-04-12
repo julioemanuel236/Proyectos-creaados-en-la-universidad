@@ -1,0 +1,12 @@
+package game;
+
+public class Tablero {
+	int width;
+	int height;
+	Entity map[][];
+	
+	public Tablero() {
+		// TODO Auto-generated constructor stub
+	}
+
+}

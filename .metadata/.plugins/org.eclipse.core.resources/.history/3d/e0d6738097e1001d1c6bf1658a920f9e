@@ -1,0 +1,10 @@
+package App;
+
+import java.util.LinkedList;
+
+public class Historial {
+	LinkedList<Tablero> tableros = LinkedList<>();
+	public Historial() {
+		
+	}
+}

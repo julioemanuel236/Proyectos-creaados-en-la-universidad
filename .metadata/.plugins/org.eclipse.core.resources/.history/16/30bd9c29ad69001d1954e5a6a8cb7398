@@ -1,0 +1,87 @@
+package agencia;
+import javax.swing.*;
+import java.awt.*;
+
+public class Ventana extends JFrame{
+
+	JPanel menu;
+	
+	public void menu() {
+		menu = new JPanel();
+		menu.setSize(210,500);
+		menu.setLocation(getWidth()-menu.getWidth()-20,0);
+		botones();
+		
+		add(menu);
+	}
+	
+	public void botones() {
+		JButton nuevo,cargasemana,distanciapromediocamion,viajeschapa,mayortransportador,
+		modernospordistancia,masprovincias,generarnomina,guardarviajes,cargarviajes;
+		menu.setLayout(null);
+		
+		nuevo = new JButton("Nuevo Elemento");
+		nuevo.setSize(200,35);
+		nuevo.setLocation(5,5);
+		menu.add(nuevo);
+				
+		cargasemana = new JButton("Carga Semanal");
+		cargasemana.setSize(200,35);
+		cargasemana.setLocation(5,45);
+		menu.add(cargasemana);			
+		
+		distanciapromediocamion = new JButton("Distancia Promedio");
+		distanciapromediocamion.setSize(200,35);
+		distanciapromediocamion.setLocation(5,85);
+		menu.add(distanciapromediocamion);
+						
+		viajeschapa = new JButton("Viajes por Chapa");
+		viajeschapa.setSize(200,35);
+		viajeschapa.setLocation(5,125);
+		menu.add(viajeschapa);
+		
+		mayortransportador = new JButton("Mayor Transportador");
+		mayortransportador.setSize(200,35);
+		mayortransportador.setLocation(5,165);
+		menu.add(mayortransportador);
+				
+		modernospordistancia = new JButton("Lista Modernos");
+		modernospordistancia.setSize(200,35);
+		modernospordistancia.setLocation(5,205);
+		menu.add(modernospordistancia);
+				
+		masprovincias = new JButton("Mas Provincias");
+		masprovincias.setSize(200,40);
+		masprovincias.setLocation(5,245);
+		menu.add(masprovincias);
+		
+		generarnomina = new JButton("Generar Nómina");
+		generarnomina.setSize(200,40);
+		generarnomina.setLocation(5,295);
+		menu.add(generarnomina);
+		
+		guardarviajes = new JButton("Guardar Viajes");
+		guardarviajes.setSize(200,40);
+		guardarviajes.setLocation(5,335);
+		menu.add(guardarviajes);
+		
+		cargarviajes = new JButton("CargarViajes");
+		cargarviajes.setSize(200,40);
+		cargarviajes.setLocation(5,375);
+		menu.add(cargarviajes);
+	}
+	
+	Ventana(){
+		setSize(820,500);
+		setResizable(false);
+		setLayout(null);
+		menu();
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setVisible(true);
+	}
+	
+	public static void main(String args[]) {
+		new Ventana();
+	}
+	
+}

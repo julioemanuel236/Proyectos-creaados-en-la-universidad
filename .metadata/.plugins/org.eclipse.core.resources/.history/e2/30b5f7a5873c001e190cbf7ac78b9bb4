@@ -1,0 +1,30 @@
+package elementos.serpiente;
+
+import elementos.Matriz;
+
+public class Serpiente {
+
+	private Cuerpo cabeza;
+	private Matriz tablero;
+	
+	public Serpiente(int x,int t,int size,int pasos) {
+		
+	}
+	
+	public int getX() {
+		return cabeza.getX();
+	}
+	
+	public int getY() {
+		return cabeza.getY();
+	}
+	
+	public int getId() {
+		return cabeza.getId();
+	}
+	
+	public void move() {
+		
+	}
+	
+}

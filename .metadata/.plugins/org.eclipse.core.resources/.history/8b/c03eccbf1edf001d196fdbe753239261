@@ -1,0 +1,77 @@
+public class AjaxSemantico extends AjaxParser {
+    private Map<String, Double> variables = new HashMap<String, Double>();
+
+    public void parse() throws ParseException {
+        start();
+    }
+
+    public void asignacion() throws ParseException {
+        Token identificador = jj_consume_token(IDENTIFICADOR);
+        jj_consume_token(IGUAL);
+        Double valor = expresion();
+        jj_consume_token(PUNTO_COMA);
+        variables.put(identificador.image, valor);
+    }
+
+    public Double expresion() throws ParseException {
+        Double resultado = termino();
+        while (true) {
+            if (jj_2_1(3)) {
+                jj_consume_token(SUMA);
+                resultado += termino();
+            } else if (jj_2_1(4)) {
+                jj_consume_token(RESTA);
+                resultado -= termino();
+            } else {
+                break;
+            }
+        }
+        return resultado;
+    }
+
+    public Double termino() throws ParseException {
+        Double resultado = factor();
+        while (true) {
+            if (jj_2_1(5)) {
+                jj_consume_token(MULTIPLICACION);
+                resultado *= factor();
+            } else if (jj_2_1(6)) {
+                jj_consume_token(DIVISION);
+                resultado /= factor();
+            } else {
+                break;
+            }
+        }
+        return resultado;
+    }
+
+    public Double factor() throws ParseException {
+        Token token = null;
+        Double resultado = null;
+        switch ((token = jj_consume_token(0)).kind) {
+        case ENTERO:
+            resultado = Double.parseDouble(token.image);
+            break;
+        case FLOAT:
+            resultado = Double.parseDouble(token.image);
+            break;
+        case IDENTIFICADOR:
+            if (variables.containsKey(token.image)) {
+                resultado = variables.get(token.image);
+            } else {
+                throw new ParseException("Variable no definida: " + token.image);
+            }
+            break;
+        case PARENTESIS_ABIERTO:
+            resultado = expresion();
+            jj_consume_token(PARENTESIS_CERRADO);
+            break;
+        default:
+            throw new ParseException("Factor inválido: " + token.image);
+        }
+        return resultado;
+    }
+
+    // Otras reglas gramaticales y semánticas aquí
+}
+

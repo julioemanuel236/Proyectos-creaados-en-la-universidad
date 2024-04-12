@@ -1,0 +1,7 @@
+package cadena;
+import java.util.ArrayList;
+
+public class Cadena {
+	private ArrayList<Hotel> hoteles;
+	private ArrayList<Cliente> clientes;
+}

@@ -1,0 +1,54 @@
+package project;
+public class Garage {
+
+	final private Car parking[];
+	private int cars;
+	
+	public Garage(int n) {
+		parking = new Car[n];
+	}
+	
+	public Car get(int pos) {
+		if(pos<1||pos>parking.length)return null;
+		return parking[pos-1];
+	}
+	
+	public void showParking() {
+		for(int i=0;i<parking.length;i++) {
+			System.out.print("Space "+(i+1)+": ");
+			if(parking[i]==null)System.out.print("empty");
+			else System.out.println(parking[i].toString());
+		}
+	}
+	
+	public void noCarsError() {
+		System.out.println("There are no cars currently in the garage.");
+	}
+	
+	public void refuelCar() {
+		if(isEmpty())noCarsError();
+		Car car = selectCar();
+		if(car==null) {
+			
+		}
+		else {
+			
+		}
+	}
+	
+	public Car selectCar() {
+		showParking();
+		while(true) {
+			int pos = InputRead.nextInt();
+			if( pos<1||pos>parking.length) {
+				System.out.println("Not valid");
+			}
+			else return get(pos);
+		}
+	}
+	
+	public boolean isEmpty() {
+		return cars==0;
+	}
+	
+}

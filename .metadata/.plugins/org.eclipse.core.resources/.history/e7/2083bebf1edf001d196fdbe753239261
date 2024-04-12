@@ -1,0 +1,127 @@
+import java.util.*;
+
+%%
+%class AjaxLexer
+%public
+%unicode
+%type Token
+
+/* Definición de tokens */
+%{
+    public enum Token {
+        PALABRA_RESERVADA,
+        IDENTIFICADOR,
+        ENTERO,
+        FLOAT,
+        OPERADOR,
+        PARENTESIS_ABIERTO,
+        PARENTESIS_CERRADO,
+        COMA,
+        PUNTO_COMA,
+        CADENA,
+        COMENTARIO
+    }
+%}
+
+/* Definición de expresiones regulares */
+%{
+    /* Definición de palabras reservadas */
+    String[] palabras_reservadas = {
+        "if",
+        "else",
+        "for",
+        "while",
+        "do",
+        "switch",
+        "case",
+        "break",
+        "continue",
+        "return"
+    };
+
+    /* Definición de identificadores */
+    String identificador = "[a-zA-Z][a-zA-Z0-9]*";
+
+    /* Definición de números enteros */
+    String entero = "-?[0-9]+";
+
+    /* Definición de números flotantes */
+    String flotante = "-?[0-9]+\\.[0-9]+";
+
+    /* Definición de operadores */
+    String operador = "[+\\-*/%]";
+
+    /* Definición de símbolos */
+    String parentesis_abierto = "\\(";
+    String parentesis_cerrado = "\\)";
+    String coma = ",";
+    String punto_coma = ";";
+
+    /* Definición de cadenas */
+    String cadena = "\"[^\"]*\"";
+
+    /* Definición de comentarios */
+    String comentario = "//.*|/\\*(.|\\n)*?\\*/";
+%}
+
+%%
+
+/* Definición de reglas */
+{palabras_reservadas}      { return Token.PALABRA_RESERVADA; }
+{identificador}            { return Token.IDENTIFICADOR; }
+{entero}                   { return Token.ENTERO; }
+{flotante}                 { return Token.FLOAT; }
+{operador}                 { return Token.OPERADOR; }
+{parentesis_abierto}       { return Token.PARENTESIS_ABIERTO; }
+{parentesis_cerrado}       { return Token.PARENTESIS_CERRADO; }
+{coma}                     { return Token.COMA; }
+{punto_coma}               { return Token.PUNTO_COMA; }
+{cadena}                   { return Token.CADENA; }
+{comentario}               { /* Ignorar comentarios */ }
+
+/* Ignorar espacios en blanco y caracteres de nueva línea */
+[ \t\r\n]+                 { /* Ignorar espacios en blanco */ }
+
+/* Manejo de errores */
+.                          { throw new RuntimeException("Caracter inesperado: " + yytext()); }
+
+%%
+
+/* Código Java para manejar el análisis léxico */
+public Token yylex() throws IOException {
+    while (true) {
+        int c = yylexer.advance();
+
+        if (c == -1) {
+            return null;
+        }
+
+        switch (c) {
+            case Token.COMENTARIO:
+            case Token.PALABRA_RESERVADA:
+            case Token
+        case Token.IDENTIFICADOR:
+        case Token.ENTERO:
+        case Token.FLOAT:
+        case Token.OPERADOR:
+        case Token.PARENTESIS_ABIERTO:
+        case Token.PARENTESIS_CERRADO:
+        case Token.COMA:
+        case Token.PUNTO_COMA:
+        case Token.CADENA:
+            return Token.values()[c];
+        default:
+            throw new AssertionError("Token desconocido: " + c);
+    }
+}
+}
+
+/* Ejemplo de uso */
+public static void main(String[] args) throws IOException {
+AjaxLexer lexer = new AjaxLexer(new FileReader("codigo.ajax"));
+Token token = lexer.yylex();
+while (token != null) {
+    System.out.println(token);
+    token = lexer.yylex();
+}
+}

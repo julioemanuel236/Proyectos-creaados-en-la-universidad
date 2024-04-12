@@ -1,0 +1,131 @@
+package clases;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class Ventana extends JFrame{
+	Subdireccion estudiantil = new Subdireccion("Estudiante","Havana");
+
+	private JPanel opciones;
+	Dimension tamannoPanel = new Dimension(600,500);
+	JPanel  interaccion;
+	
+	Subdireccion sb = new Subdireccion("Subdireccion","Algun lugar");
+
+	public void iniciar() {
+		JPanel panel = new JPanel();
+		add(panel);
+		
+		JButton nuevoEdificio = new JButton("Nuevo Edificio");
+		panel.add(nuevoEdificio);
+		nuevoEdificio.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				sb.nuevoEdificio();
+			}
+			
+		});
+		
+		JButton nuevoBecado = new JButton("Nuevo Becado");
+		panel.add(nuevoBecado);
+		nuevoBecado.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				sb.nuevoBecado();				
+			}
+			
+		});
+		
+		JButton datosEdificio = new JButton("Datos de un Edificio");
+		panel.add(datosEdificio);
+		datosEdificio.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String s = sb.datosEdificio();				
+				JOptionPane.showInternalMessageDialog(null, s);
+			}
+			
+		});
+		
+		JButton datosBecadoCi = new JButton("Datos de un Becado por su carnet");
+		panel.add(datosBecadoCi);
+		datosBecadoCi.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String s = sb.datosBecadoCi();				
+				JOptionPane.showInternalMessageDialog(null, s);				
+			}
+			
+		});
+		
+		JButton edificioMasBecados = new JButton("Edificio con mas Becados");
+		panel.add(edificioMasBecados);
+		edificioMasBecados.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String s = sb.edificioMasBecados();				
+				JOptionPane.showInternalMessageDialog(null, s);				
+			}
+			
+		});
+		
+		JButton cantidadBecadosTipo = new JButton("Cantidad de Becados por Tipo");
+		panel.add(cantidadBecadosTipo);
+		cantidadBecadosTipo.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String s = sb.cantidadBecadosTipo();				
+				JOptionPane.showInternalMessageDialog(null, s);				
+			}
+			
+		});
+	
+		JButton porcentajeOcupacionTotal = new JButton("Porcentaje de Ocupacion total de los Edificios");
+		panel.add(porcentajeOcupacionTotal);
+		porcentajeOcupacionTotal.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String s = sb.porcentajeOcupacionTotal();				
+				JOptionPane.showInternalMessageDialog(null, s);				
+			}
+			
+		});
+		
+		JButton porcentajeOcupacionEdificio = new JButton("Porcentaje de Ocupacion total de un Edificio");
+		panel.add(porcentajeOcupacionEdificio);
+		porcentajeOcupacionEdificio.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String s = sb.porcentajeOcupacionEdificio();				
+				JOptionPane.showInternalMessageDialog(null, s);				
+			}
+			
+		});
+		
+	}
+	
+	
+	public Ventana(){
+		setResizable(false);
+		setSize(250,300);
+		setTitle("Residencia");
+		iniciar();
+		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		this.setVisible(true);
+	}
+
+	
+	public static void main(String args[]) {
+		new Ventana();
+	}
+}

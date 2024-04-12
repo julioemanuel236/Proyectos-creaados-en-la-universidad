@@ -1,0 +1,10 @@
+package App;
+
+import javax.swing.*;
+
+public class Reporte extends JDialog{
+
+	public Reporte() {
+		
+	}
+}

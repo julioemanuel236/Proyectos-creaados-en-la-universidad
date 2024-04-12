@@ -1,0 +1,19 @@
+package ejercicio1;
+
+
+
+public class Main {
+	
+	public abstract class Reloj implements ClienteTemporizador,Temporizador{
+
+		@Override
+		public void timeout() {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	}
+	
+	Puerta puerta = new Puerta();	
+	PuertaTemporizada puertaT = new PuertaTemporizada();
+}

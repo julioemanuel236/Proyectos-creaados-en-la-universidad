@@ -1,0 +1,9 @@
+package Algoritmos;
+
+import java.util.Queue;
+public class RoundRobin {
+	Queue<Proceso> procesos;
+	public RoundRobin() {
+		procesos = new Queue<Proceso>();
+	}
+}

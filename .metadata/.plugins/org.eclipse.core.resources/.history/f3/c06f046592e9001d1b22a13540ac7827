@@ -1,0 +1,113 @@
+package tareas;
+import java.util.Scanner;
+
+public class Cifrado {
+
+	public static int[][] cifradoHill(String frase, int[][] clave) {
+	    int n = clave.length;
+	    int m = (frase.length() + n - 1) / n;
+	    int[][] mensajeMatriz = new int[n][m];
+	    int indice = 0;
+	    for (int j = 0; j < m; j++) {
+	        for (int i = 0; i < n; i++) {
+	            if (indice < frase.length()) {
+	                mensajeMatriz[i][j] = frase.charAt(indice) % 256;
+	                indice++;
+	            } else {
+	                mensajeMatriz[i][j] = ' ' % 256;
+	            }
+	        }
+	    }
+	    int[][] cifradoMatriz = new int[n][m];
+	    for (int j = 0; j < m; j++) {
+	        for (int k = 0; k < n; k++) {
+	            cifradoMatriz[k][j] = 0;
+	            for (int l = 0; l < n; l++) {
+	                cifradoMatriz[k][j] += clave[k][l] * mensajeMatriz[l][j];
+	            }
+	            cifradoMatriz[k][j] %= 256;
+	        }
+	    }
+	    return cifradoMatriz;
+	}
+	
+	public static double determinante(int[][] matrix) {
+	    int n = matrix.length;
+	    double result = 0;
+	    if (n == 1) {
+	        result = matrix[0][0];
+	    } else if (n == 2) {
+	        result = matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
+	    } else {
+	        for (int j1 = 0; j1 < n; j1++) {
+	            int[][] submatrix = new int[n - 1][n - 1];
+	            for (int i = 1; i < n; i++) {
+	                int j2 = 0;
+	                for (int j = 0; j < n; j++) {
+	                    if (j == j1) {
+	                        continue;
+	                    }
+	                    submatrix[i - 1][j2] = matrix[i][j];
+	                    j2++;
+	                }
+	            }
+	            result += Math.pow(-1.0, 1.0 + j1 + 1.0) * matrix[0][j1] * determinante(submatrix);
+	        }
+	    }
+	    return result;
+	}
+	
+	public static String descifradoHill(int[][] cifradoMatriz, int[][] clave) {
+	    int n = clave.length;
+	    int m = cifradoMatriz[0].length;
+	    int[][] claveInversa = new int[n][n];
+	    double determinante = clave[0][0] * clave[1][1] - clave[0][1] * clave[1][0];
+	    double inversaDeterminante = 1.0 / determinante;
+	    claveInversa[0][0] = (int) (clave[1][1] * inversaDeterminante);
+	    claveInversa[1][1] = (int) (clave[0][0] * inversaDeterminante);
+	    claveInversa[0][1] = (int) (-clave[0][1] * inversaDeterminante);
+	    claveInversa[1][0] = (int) (-clave[1][0] * inversaDeterminante);
+	    StringBuilder mensaje = new StringBuilder();
+	    for (int j = 0; j < m; j++) {
+	        int[][] mensajeMatriz = new int[n][1];
+	        for (int i = 0; i < n; i++) {
+	            mensajeMatriz[i][0] = 0;
+	            for (int k = 0; k < n; k++) {
+	                mensajeMatriz[i][0] += claveInversa[i][k] * cifradoMatriz[k][j];
+	            }
+	            mensajeMatriz[i][0] %= 256;
+	        }
+	        for (int i = 0; i < n; i++) {
+	            mensaje.append((char) mensajeMatriz[i][0]);
+	        }
+	    }
+	    return mensaje.toString();
+	}
+	
+    public static void main(String[] args) {
+    	System.out.println("Ingrese la frase a cifrar:");
+    	Scanner scanner = new Scanner(System.in);
+    	String texto = scanner.nextLine();
+
+    	texto = texto.substring(0, texto.length());
+
+        System.out.println("Ingrese la matriz de cifrado:");
+        int[][] clave= new int[2][2];
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < 2; j++) {
+                System.out.print("Ingrese el elemento [" + i + "][" + j + "]: ");
+                clave[i][j] = scanner.nextInt();
+            }
+        }
+
+        int[][] matriz = cifradoHill(texto,clave);
+        for (int i = 0; i < matriz.length; i++) {
+            for (int j = 0; j < matriz[i].length; j++) {
+                System.out.print("Ingrese el elemento [" + i + "][" + j + "]: ");
+                clave[i][j] = scanner.nextInt();
+            }
+        }
+        //System.out.println(matriz.toString());
+        System.out.println(descifradoHill(matriz,clave));
+       }
+}

@@ -1,0 +1,5 @@
+package Algoritmos;
+
+public abstract class AlgoritmoPlanificacion {
+	public abstract void add(Proceso pr);
+}

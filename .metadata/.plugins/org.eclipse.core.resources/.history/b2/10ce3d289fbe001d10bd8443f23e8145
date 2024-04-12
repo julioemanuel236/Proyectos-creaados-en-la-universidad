@@ -1,0 +1,16 @@
+package game;
+
+public class Caballero extends Heroe {
+
+	public Caballero(int vida, int movimientos, int damage) {
+		super(vida, movimientos, damage);
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public void atacar() {
+		// TODO Auto-generated method stub
+
+	}
+
+}

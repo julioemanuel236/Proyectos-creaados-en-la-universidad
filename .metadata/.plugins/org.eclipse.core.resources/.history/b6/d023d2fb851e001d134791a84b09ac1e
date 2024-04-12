@@ -1,0 +1,593 @@
+package com.nobody.adMEnestrator;
+
+import javax.swing.*;
+import javax.swing.border.Border;
+
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Date;
+
+import Ventana.*;
+import Ventana.TextField;
+import java.util.Scanner;
+
+public class App extends JFrame{
+	String username;
+	JPanel Main;
+	JLabel closebt;
+	JLabel clock;
+	JLabel userlabel;
+	Data data;
+	JScrollPane Show;
+	NewZone newz;
+	ShowZone showz;
+	
+	private class Login extends JFrame{ 
+		JLabel closebt;
+		JPanel back;
+		JLabel logintxt;
+		TextField user;
+		public JButton SignUp;
+		int width=300;
+		int height=175;
+		int movinsu=0;
+		int su1=120;
+		int su2=height+1;
+			
+		public Login(){
+			this.setAlwaysOnTop(true);
+			this.setFocusable(true);
+			this.setUndecorated(true);
+			
+			Listeners.addWindowsMove(this);
+			this.setSize(width,height);
+			this.setBackground(Color.WHITE);
+			this.setLayout(null);
+			//mostrar();
+			back();
+			closebt();
+			logintxt();		
+			user();
+			signup();
+			back.add(user);
+			this.setLocationRelativeTo(null);
+			user.text.requestFocus();
+			this.setVisible(true);
+		}
+
+		private void back() {
+			back = new JPanel();
+			back.setSize(this.getSize());
+			back.setLayout(null);
+			back.setBackground(Color.DARK_GRAY);
+			this.add(back);
+		}
+		
+		private void closebt() {
+			closebt = new JLabel();
+			closebt.setSize(40,25);
+			closebt.setHorizontalAlignment(SwingConstants.CENTER);
+			closebt.setVerticalAlignment(SwingConstants.CENTER);
+			closebt.setLocation(0,0);
+			closebt.setFont(new Font("Roboto",Font.BOLD,15));
+			closebt.setForeground(Color.white);
+			closebt.setText("X");
+			Listeners.addRedBG(closebt);
+			back.add(closebt);
+		}
+				
+		private void logintxt() {
+			logintxt = new JLabel();
+			logintxt.setSize(100,50);
+			logintxt.setFont(new Font("Roboto",Font.ITALIC,30));
+			logintxt.setText("Login");
+			logintxt.setHorizontalAlignment(SwingConstants.CENTER);
+			logintxt.setVerticalAlignment(SwingConstants.CENTER);
+			logintxt.setForeground(Color.white);
+			//logintxt.setOpaque(true);
+			logintxt.setLocation((int)((back.getWidth()/2)-(logintxt.getWidth()/2)),0);
+			back.add(logintxt)
+;		}
+	
+		private void user() {
+			user=new TextField(250,50,"User","/user.png");
+			user.setLocation(user.centrarx(back),user.centrary(back));
+			user.requestFocus();
+			user.text.setForeground(Color.WHITE);
+			user.hint.setForeground(Color.lightGray);
+			user.text.setCaretColor(Color.white);
+		}
+		
+		private void signup() {
+			SignUp = new JButton();
+			SignUp.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			SignUp.setSize(75,30);
+			SignUp.setText("SignUp");
+			SignUp.setBackground(new Color(20,144,222));
+			SignUp.setOpaque(true);
+			SignUp.setLocation((back.getWidth()/2)-(SignUp.getWidth()/2),su2);
+			SignUp.setBorderPainted(false);
+			SignUp.setForeground(Color.white);
+			SignUp.setEnabled(false);
+			SignUp.setActionCommand("\n");
+			ActionListener Next = new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {		
+					App.this.username=user.text.getText();
+					System.out.println(App.this.username);
+					App.Login.this.setVisible(false);
+					App.this.setVisible(true);
+					App.this.data = new Data("/"+App.this.username);
+					App.this.Main();
+				}
+				
+			};
+			SignUp.addActionListener(Next);
+			user.KeyButton(SignUp, '\n');
+			ComponentListener habilitar = new ComponentListener() {
+
+				@Override
+				public void componentResized(ComponentEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void componentMoved(ComponentEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void componentShown(ComponentEvent e) {
+					SignUp.setEnabled(false);
+					movinsu=-1;
+					(new Thread() {
+						public void run() {
+							while(movinsu==-1&&SignUp.getY()<su2) {
+								SignUp.setLocation(SignUp.getX(),SignUp.getY()+4);
+								SignUp.repaint();
+								try {
+									sleep(1);
+								}
+								catch(Exception e) {
+									
+								}
+							}
+						}
+					}).start();
+				}
+
+				@Override
+				public void componentHidden(ComponentEvent e) {
+					SignUp.setEnabled(true);
+					movinsu=1;
+					(new Thread() {
+						public void run() {
+							while(movinsu==1&&SignUp.getY()>su1) {
+								SignUp.setLocation(SignUp.getX(),SignUp.getY()-3);
+								SignUp.repaint();
+								try {
+									sleep(1);
+								}
+								catch(Exception e) {
+									
+								}
+							}
+							
+						}
+					}).start();
+				}
+				
+			};
+			user.hint.addComponentListener(habilitar);
+			back.add(SignUp);
+		}
+		
+		private void mostrar() {
+			(new Thread() {
+				public void run() {
+					int divisor=100;
+					int x=Login.this.getWidth()/divisor;
+					int y=Login.this.getHeight()/divisor;
+					Login.this.setSize(0,0);
+					Login.this.setLocationRelativeTo(null);
+					Login.this.setVisible(true);
+					for(int i=0;i<divisor;i++) {
+						Login.this.setSize(Login.this.getWidth()+x,Login.this.getHeight()+y);
+						Login.this.repaint();
+						Login.this.setLocationRelativeTo(null);
+						try {
+							sleep(5);
+						}
+						
+						catch(Exception e) {
+							
+						}
+					}
+					
+				
+				}
+			}).start();
+		}
+		
+	}
+	
+	private class Data{
+		public static FileReader fr;
+		public static FileWriter fw;
+		public static boolean newuser;
+		Entry[] data = new Entry[1000];
+		int next=0;
+		
+		public Data(String s) {
+				newuser=false;
+				System.out.println("CARGANDO DATOS");
+			try {
+				fr = new FileReader(s);
+				Cargar_Datos();
+			}
+			catch(Exception e) {
+				System.out.println("NEWUSER");
+				newuser=true;
+				try {
+					fw= new FileWriter(s,true);
+					fw.close();
+				} 
+				catch (IOException e1) {
+				}
+			}
+		}
+		
+		public void Cargar_Datos() {
+			String name;
+			float price;
+			int categoria;
+			Scanner entry = new Scanner(fr);
+			while((name = entry.next()).length()>0) {
+				price= entry.nextFloat();
+				categoria= entry.nextInt();
+				data[next]=new Entry(name,price,categoria,next++);
+				System.out.println(name+' '+price+' '+categoria+' '+(next-1));
+			}
+			
+		}
+		
+		public void Guardar_Datos() throws IOException {
+			if(fw.equals(null))fw.close();
+			fw = new FileWriter('/'+App.this.username);
+			for(int i=0;i<next;i++) {
+				fw.append(data[i].string());
+			}
+		}
+	}
+	
+	private class CategoriasPane extends JPanel{
+		
+		public CategoriasPane() {
+			this.setLayout(null);
+			this.setBackground(Color.BLACK);
+			this.setSize(100,App.this.getHeight()-App.this.clock.getHeight());
+			this.setLocation(App.this.getWidth()-this.getWidth(),App.this.clock.getHeight());
+			App.this.Main.add(this);
+		}
+		
+	}
+	
+	private class NewZone extends JPanel{
+		private boolean UP=false;
+		private boolean DOWN=false;
+		public boolean e1=false,e2=false;
+		
+		TextField name,price,categoria;
+		JButton accept;
+		public NewZone() {
+			this.setLayout(null);
+			this.setBackground(Color.DARK_GRAY);
+			this.setSize(250,300);
+			this.setLocation(App.this.Main.getWidth()-this.getWidth()-5,App.this.Main.getHeight());
+			//System.out.println(this.getBounds());
+			App.this.Main.add(this);
+			name = new TextField(250,50,"Product","/user.png");
+			name.setLocation(name.centrarx(this),5);
+			name.text.setForeground(Color.white);
+			name.hint.setForeground(Color.gray);
+			name.text.setCaretColor(Color.white);
+			price = new TextField(250,50,"Price","/user.png");
+			price.setLocation(price.centrarx(this),60);
+			price.text.setForeground(Color.white);
+			price.hint.setForeground(Color.gray);
+			price.text.setCaretColor(Color.white);
+			
+			categoria = new TextField(250,50,"Category","/user.png");
+			categoria.setLocation(categoria.centrarx(this),105);
+			categoria.text.setForeground(Color.white);
+			categoria.hint.setForeground(Color.white);
+			categoria.text.setCaretColor(Color.white);
+			categoria.text.setEnabled(false);
+			
+			acceptbtn();
+			
+			this.add(name);
+			this.add(price);
+			this.add(categoria);
+		}
+		
+		private void acceptbtn() {
+			accept = new JButton();
+			accept.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			accept.setSize(200,30);
+			accept.setText("Accept");
+			accept.setBackground(new Color(20,144,222));
+			accept.setOpaque(true);
+			//center x (this.getWidth()/2)-(accept.getWidth()/2) 
+			accept.setLocation((this.getWidth()/2)-(accept.getWidth()/2),170);
+			accept.setBorderPainted(false);
+			accept.setForeground(Color.white);
+			accept.setEnabled(false);
+			accept.setActionCommand("\n");
+			accept.setEnabled(false);
+			accept.setFocusable(false);
+			ActionListener Next = new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {		
+					
+					data.data[data.next]= new Entry(name.text.getText(),(float)price.text.getText(),0);
+					
+					try {
+						data.Guardar_Datos();
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+					
+					name.text.setText(null);
+					price.text.setText(null);
+					
+				}
+				
+			};
+			accept.addActionListener(Next);
+			name.KeyButton(accept, '\n');
+			price.KeyButton(accept, '\n');
+			ComponentListener habilitar = new ComponentListener() {
+
+				@Override
+				public void componentResized(ComponentEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void componentMoved(ComponentEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				
+				private void hab_dis() {
+					if(e1&&e2)accept.setEnabled(true);
+					else accept.setEnabled(false);
+				}
+				
+				@Override
+				public void componentShown(ComponentEvent e) {
+					if(e.getComponent() == name.hint) 
+						e1=false;
+					else if(e.getComponent() == price.hint)
+						e2=false;
+					hab_dis();
+				}
+
+				
+				@Override
+				public void componentHidden(ComponentEvent e) {
+					if(e.getSource() == name.hint) 
+						e1=true;
+					else if(e.getSource() == price.hint)
+						e2=true;
+					hab_dis();
+				}
+			};
+			name.hint.addComponentListener(habilitar);
+			price.hint.addComponentListener(habilitar);
+			this.add(accept);
+		}
+		
+		private void UP() {
+			UP=true;
+			DOWN=false;
+			(new Thread() {
+				public void run() {
+					while(UP&&NewZone.this.getY()>App.this.getHeight()-NewZone.this.getHeight()) {
+						//System.out.println("Subiendo");
+						NewZone.this.setLocation(NewZone.this.getX(),NewZone.this.getY()-2);
+						try {
+							sleep(1);
+							NewZone.this.repaint();
+						}
+						catch(Exception e) {
+							
+						}
+					}
+				}
+			}).start();
+		}
+
+		private void DOWN() {
+			DOWN=true;
+			UP=false;
+			(new Thread() {
+				public void run() {
+					while(DOWN&&NewZone.this.getY()<App.this.getHeight()) {
+						//System.out.println("Bajando");
+						NewZone.this.setLocation(NewZone.this.getX(),NewZone.this.getY()+2);
+						try {
+							sleep(1);
+							NewZone.this.repaint();
+						}
+						catch(Exception e) {
+							
+						}
+					}
+				}
+			}).start();
+		}
+		
+	}
+	
+	private class ShowZone extends JScrollPane{
+		
+		private JPanel[] vistas;
+		
+		public ShowZone() {
+			this.setSize(App.this.Main.getWidth()-280,App.this.Main.getHeight()-100);
+			this.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+			this.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+			//center x (App.this.Main.getWidth()/2)-(this.getWidth()/2)
+			this.setLocation(10,2);
+			init_vistas();
+			this.setViewportView(vistas[0]);
+			App.this.Main.add(this);
+		}
+		
+		private void init_vistas() {
+			vistas = new JPanel[10];
+			JLabel txt = new JLabel();
+			txt.setSize(250,50);
+			txt.setForeground(Color.white);
+			for(int i=0;i<vistas.length ;i++) {
+				txt.setText(""+i);
+				vistas[i] = new JPanel();
+				vistas[i].setLayout(null);
+				vistas[i].setOpaque(true);
+				vistas[i].setSize(this.getWidth()-20,this.getHeight());
+				vistas[i].setPreferredSize(new Dimension(this.getWidth()-20,this.getHeight()-5));
+				vistas[i].setBackground(new Color(50,50,50));
+				txt.setLocation(50, 50);
+				vistas[i].add(txt);
+				
+				this.repaint();
+			}
+		}
+		
+	}
+	
+	public App() {
+		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		this.setSize(960,600);
+		this.setUndecorated(true);
+		this.setLayout(null);
+		this.setBackground(Color.DARK_GRAY);
+		this.setLocationRelativeTo(null);
+		new Login().user.text.requestFocus();
+	}
+
+	private void closebt(JComponent j) {
+		closebt = new JLabel();
+		closebt.setSize(40,25);
+		closebt.setHorizontalAlignment(SwingConstants.CENTER);
+		closebt.setVerticalAlignment(SwingConstants.CENTER);
+		closebt.setLocation(0,0);
+		closebt.setFont(new Font("Roboto",Font.BOLD,15));
+		closebt.setForeground(Color.white);
+		closebt.setText("X");
+		Listeners.addRedBG(closebt);
+		j.add(closebt);
+	}
+	
+	private void Main() {
+		JPanel topbar = new JPanel();
+		topbar.setLayout(null);
+		topbar.setBackground(Color.DARK_GRAY);
+		topbar.setOpaque(true);
+		topbar.setLocation(0,0);
+		topbar.setSize(this.getWidth(),50);
+		Listeners.addWindowsMove(this);
+		
+		Main = new JPanel();
+		Main.setLayout(null);
+		closebt(topbar);
+		Main.setBackground(Color.DARK_GRAY);
+		Main.setOpaque(true);
+		Main.setLocation(0,topbar.getHeight());
+		Main.setSize(this.getWidth(),this.getHeight()-topbar.getHeight());
+		//USERNAME LABEL
+		userlabel = new JLabel(this.username);
+		userlabel.setForeground(Color.white);
+		Font f=closebt.getFont();
+		userlabel.setFont(new Font(f.getFontName(),f.getStyle(),25));
+		userlabel.setSize(200,40);
+		userlabel.setHorizontalAlignment(SwingConstants.CENTER);
+		userlabel.setVerticalAlignment(SwingConstants.CENTER);
+		userlabel.setLocation((Main.getWidth()/2)-(userlabel.getWidth()/2)-140,0);
+		Clock(topbar);
+		//ADD
+		this.add(Main);
+		this.add(topbar);
+		topbar.add(userlabel);
+//		new CategoriasPane();
+		newz = new NewZone();
+		showz = new ShowZone();
+		Main.addMouseMotionListener(new MouseMotionListener() {
+			
+			@Override
+			public void mouseMoved(MouseEvent e) {
+				System.out.println(e.getX()+" "+e.getY());
+				if(e.getY()>App.this.Main.getHeight()-newz.getHeight()&&
+				   e.getX()>newz.getX()) {
+					newz.UP();
+				}
+				else if(e.getY()<App.this.Main.getHeight()-newz.getHeight()) {
+					newz.DOWN();
+				}
+				
+			}
+			
+			@Override
+			public void mouseDragged(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+	}
+
+	public void Clock(JComponent j) {
+		clock = new JLabel();
+		clock.setSize(280,40);
+		clock.setFont(userlabel.getFont());
+		clock.setForeground(Color.white);
+		clock.setLocation(Main.getWidth()-clock.getWidth(),0);
+		(new Thread() {
+			public void run() {
+				while(true) {
+					Date d = new Date();
+					clock.setText(d.toString().substring(0, 8)+(d.getHours()<10?0:"")+d.getHours()%12+":"+(d.getMinutes()<10?0:"")+d.getMinutes()+":"+(d.getSeconds()<10?0:"")+d.getSeconds()+" "+(d.getHours()>11?"PM":"AM"));
+					try {
+						sleep(100);
+					}
+					catch(Exception e) {
+						
+					}
+				}
+			}
+		}).start();
+		j.add(clock);
+	}
+
+	
+	public static void main(String[] args) {
+		new App();
+	}
+	
+}

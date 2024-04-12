@@ -1,0 +1,19 @@
+package project;
+import java.util.Scanner;
+public class InputRead {
+	private static Scanner entry = new Scanner(System.in);
+
+	static public int nextInt() {
+		try {
+			while(true) {
+				int n = Integer.parseInt(entry.next());
+				return n;
+			}
+		}
+		catch(Exception e) {
+			System.out.println("Invalid Input");
+		}
+		
+	}
+	
+}

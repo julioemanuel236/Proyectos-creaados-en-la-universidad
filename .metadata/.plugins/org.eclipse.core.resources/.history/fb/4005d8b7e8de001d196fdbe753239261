@@ -1,0 +1,208 @@
+package RegistroEstudiantes;
+
+import java.nio.charset.CodingErrorAction;
+import java.util.Scanner;
+
+public class Metodos {
+
+	Scanner leer = new Scanner(System.in);
+
+	public int pedirEstudiantes() {
+		System.out.print("¿Cuántos estudiantes desea ingresar?: ");
+		int filaEstudiantes = leer.nextInt();
+		return filaEstudiantes;
+	}
+
+	public void ingresarEstudiantes(String[][] estudiantes) {
+		for (int i = 0; i < estudiantes.length; i++) {
+			System.out.print("\nIngrese nombre del estudiante " + (i + 1) + ": ");
+			estudiantes[i][0] = leer.next();
+			System.out.print("Ingrese apellido del estudiante " + (i + 1) + ": ");
+			estudiantes[i][1] = leer.next();
+			System.out.print("Ingrese código del estudiante " + (i + 1) + ": ");
+			String codigo = leer.next();
+			if (comprobarCodigo(estudiantes, codigo)) {
+				estudiantes[i][2] = codigo;
+				System.out.print("Ingrese correo del estudiante " + (i + 1) + ": ");
+				estudiantes[i][3] = leer.next();
+			} else {
+				System.out.println("El código ingresado ya es de un estudiante, ingrese otro");
+				i -= 1;
+			}
+		}
+	}
+
+	public boolean comprobarCodigo(String[][] estudiantes, String codigo) {
+		for (int i = 0; i < estudiantes.length; i++) {
+			if (estudiantes[i][2] != null) {
+				if (codigo.equalsIgnoreCase(estudiantes[i][2])) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+
+	public void mostrarEstudiantes(String[][] estudiantes) {
+		System.out.println("\nSus estudiantes son: ");
+		for (int i = 0; i < estudiantes.length; i++) {
+			for (int j = 0; j < estudiantes[i].length; j++) {
+				System.out.print(estudiantes[i][j] + " | ");
+			}
+			System.out.println("");
+		}
+	}
+
+	public int pedirAsignaturas() {
+		System.out.print("\n¿Cuántas asignaturas desea ingresar?: ");
+		int filasAsignaturas = leer.nextInt();
+		return filasAsignaturas;
+	}
+
+	public void ingresarAsignaturas(String[][] asignaturas) {
+		for (int i = 0; i < asignaturas.length; i++) {
+			System.out.print("\nIngrese nombre de su asignatura " + (i + 1) + ": ");
+			asignaturas[i][0] = leer.next();
+			System.out.print("Ingrese código de su asignatura " + (i + 1) + ": ");
+			String codigoAsignatura = leer.next();
+			if (comprobarCodigoAsignatura(asignaturas, codigoAsignatura)) {
+				asignaturas[i][1] = codigoAsignatura;
+				System.out.print("Ingrese número de creditos de su asignatura " + (i + 1) + ": ");
+				asignaturas[i][2] = leer.next();
+			} else {
+				System.out.println("\nEl código ingresado ya existe en una asignatura, ingrese de nuevo");
+				i -= 1;
+			}
+		}
+	}
+
+	public boolean comprobarCodigoAsignatura(String[][] asignaturas, String codigoAsignatura) {
+		for (int i = 0; i < asignaturas.length; i++) {
+			if (asignaturas[i][1] != null) {
+				if (codigoAsignatura.equalsIgnoreCase(asignaturas[i][1])) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+
+	public void mostrarAsignaturas(String[][] asignaturas) {
+		System.out.println("\nSus asignaturas son:");
+		for (int i = 0; i < asignaturas.length; i++) {
+			for (int j = 0; j < asignaturas[i].length; j++) {
+				System.out.print(asignaturas[i][j] + " | ");
+			}
+			System.out.println("");
+		}
+	}
+
+	public int tama�oMatricula() {
+        System.out.print("\nIngrese cuántas asignaturas desea matricular: ");
+        int filasMatriculas = leer.nextInt();
+        return filasMatriculas;
+    }
+
+	public void ingresarMatricula(String[][] matricula, String[][] estudiantes, String[][] asignatura) {
+		for (int i = 0; i < matricula.length; i++) {
+			System.out.print("\nIngrese código del estudiante que quiere matricular: ");
+			String codigoEstudiante = leer.next();
+			if (comprobarSiEstudianteExiste(estudiantes, codigoEstudiante)) {
+				System.out.print("Ingrese código de la asignatura que desea matricular: ");
+				String codigoAsignatura = leer.next();
+				if (comprobarSiExisteAsignatura(asignatura, codigoAsignatura)) {
+					System.out.print("Ingrese código de la matrícula: ");
+					matricula[i][0] = leer.next();
+					System.out.print("Ingrese fecha de la matrícula: ");
+					matricula[i][1] = leer.next();
+					System.out.print("Ingrese semestre de la matrícula: ");
+					matricula[i][2] = leer.next();
+					matricula[i][3] = codigoEstudiante;
+					matricula[i][4] = codigoAsignatura;
+				} else {
+					System.out.println("La asignatura ingresada no existe, intente de nuevo");
+					i -= 1;
+				}
+			} else {
+				System.out.println("El estudiante ingresado no existe, intente de nuevo");
+				i -= 1;
+			}
+		}
+	}
+
+	public boolean comprobarSiEstudianteExiste(String[][] estudiantes, String codigoEstudiante) {
+		for (int i = 0; i < estudiantes.length; i++) {
+			if (estudiantes[i][2] != null) {
+				if (codigoEstudiante.equalsIgnoreCase(estudiantes[i][2])) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	public boolean comprobarSiExisteAsignatura(String[][] asignatura, String codigoAsignatura) {
+		for (int i = 0; i < asignatura.length; i++) {
+			if (asignatura[i][1] != null) {
+				if (codigoAsignatura.equalsIgnoreCase(asignatura[i][1])) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	public void mostrarMatricula(String[][] matricula) {
+		System.out.println("\nSus matrículas son: ");
+		for (int i = 0; i < matricula.length; i++) {
+			for (int j = 0; j < matricula[i].length; j++) {
+				System.out.print(matricula[i][j] + " | ");
+			}
+			System.out.println("");
+		}
+	}
+
+	public int pedirTama�oConsulta(){
+        System.out.print("\nIngrese cuantos estudiantes desea consultar: ");
+        int f = leer.nextInt();
+        return f;
+    }
+
+	public void detalleMatricula(String[][] estudiantes, String[][] matricula, String[][] asignatura,
+			String[][] detalleMatricula) {
+		for (int i = 0; i < detalleMatricula.length; i++) {
+			System.out.print("\nIngrese código del estudiante que desea consultar: ");
+			String codigoEstudiante = leer.next();
+			if (comprobarSiEstudianteExiste(estudiantes, codigoEstudiante)) {
+				if (comprobarSiEstudianteEstaMatriculado(matricula, codigoEstudiante)) {
+					detalleMatricula[i][0] = codigoEstudiante;
+					detalleMatricula[i][1] = asignatura[i][0];
+				} else {
+					System.out.println("Su estudiante no está matriculado, vuelva a intentar");
+					i -= 1;
+				}
+			} else {
+				System.out.println("Su estudiante no existe, vuelva a intentar");
+				i -= 1;
+			}
+		}
+	}
+
+	public boolean comprobarSiEstudianteEstaMatriculado(String[][] matricula, String codigoEstudiante) {
+		for (int i = 0; i < matricula.length; i++) {
+			if (codigoEstudiante.equalsIgnoreCase(matricula[i][3])) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public void mostrarDetalleMatricula(String[][] detalleMatricula) {
+		for (int i = 0; i < detalleMatricula.length; i++) {
+			for (int j = 0; j < detalleMatricula.length; j++) {
+				System.out.print(detalleMatricula[i][j] + " | ");
+			}
+			System.out.println("");
+		}
+	}
+}

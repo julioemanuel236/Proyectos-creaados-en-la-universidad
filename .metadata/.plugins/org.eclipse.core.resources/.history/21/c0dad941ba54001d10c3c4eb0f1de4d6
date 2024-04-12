@@ -1,0 +1,27 @@
+package decanato;
+
+public class Asignatura {
+	private String nombre;
+	private float nota;
+	private int	  year;
+
+	public Asignatura(String nombre,float nota,int year) {
+		this.nombre=nombre;
+		this.nota=nota;
+		this.year=year;
+	}
+	
+	public String getNombre() {
+		return nombre;
+	}
+	
+	public float getNota() {
+		return nota;
+	}
+	
+	public int getYear() {
+		return year;
+	}
+	
+}
+

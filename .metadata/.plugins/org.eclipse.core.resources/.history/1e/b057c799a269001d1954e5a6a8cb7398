@@ -1,0 +1,146 @@
+package agencia;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+
+import javax.swing.JOptionPane;
+
+public class Agencia {
+	private 	ArrayList<CM> modernos = new ArrayList<>();
+	private ArrayList<CV> viejos = new ArrayList<>();
+	private ArrayList<Viaje> viajes = new ArrayList<>();
+	private ArrayList<Provincial> provinciales = new ArrayList<>();
+	private ArrayList<Administrativo> admins = new ArrayList<>();
+	private ArrayList<Chofer> chofers = new ArrayList<>();
+	
+	public void nuevoCamionModerno(String chapa,float kml) {
+		modernos.add(new CM(chapa,kml));
+	}
+	
+	public void nuevoCamionViejo(String chapa,int anio,int rep) {
+		viejos.add(new CV(chapa,anio,rep));
+	}
+	
+	public void nuevoViaje(int dia,int carga,float km,Camion camion,Chofer chofer) {
+		camion.addDistanciaTotal(km);
+		viajes.add(new Viaje(dia,carga,km,camion,chofer));
+	}
+	
+	public void nuevoProvincial(int dia,int carga,int km,Camion camion,Chofer chofer,int regreso,int provincias) {
+		camion.addDistanciaTotal(km);	
+		provinciales.add(new Provincial(dia,carga,km,camion,chofer,regreso,provincias));
+	}
+	
+	public void nuevoAdmin(String n,String c,String ne,String s,String t,String d,int x,String cargo) {
+		admins.add(new Administrativo(n,c,ne,s,t,d,x,cargo));
+	}
+	
+	public void nuevoChofer(String n,String c,String ne,String s,String t,String d,int x) {
+		chofers.add(new Chofer(n,c,ne,s,t,d,x));
+	}
+	
+	public String volumenCarga() {
+		float volumen=0;
+		float distancia=1;
+		for(Viaje i:viajes) {
+			volumen+=i.getCarga();
+			distancia+=i.getKM();
+		}
+		for(Provincial i:provinciales) {
+			volumen+=i.getCarga();
+			distancia+=i.getKM();
+		}
+		String s="El total de volumen de carga transportado fue de "+(volumen/(distancia-1))+" toneladas/kilometro";
+		JOptionPane.showMessageDialog(null, s);
+		return s;
+	}
+	
+	public String distanciaPromedio(Camion camion) {
+		float distancia=0;
+		int cv=0;
+	
+		for(Viaje i:viajes) 			
+			if(i.getCamion()==camion) {
+				distancia+=i.getKM();
+				cv++;
+			}
+		
+		for(Provincial i:provinciales) 
+			if(i.getCamion()==camion) {
+				distancia+=i.getKM();
+				cv++;
+			}
+		
+		
+		if(cv==0)cv=1;
+		String s="La distancia promedio de recorrida por ese camión fue de"+(distancia/cv)+" toneladas/kilometro";
+		JOptionPane.showMessageDialog(null, s);
+		return s;
+	}
+
+	public String datosViajesChapa(String chapa) {
+		String s="";
+		Camion m=null;
+		for(CM i:modernos) 
+			if(i.getChapa().equals(chapa)) {
+				m=i;
+				break;
+			}
+
+		for(CV i:viejos) 
+			if(i.getChapa().equals(chapa)) {
+				m=i;
+				break;
+			}
+				
+		if(m==null)s="Camion no encontrado";
+		s="Camion: "+chapa+'\n';
+		
+			for(Viaje i:viajes)
+				if(i.getCamion()==m)s+=i.datos();
+		
+		if(m.getClass()==CM.class)
+			for(Provincial i:provinciales)
+				if(i.getCamion()==m)s+=i.datos();
+		return s;
+	}
+
+	public String modernosDistancia() {
+		String s="";
+		
+		Comparator<CM> cmp = new Comparator<>() {
+			@Override
+			public int compare(CM a, CM m) {
+				if(a.getDistanciaTotal()>m.getDistanciaTotal())return 1;
+				else if(a.getDistanciaTotal()<m.getDistanciaTotal())return -1;
+				return 0;
+			}
+		};
+		
+		Collections.sort(modernos,cmp);
+		
+		for(int i=0;i<modernos.size();i++)
+			s+=modernos.get(i).datos()+'\n';
+		
+		return s;
+	}
+
+	public String masProvinciasViaje() {
+		String s="";
+		int provincias=0;
+		for(int i=0;i<provinciales.size();i++) {
+			Provincial j = provinciales.get(i);
+			if(j.getProvinciasVisitadas()>provincias) {
+				s=((CM)j.getCamion()).datos();
+				
+			}
+			else if(j.getProvinciasVisitadas()==provincias) {
+				s+=((CM)j.getCamion()).datos();
+			}
+				
+		}
+		
+		return s;
+	}
+	
+}

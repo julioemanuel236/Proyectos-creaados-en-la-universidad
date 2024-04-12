@@ -1,0 +1,163 @@
+package texteditor;
+
+import java.io.FileReader;
+import java.util.Scanner;
+
+/** 
+* 
+* Student name:  xxxxx
+* Completion date: xxxx
+*
+* LineList.txt: the template file of LineList.java
+* Student tasks: implement tasks as specified in this file
+*
+* LineList class is a linked-base list that represents the contents of a document
+*
+*/
+
+
+public class LineList{
+   
+   private Node head;
+   
+   public LineList(){   //constructor  
+      head=null;
+   }
+   //Don't modify anything before this line. 
+   //Do not add any other instance variables.
+   
+
+   // *** Student tasks: implement the following methods *** 
+  
+   public void empty(){
+      	head = null;
+   }
+
+   public void load(String fileName, boolean append){
+      	if(!append)empty();
+      	try {
+      		FileReader fr = new FileReader(fileName);
+      		Scanner entry = new Scanner(fr);
+      		while(entry.hasNext()) {
+      			String line = entry.nextLine();
+      			addLine(line);
+      		}
+      		entry.close();
+      	}
+      	catch(Exception e) {
+      		System.out.println(e.toString());
+      	}
+   }
+   
+   public void save(String fileName){
+      	// Save all lines represented with Nodes to a file. 
+	// Each line (Node) occupies a line in the saved file.
+	// You may need to handle exception within this method
+	// or throw runtime exception only.
+
+   }
+   
+   public void addLine(String line){
+      	Node aux = head;
+      	if(aux == null) {
+      		head = new Node(line);
+      		return;
+      	}
+      	while(aux.getNext() != null) {
+      		aux = aux.getNext();
+      	}
+      	aux.setNext(new Node(line));
+   }
+
+   public void addLine(String line, int n){
+	    int pos = 0;
+	    Node aux = head;
+	    Node aux2;
+	    Node add = new Node(line);
+	 	if(aux == null) {	 		
+	 		head = new Node(line);
+	 		return;
+	 	}
+	 	while(aux.getNext() != null && pos<n) {
+	 		aux = aux.getNext();
+	 		pos++;
+	 	}
+	 	aux2 = aux.getNext();
+	 	aux.setNext(add);
+	 	add.setNext(aux2);
+   }
+   
+   public int words(){
+	   int cont = 0;
+	   Node aux = head;
+	   while(aux!=null) {
+		   String line = aux.getLine();
+		   boolean word = false;
+		   for(int i = 0 ; i < line.length() ; i++) {
+			   char c = line.charAt(i);
+			   //\s(white spaces) \t(tab) , . ; ’ ? * ! ” @ - : . 
+			   if(c == '\s' || c == '\t' || c == ',' || c == '.' || c == ';' || c == '’' || c == '?' ||
+			      c == '*' || c == '!' || c == '”' || c == '@' || c == '-' || c == ':' || c== '.'  ) {
+				   if(word)cont++;
+				   word = false;
+			   }
+			   else word = true;
+				   
+		   }
+		   aux = aux.getNext();
+	   }
+	   return cont;
+      
+   }
+
+   public int lines(){ 
+	   int cont = 0;
+	   Node aux = head;
+	   while(aux!=null) {
+		   cont++;
+		   aux = aux.getNext();
+	   }
+	   return cont;
+   }
+
+   public void delete(int n){
+	   Node aux = head;
+	   int pos = 0;
+	   if(aux == null)return;
+	   
+	   while(aux.getNext() != null && pos < n) {
+		   pos++;
+		   aux = aux.getNext();	   
+	   }
+	   Node aux2 = aux.getNext();
+	   if(aux2 == null)return;
+	   aux.setNext(aux2.getNext());
+   }
+
+   public String toString(){
+	   String s = "";
+	   Node aux = head;
+	   while(aux!=null) {
+		   s += aux.getLine()+"\n"; 
+		   aux = aux.getNext();
+	   }
+	   return s;
+   }
+
+   public void print(){
+      	// Print each line. Each line is proceeded with its corresponding line 
+      	// numbers. Please refer to sample output.
+
+   }
+   
+   public void replace(String s1, String s2){
+      	// Replace all occurrences of s1 with s2.
+
+   }
+   
+   public void line(int n){
+      	// Print nth line in the document. (The nth node in the list)
+      	// If nth line does not exists, print “Line n does not exist.”
+
+   }
+}

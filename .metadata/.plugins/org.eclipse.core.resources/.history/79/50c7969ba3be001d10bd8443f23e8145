@@ -1,0 +1,28 @@
+package game;
+
+public class Arquero extends Heroe {
+
+	public Arquero( Tablero t) {
+		super(vida, movimientos, damage, t);
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public void atacar() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void hit(Mob m) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void die() {
+		// TODO Auto-generated method stub
+
+	}
+
+}

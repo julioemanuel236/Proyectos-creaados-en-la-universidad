@@ -1,0 +1,26 @@
+package tareas;
+
+import java.util.Stack;
+import java.util.LinkedList;
+
+public class repaso {
+
+	public class Dato{
+		
+		public Dato() {
+			
+		}
+	}
+	
+	public void run() {
+		Stack<Dato> stack = new Stack<>();	
+		LinkedList<Dato> lista = new LinkedList<>();
+		
+		
+		
+	}
+	
+	public static void main(String args[]) {
+		
+	}
+}

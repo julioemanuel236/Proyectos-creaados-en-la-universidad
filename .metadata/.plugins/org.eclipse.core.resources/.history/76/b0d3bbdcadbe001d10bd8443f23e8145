@@ -1,0 +1,10 @@
+package game;
+
+public abstract class Enemigo extends Mob {
+
+	public Enemigo(int vida, int damage,int mM,boolean volar, Tablero t) {
+		super(vida,damage,mM,volar,t);
+		// TODO Auto-generated constructor stub
+	}
+
+}

@@ -1,0 +1,14 @@
+package project;
+
+public class Main {
+
+	public static void main(String[] args) {
+		System.out.println("Welcome to the Car and Garage program");
+		System.out.println("Enter the number of parking space you would like to have in the garage");		
+		Garage garage = new Garage(InputRead.parkingSize());
+		
+		while(true) {
+			
+		}
+	}
+}

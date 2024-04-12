@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename local variable &apos;msg&apos; in &apos;bussines.LogicList.dijkstraPrueba(...)&apos; to &apos;nodog&apos;&#x0D;&#x0A;- Original project: &apos;Proyecto2-DiegoBonillaTry3&apos;&#x0D;&#x0A;- Original element: &apos;bussines.LogicList.dijkstraPrueba(Grafo, Person, Person).msg&apos;&#x0D;&#x0A;- Renamed element: &apos;msg&apos;&#x0D;&#x0A;- Update references to refactored element" description="Rename local variable &apos;msg&apos;" id="org.eclipse.jdt.ui.rename.local.variable" input="/src&lt;bussines{LogicList.java[LogicList~dijkstraPrueba~QGrafo;~QPerson;~QPerson;@msg!16990!17023!16999!17001!QNodoGraf;!0!false" name="nodog" references="true" stamp="1709060771940" version="1.0"/>
+</session>

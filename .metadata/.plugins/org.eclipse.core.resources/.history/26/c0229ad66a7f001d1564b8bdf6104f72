@@ -1,0 +1,10 @@
+package banco;
+import javax.swing.*;
+
+public class GUI {
+	Sucursal sucursal;
+	
+	public GUI(){
+		sucursal = new Sucursal();
+	}
+}

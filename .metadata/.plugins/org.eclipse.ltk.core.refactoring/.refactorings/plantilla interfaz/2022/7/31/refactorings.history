@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Move 3 elements to &apos;image&apos;&#x0D;&#x0A;- Original project: &apos;plantilla interfaz&apos;&#x0D;&#x0A;- Destination element: &apos;image&apos;&#x0D;&#x0A;- Original elements:&#x0D;&#x0A;     fondo1.png&#x0D;&#x0A;     key.png&#x0D;&#x0A;     user.png&#x0D;&#x0A;- Update references to refactored element" description="Move files" element1="fondo1.png" element2="key.png" element3="user.png" files="3" flags="589830" folders="0" id="org.eclipse.jdt.ui.move" policy="org.eclipse.jdt.ui.moveResources" qualified="false" references="true" stamp="1659137936354" target="image" units="0" version="1.0"/>
+</session>

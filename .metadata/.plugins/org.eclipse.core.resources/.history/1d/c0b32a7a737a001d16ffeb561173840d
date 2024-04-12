@@ -1,0 +1,40 @@
+package clases;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class Ventana extends JFrame{
+	Subdireccion estudiantil = new Subdireccion("Estudiante","Havana");
+
+	private JPanel opciones;
+	Dimension tamannoPanel = new Dimension(600,500);
+	JPanel  interaccion;
+	
+
+	public void iniciar() {
+		JPanel panel = new JPanel();
+		add(panel);
+		
+		JButton nuevoEdificio = new JButton("Nuevo Edificio");
+		panel.add(nuevoEdificio);
+		nuevoEdificio.addActionListener(new ActionListener() {
+			
+		});
+	}
+	
+	public Ventana(){
+		setResizable(false);
+		setSize(200,300);
+		setTitle("Residencia");
+		iniciar();
+		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		this.setVisible(true);
+	}
+
+	
+	public static void main(String args[]) {
+		new Ventana();
+	}
+}

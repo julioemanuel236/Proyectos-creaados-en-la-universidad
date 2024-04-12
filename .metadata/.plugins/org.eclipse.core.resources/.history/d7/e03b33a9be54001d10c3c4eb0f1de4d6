@@ -1,0 +1,36 @@
+package decanato;
+
+import java.util.ArrayList;
+
+public class Ayudante extends Alumno{
+	protected ArrayList<Integer> ayudantia;
+	protected ArrayList<Asignatura> impartidas;
+	
+	public Ayudante(String n,String a,String s,String id,String gru,int year,String p,boolean ayuda,int[] ayudantia,Asignatura[] as) {
+		super(n,a,s,id,gru,year,p,ayuda);
+		for(Integer i:ayudantia)
+			this.ayudantia.add(i);
+		for(Asignatura i:as)
+			this.impartidas.add(i);
+		System.out.println(new B().getClass());
+	}
+	
+	class B extends Ayudante{
+
+		public B(String n, String a, String s, String id, String gru, int year, String p, boolean ayuda,
+				int[] ayudantia, Asignatura[] as) {
+			super(n, a, s, id, gru, year, p, ayuda, ayudantia, as);
+			// TODO Auto-generated constructor stub
+		}
+		
+		B(){
+			
+		}
+	}
+	
+	
+	
+	public static void main(String args[]) {
+		
+	}
+}

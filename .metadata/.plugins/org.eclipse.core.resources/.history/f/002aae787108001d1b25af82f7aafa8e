@@ -1,0 +1,18 @@
+package vector;
+
+public class Vector {
+	
+	public class nodo{
+		int valor;
+		int index;
+		
+		public static index(){
+			
+		}
+		
+		public nodo(int x,int p) {
+			this.valor=x;
+			this.index=p;
+		}
+	}
+}

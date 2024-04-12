@@ -1,0 +1,47 @@
+package medios_uci;
+import java.util.ArrayList;
+
+public class CONTROL {
+	static ArrayList<Medio> medios = new ArrayList<>();
+	
+	public static void addMedio(Medio m) {
+		medios.add(m);
+	}
+	
+	public static String cantidadEquipos() {
+		int arr[] = new int[Equipo.MARCA.length];
+		for(int i=0;i<medios.size();i++) {
+			if(medios.get(i).getClass()==Equipo.class) {
+				Equipo e = (Equipo)medios.get(i);
+				arr[e.getMarca()]++;
+			}
+		}
+		String result="";
+		
+		for(int i=0;i<Equipo.MARCA.length;i++) {
+			result+=Equipo.MARCA[i]+": "+arr[i]+'\n';
+		}
+		
+		return result;
+	}
+	
+	public static String garantias() {
+		
+	}
+	
+	public static String estadoMedios() {
+		int equipos=0,muebles=0;
+		for(int i=0;i<medios.size();i++) {
+			if(medios.get(i).getClass()==Equipo.class) 
+				equipos++;
+			else muebles++;
+			
+		}
+		String result="Existen un total de: "+(equipos+muebles)+" medios en mal estado\n"
+				+"Equipos: "+equipos+'\n'
+				+"Muebles: "+muebles+'\n';
+		
+		return result;
+		
+	}
+}

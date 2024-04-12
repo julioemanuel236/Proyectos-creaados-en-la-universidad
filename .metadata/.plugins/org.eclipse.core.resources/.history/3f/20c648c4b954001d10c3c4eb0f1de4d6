@@ -1,0 +1,8 @@
+package decanato;
+
+public class Alumno {
+	private String nombre;
+	private String sexo;
+	private String ID;;
+	
+}

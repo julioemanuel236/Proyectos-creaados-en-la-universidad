@@ -1,0 +1,13 @@
+package cadena;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+
+public class Cadena {
+	private ArrayList<Hotel> hoteles;
+	private ArrayList<Cliente> clientes;
+
+	public void nuevoHotel() {
+		int cantidadPisos = Integer.parseInt(JOptionPane.showInputDialog("Cantidad de Pisos"));
+	}
+	
+}

@@ -1,0 +1,44 @@
+package game;
+
+public class Caballero extends Heroe {
+
+	public Caballero(Tablero t) {
+		super(300, 1, 45,1,t);
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public void atacar() {		
+
+		for(int i=0;i<8;i++) {
+			int x=getX()+dx[i];
+			int y=getY()+dy[i];
+			if(x<1||x>tablero.width||y<1||y>tablero.height)continue;
+			if(tablero.map[x][y] instanceof Enemigo) {
+				Enemigo e = (Enemigo)tablero.map[x][y];
+				this.hit(e);
+			}
+		}
+	}
+	
+	@Override
+	public void hit(Mob m) {
+		m.vida-=this.damage;
+		if(m.vida<0)m.die();
+	}
+
+	@Override
+	public void die() {
+		
+	}
+	
+	@Override
+	public boolean mover(int dir) {
+		int x=getX()+dx[dir];
+		int y=getY()+dy[dir];
+		
+		if(x<1||x>tablero.width||y<1||y>tablero.height||tablero.map[x][y]!=null)return 0;
+		
+		return true;
+	}
+}

@@ -1,0 +1,12 @@
+package competencia;
+import java.util.ArrayList;
+public class ACM {
+	ArrayList<Equipo> equipos = new ArrayList<>();
+	ArrayList<Participante> participantes = new ArrayList<>();
+	
+	
+	
+	public void addParticipante(Participante p) {
+		participantes.add(p);
+	}
+}

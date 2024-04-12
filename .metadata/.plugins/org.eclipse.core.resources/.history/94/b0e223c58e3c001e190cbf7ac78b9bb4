@@ -1,0 +1,25 @@
+package elementos;
+
+import elementos.serpiente.Cuerpo;
+
+public class Matriz {
+	
+	private Cuerpo[][] matriz;
+	
+	public Matriz(int n,int m) {
+		matriz = new Cuerpo[n][m];
+	}
+	
+	public int get(int x,int y) {
+		if(matriz[y][x] == null)return -1;
+		else return matriz[y][x].getId();
+	}
+
+	public boolean set(int x,int y,Cuerpo c) {		
+		if(x<0 || y < 0 || x>=matriz.length || y>= matriz.length)return false;
+		Cuerpo temp = matriz[y][x];
+		if(temp != null && temp.getId()!=c.getId())return false;
+		matriz[y][x] = c;
+		return true;
+	}
+}

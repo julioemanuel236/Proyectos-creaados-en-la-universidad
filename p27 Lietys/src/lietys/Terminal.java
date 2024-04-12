@@ -1,0 +1,44 @@
+package lietys;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+
+public class Terminal implements Serializable{
+	
+	private String nombre;
+	private int    numero;
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public int getNumero() {
+		return numero;
+	}
+
+	public void setNumero(int numero) {
+		this.numero = numero;
+	}
+
+	public ArrayList<Vuelo> getVuelos() {
+		return vuelos;
+	}
+
+	public void setVuelos(ArrayList<Vuelo> vuelos) {
+		this.vuelos = vuelos;
+	}
+
+	ArrayList<Vuelo> vuelos = new ArrayList<Vuelo>();
+	
+	public Terminal(String nombre,int numero) {
+		this.nombre=nombre;
+		this.numero=numero;
+	}
+	
+	public String toString() {
+		return nombre;
+	}
+}

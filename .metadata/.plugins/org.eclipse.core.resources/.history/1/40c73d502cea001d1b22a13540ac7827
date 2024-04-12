@@ -1,0 +1,24 @@
+package gui;
+import javax.swing.*;
+
+public class MainWindow extends JFrame{
+
+	SelectTypePanel stp;
+	Reporte repote;
+	
+	public MainWindow(){
+		int w=1120,h=720;
+		setResizable(false);
+		setSize(w,h);
+		setLocationRelativeTo(null);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		stp = new SelectTypePanel(w,h);
+		setVisible(true);
+		
+	}
+	
+	public static void main(String args[]) {
+		new MainWindow();
+	}
+	
+}

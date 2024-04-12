@@ -1,0 +1,24 @@
+package mainApp;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.Scanner;
+
+
+public class regex {
+	
+    public static boolean isValidIfStatement(String statement) {
+        String regex = "^if\\s*\\(.*\\[<,>,==,!=].*\\)\\s*\\{.*\\}$";
+        return statement.matches(regex);
+    }
+
+	
+    public static void main(String[] args) {
+        Scanner entry = new Scanner(System.in);
+        String s;
+        while(true) {
+        	s = entry.nextLine();
+        	System.out.println(isValidIfStatement(s));
+        }
+    }
+}

@@ -1,0 +1,14 @@
+package competencia;
+
+public class Junior extends Participante{
+	int problemas=0;
+
+	public Junior(String nombre, String carnet, int edad, String sexo, Pais pais, Equipo equipo) {
+		super(nombre, carnet, edad, sexo, pais, equipo);
+	}
+	
+	public int getProblemas() {
+		return problemas;
+	}
+	
+}

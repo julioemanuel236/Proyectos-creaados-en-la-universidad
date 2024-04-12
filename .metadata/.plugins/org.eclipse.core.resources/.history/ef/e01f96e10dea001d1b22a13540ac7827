@@ -1,0 +1,54 @@
+package gui;
+
+import java.awt.Container;
+
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.Image;
+public class SlidePanel extends JPanel{
+
+	Image right;
+	Image left;
+	Image backgroundImage;
+	public SlidePanel(Container c) {				
+		setSize(Math.min(150,c.getWidth()),c.getHeight());
+		ini();
+		setLocation(-getWidth()+right.getWidth(null),0);
+		c.add(this);
+	}
+	
+	private void ini() {
+		try {
+			int h=getHeight()/15 , w=h/2;
+			right = ImageIO.read(getClass().getResource("/img/rigth.png")).getScaledInstance(w,h,Image.SCALE_SMOOTH);
+			left = ImageIO.read(getClass().getResource("/img/left.png")).getScaledInstance(w,h,Image.SCALE_SMOOTH);
+			backgroundImage = ImageIO.read(getClass().getResource("/img/selectbackground.jpg")).getScaledInstance(getWidth(), getHeight(), Image.SCALE_SMOOTH);
+			iniButtons();
+			JLabel back = new JLabel();
+			back.setSize(getSize());
+			back.setIcon(new ImageIcon(backgroundImage));
+			add(back);
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void iniButtons() {
+		JButton inOut = new JButton();
+		inOut.setIcon(new ImageIcon(right));
+		inOut.setSize(right.getWidth(null),getHeight());
+		inOut.setLocation(getWidth()-inOut.getWidth(),(getHeight()/2)-(inOut.getHeight()/2));
+		add(inOut);
+	}
+	
+	public static void main(String args[]) {
+		JFrame fr = new JFrame();
+		fr.setSize(1000,600);
+		fr.setLayout(null);
+		fr.setDefaultCloseOperation(fr.EXIT_ON_CLOSE);
+		fr.setVisible(true);		
+		new SlidePanel(fr);
+		fr.repaint();		
+	}
+}

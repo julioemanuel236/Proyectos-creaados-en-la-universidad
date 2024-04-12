@@ -1,0 +1,29 @@
+package banco;
+
+public class Personal extends Solicitud{
+	private String carnet;
+	private float  salario;
+	private int    sustenta;
+	
+	public Personal(String nombre, String credito, String direccion, String carnet, float salario, int sustenta) {
+		super(nombre, credito, direccion);
+		this.carnet = carnet;
+		this.salario = salario;
+		this.sustenta = sustenta;
+	}
+
+	public String getCarnet() {
+		return carnet;
+	}
+
+	public float getSalario() {
+		return salario;
+	}
+
+	public int getSustenta() {
+		return sustenta;
+	}
+	
+	
+	
+}

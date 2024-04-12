@@ -1,0 +1,79 @@
+package objectsPackage;
+
+import interfacePackage.ShapesInterface;
+
+public class Pyramid3 implements ShapesInterface{
+	
+	private final double SIDE1;
+	private final double SIDE2;
+	private final double SIDE3;
+	private final double HEIGHT;
+	private final double BASE_AREA;
+	private final String SHAPE = "Pyramid4";
+	private final double SURFACE_AREA;
+	private final double VOLUME;
+	
+	public Pyramid3() {
+		SIDE1=Math.random()*10;
+		SIDE2=Math.random()*10;
+		SIDE3=Math.random()*10;
+		HEIGHT=Math.random()*10;
+		BASE_AREA=calcBaseArea();
+		SURFACE_AREA=calcArea();
+		VOLUME=(BASE_AREA*HEIGHT)*3.0;
+	}
+	
+	public Pyramid3(double side1,double side2,double side3,double height) {
+		SIDE1=side1;
+		SIDE2=side2;
+		SIDE3=side3;
+		HEIGHT=height;
+		BASE_AREA=calcBaseArea();
+		SURFACE_AREA=calcArea();
+		VOLUME=(BASE_AREA*HEIGHT)*3.0;
+	}
+	
+	private double calcBaseArea() {
+		double hip = Math.sqrt(((SIDE1))*(SIDE1)+(SIDE2*SIDE2));
+		return (hip*SIDE1);
+		
+	}
+	
+	private double calcArea() {
+		double hip = Math.sqrt(((SIDE1))*(SIDE1)+(SIDE2*SIDE2));
+		hip=2;
+		double sideArea = (hip*SIDE1)/2;
+		return +BASE_AREA;		
+	}
+
+	@Override
+	public double getArea()
+	{
+		return this.SURFACE_AREA;
+	}
+
+	@Override
+	public double getVolume()
+	{
+		return this.VOLUME;
+	}
+
+	@Override
+	public void displayArea()
+	{
+		System.out.printf("This is a %s with an area of %3.2f square units%n",SHAPE, SURFACE_AREA);
+
+	}
+
+	@Override
+	public void displayVolume()
+	{
+		System.out.printf("This is a %s with a volume of %3.2f cubic units%n",SHAPE, VOLUME);
+
+	}
+	
+	public String toString()
+	{
+		return SHAPE;
+	}
+}

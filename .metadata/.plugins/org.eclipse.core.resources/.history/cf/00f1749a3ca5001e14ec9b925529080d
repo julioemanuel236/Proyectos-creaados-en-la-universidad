@@ -1,0 +1,290 @@
+package tablero;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Container;
+import java.awt.Graphics;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.LinkedList;
+import java.awt.Point;
+import pieza.Pieza;
+import pieza.*;
+public class Tablero extends Container implements MouseListener{
+
+	private Pieza blanca,negra;
+	
+	private boolean turno = false;
+	
+	private int altoCasilla,anchoCasilla;
+	
+	Pieza matrix[][] = new Pieza[8][8];
+	
+	private Color[] colores = {Color.white,new Color(97,57,22)};
+	private Color[] colorJugador = {Color.red,Color.blue};
+	public Tablero() {
+		addMouseListener(this);
+		setLayout(null);
+	}
+	
+	private boolean mover(Pieza temp, int i,int j) {
+		
+		LinkedList<Point> movimientos = temp.getCasillasMovimiento();
+		LinkedList<Point> capturas = temp.getCasillasCapturas();
+		
+		for(Point p:movimientos) {
+			if(p.x == i && p.y == j) {
+				matrix[temp.getI()][temp.getJ()] = null;
+				temp.moverA(i,j);					
+				matrix[i][j] = temp;
+				return true;
+			}
+		}
+		
+		for(Point p:capturas) {
+			if(p.x == i && p.y == j) {
+				matrix[temp.getI()][temp.getJ()] = null;
+				temp.moverA(i,j);					
+				matrix[i][j] = temp;
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	public void notificarSeleccion(Pieza pieza,int i,int j) {
+
+		if(pieza == null) {
+			Pieza temp;
+			if(turno)temp = negra;
+			else temp = blanca;
+			if(temp == null)return;
+			if(mover(temp,i,j)) {
+				if(i == 0 && turno) {
+					//hacer transforamcion de peon
+				}
+					
+				siguienteTurno();
+			}
+									
+		}
+		
+		else {
+			System.out.println("Notificado por " + pieza.getClass().getSimpleName() + " " + pieza.isColor());
+			if(pieza.isColor())negra = pieza;
+			else blanca = pieza;
+			
+			if(pieza.isColor() == turno) 				
+				repaint();
+			
+			else {
+				if(capturar())
+					siguienteTurno();
+			}
+			
+			
+		}
+		
+		
+						
+	}
+	
+	private boolean capturar() {
+		Pieza j1;
+		Pieza j2;
+		
+		if(turno) {
+			j1 = negra;
+			j2 = blanca;			
+		}
+		else {
+			j1 = blanca;
+			j2 = negra;
+		}
+		
+		if(j1 == null || j2 == null)return false;
+		
+		if(puedeComer(j1,j2)) {
+			mover(j1,j2.getI(),j2.getJ());
+			j2.morir();				
+			return true;						
+		}
+		
+		return false;
+		
+	}
+	
+	public boolean puedeComer(Pieza p1,Pieza p2) {
+		if(p1 == null || p2 == null)return false;
+		LinkedList<Point> casillas = p1.getCasillasCapturas();
+		int i = p2.getI();
+		int j = p2.getJ();
+		int n = casillas.size();
+		
+		for(Point p : casillas) {			
+			if(i == p.x && j == p.y)return true;
+		}
+		
+		return false;
+	}
+	
+	public void siguienteTurno() {
+		turno = !turno;
+		blanca = negra = null;
+		repaint();
+		System.err.println("SE CAMBIO EL TURNO");
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+										
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		
+		int j = e.getX()/anchoCasilla;
+		int i = e.getY()/altoCasilla;
+		
+		System.out.println(i+" "+j);
+		
+		notificarSeleccion(matrix[i][j],i,j);		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
+	public void paint(Graphics g) {
+		g.setColor(colores[0]);
+		boolean pI = false;
+		int width = getWidth()/8;
+		int height = getHeight()/8;
+		
+		for(int i=0;i<8;i++) {
+			for(int j=(pI?1:0);j<8;j++) {
+				g.fillRect(j*width, i*height, width, height);
+				j++;
+			}		
+			pI = !pI;
+		}
+		
+		g.setColor(colores[1]);
+		pI = true;		
+		for(int i=0;i<8;i++) {
+			for(int j=(pI?1:0);j<8;j++) {
+				g.fillRect(j*width, i*height, width, height);
+				j++;
+			}		
+			pI = !pI;
+		}
+		
+		g.setColor(colorJugador[(turno?0:1)]);
+		for(int i=0;i<8;i++) {
+			g.drawLine(i*anchoCasilla, 0, i*anchoCasilla , getHeight());
+			g.drawLine(0, i*altoCasilla, getWidth() , i*altoCasilla);
+		}
+		Pieza pieza;
+		if(turno)pieza = negra;
+		else pieza = blanca;
+		if(pieza != null) {
+			LinkedList<Point> movimientos = pieza.getCasillasMovimiento();
+			LinkedList<Point> capturas = pieza.getCasillasCapturas();
+			
+			g.setColor(new Color(50,100,200,150));
+			
+			for(Point p : movimientos) {
+				//System.out.println(p.x + " / " + p.y);
+				g.fillRect(p.y*anchoCasilla, p.x*altoCasilla, anchoCasilla, altoCasilla);				
+			}
+			
+			g.setColor(new Color(100,50,200,150));
+			for(Point p : capturas) {
+				//System.out.println(p.x + " / " + p.y);
+				g.fillRect(p.y*anchoCasilla, p.x*altoCasilla, anchoCasilla, altoCasilla);
+			}
+			
+		}
+		
+					
+		super.paint(g);
+	}
+
+	@Override
+	public void setSize(int width,int height) {
+		anchoCasilla = width/8;
+		altoCasilla = height/8;
+		super.setSize(width, height);
+	}
+
+	public int getAltoCasilla() {
+		return altoCasilla;
+	}
+
+	public int getAnchoCasilla() {
+		return anchoCasilla;
+	}
+	
+	public void iniciarPartida() {
+		removeAll();
+		crearBlancas();
+		crearNegras();
+	}
+	
+	private void crearBlancas() {
+		
+		for(int i=0;i<8;i++) 
+			matrix[1][i] = new Peon(1,i,false,this);
+		
+		matrix[0][0] = new Torre(0,0,false,this);
+		matrix[0][7] = new Torre(0,7,false,this);
+	
+		matrix[0][1] = new Caballo(0,1,false,this);
+		matrix[0][6] = new Caballo(0,6,false,this);
+		
+		matrix[0][2] = new Alfil(0,2,false,this);
+		matrix[0][5] = new Alfil(0,5,false,this);
+		
+		matrix[0][4] = new Reyna(0,4,false,this);
+		matrix[0][3] = new Rey(0,3,false,this);
+	}
+	
+	private void crearNegras() {
+		
+		for (int i = 0; i < 8; i++)
+			matrix[6][i] = new Peon(6, i, true, this);
+
+		matrix[7][0] = new Torre(7, 0, true, this);
+		matrix[7][7] = new Torre(7, 7, true, this);
+
+		matrix[7][1] = new Caballo(7, 1, true, this);
+		matrix[7][6] = new Caballo(7, 6, true, this);
+
+		matrix[7][2] = new Alfil(7, 2, true, this);
+		matrix[7][5] = new Alfil(7, 5, true, this);
+
+		matrix[7][4] = new Reyna(7, 4, true, this);
+		matrix[7][3] = new Rey(7, 3, true, this);
+
+	}
+	
+	public Pieza getPieza(int i,int j) {
+		return matrix[i][j];
+	}
+
+}

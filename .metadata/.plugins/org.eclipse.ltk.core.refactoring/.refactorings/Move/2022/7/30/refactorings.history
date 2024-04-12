@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename compilation unit &apos;Move.JLMV.java&apos; to &apos;Move.java&apos;&#x0D;&#x0A;- Original project: &apos;Move&apos;&#x0D;&#x0A;- Original element: &apos;Move.JLMV.java&apos;&#x0D;&#x0A;- Renamed element: &apos;Move.Move.java&apos;" description="Rename compilation unit &apos;JLMV.java&apos;" flags="2" id="org.eclipse.jdt.ui.rename.compilationunit" input="/src&lt;Move{JLMV.java" name="Move.java" references="false" stamp="1658195955191" version="1.0"/>
+</session>

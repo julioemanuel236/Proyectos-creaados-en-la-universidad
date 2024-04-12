@@ -1,0 +1,8 @@
+package app;
+
+public class Name {
+	private final String firsName;
+	private final String middleName;
+	private final String lastName;
+	
+}

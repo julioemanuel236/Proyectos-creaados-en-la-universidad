@@ -1,0 +1,11 @@
+package game;
+
+public class Terreno extends Object{
+	int x,y;
+	
+	public Terreno(int x,int y) {
+		this.x=x;
+		this.y=y;
+	}
+
+}

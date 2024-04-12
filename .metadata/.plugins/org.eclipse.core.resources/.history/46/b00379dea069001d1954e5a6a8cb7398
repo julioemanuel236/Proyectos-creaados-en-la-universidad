@@ -1,0 +1,16 @@
+package agencia;
+
+public class Administrativo extends Trabajador{
+	
+	private String cargo;
+	
+	public Administrativo(String n,String c,String ne,String s,String t,String d,int x,String cargo) {
+		super(n,c,ne,s,t,d,x);
+		this.cargo=cargo;
+		
+	}
+	
+	public String getCargo() {
+		return cargo;
+	}
+}
